@@ -10,7 +10,7 @@ World Explorer: Europe is een applicatie die info geeft over alle landen van Eur
 -	Een lijst met enkele typische nummers uit dat land via een afspeelijst op spotify;
 -	Een collectie foto’s van de gebruiker zelf.
 
-Het is ook de bedoeling dat de database beheert wordt door een administrator via een externe website. De bewerkingen gaan dan via internet (application programming interface) naar de database. 
+Het is ook de bedoeling dat de database beheert wordt door een administrator via een externe website. De bewerkingen gaan dan via internet langs een web api(application programming interface) naar de database. 
 
 ## Extra info
 Extra instructies zoals de client id en client secret voor Spotify worden hier binnenkort ingeplaatst.
