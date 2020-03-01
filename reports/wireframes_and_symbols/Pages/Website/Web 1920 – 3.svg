@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <clipPath id="clip-Web_1920_3">
+      <rect width="1920" height="1080"/>
+    </clipPath>
+  </defs>
+  <g id="Web_1920_3" data-name="Web 1920 – 3" clip-path="url(#clip-Web_1920_3)">
+    <rect width="1920" height="1080" fill="#fff"/>
+    <g id="Rectangle_2" data-name="Rectangle 2" fill="#fe5f55" stroke="#707070" stroke-width="1">
+      <rect width="399" height="1080" stroke="none"/>
+      <rect x="0.5" y="0.5" width="398" height="1079" fill="none"/>
+    </g>
+    <text id="Enter_email_" data-name="Enter email " transform="translate(470 433)" font-size="35" font-family="Raleway-ExtraLight, Raleway" font-weight="200" opacity="0.64"><tspan x="0" y="0">Enter email </tspan></text>
+    <text id="E-mail:" transform="translate(472 389)" font-size="35" font-family="RobotoMono-Bold, Roboto Mono" font-weight="700"><tspan x="0" y="0">E-mail:</tspan></text>
+    <text id="Birthdate:" transform="translate(472 513)" font-size="35" font-family="RobotoMono-Bold, Roboto Mono" font-weight="700"><tspan x="0" y="0">Birthdate:</tspan></text>
+    <g id="Rectangle_47" data-name="Rectangle 47" transform="translate(470 813)" fill="#c7efcf" stroke="#88bf93" stroke-width="4">
+      <rect width="198" height="60" stroke="none"/>
+      <rect x="2" y="2" width="194" height="56" fill="none"/>
+    </g>
+    <text id="Edit" transform="translate(527 855)" fill="#fff" font-size="35" font-family="RobotoMono-Bold, Roboto Mono" font-weight="700"><tspan x="0" y="0">Edit</tspan></text>
+    <text id="_01_01_2020" data-name="01/01/2020" transform="translate(470 557)" font-size="35" font-family="Raleway-ExtraLight, Raleway" font-weight="200" opacity="0.64"><tspan x="0" y="0">01/01/2020</tspan></text>
+    <text id="Firstname" transform="translate(470 183)" font-size="35" font-family="Raleway-ExtraLight, Raleway" font-weight="200" opacity="0.64"><tspan x="0" y="0">Firstname</tspan></text>
+    <text id="Firstname:" transform="translate(472 139)" font-size="35" font-family="RobotoMono-Bold, Roboto Mono" font-weight="700"><tspan x="0" y="0">Firstname:</tspan></text>
+    <text id="Enter_lastname" data-name="Enter lastname" transform="translate(470 308)" font-size="35" font-family="Raleway-ExtraLight, Raleway" font-weight="200" opacity="0.64"><tspan x="0" y="0">Enter lastname</tspan></text>
+    <text id="Lastname:" transform="translate(472 264)" font-size="35" font-family="RobotoMono-Bold, Roboto Mono" font-weight="700"><tspan x="0" y="0">Lastname:</tspan></text>
+    <g id="Rectangle_53" data-name="Rectangle 53" transform="translate(682 813)" fill="#fe5f55" stroke="#fa9a94" stroke-width="4">
+      <rect width="157" height="60" stroke="none"/>
+      <rect x="2" y="2" width="153" height="56" fill="none"/>
+    </g>
+    <text id="Cancel" transform="translate(700 855)" fill="#fff" font-size="35" font-family="RobotoMono-Bold, Roboto Mono" font-weight="700"><tspan x="0" y="0">Cancel</tspan></text>
+    <g id="Rectangle_54" data-name="Rectangle 54" transform="translate(667 708)" fill="#fff" stroke="#707070" stroke-width="1">
+      <rect width="61" height="52" stroke="none"/>
+      <rect x="0.5" y="0.5" width="60" height="51" fill="none"/>
+    </g>
+    <text id="Is_Admin" data-name="Is Admin" transform="translate(472 748)" font-size="35" font-family="RobotoMono-Bold, Roboto Mono" font-weight="700"><tspan x="0" y="0">Is Admin</tspan></text>
+    <text id="Nationality" transform="translate(474 638)" font-size="35" font-family="RobotoMono-Bold, Roboto Mono" font-weight="700"><tspan x="0" y="0">Nationality</tspan></text>
+    <text id="Belgium" transform="translate(472 682)" font-size="35" font-family="Raleway-ExtraLight, Raleway" font-weight="200" opacity="0.64"><tspan x="0" y="0">Belgium</tspan></text>
+    <text id="Edit_profile" data-name="Edit profile" transform="translate(20 254)" fill="#fff" font-size="33" font-family="Raleway-Bold, Raleway" font-weight="700"><tspan x="0" y="0">Edit profile</tspan></text>
+    <text id="USERS" transform="translate(20 328)" font-size="40" font-family="RobotoMono-Bold, Roboto Mono" font-weight="700"><tspan x="0" y="0">USERS</tspan></text>
+    <text id="Log_out" data-name="Log out" transform="translate(20 197)" fill="#fff" font-size="33" font-family="Raleway-Bold, Raleway" font-weight="700"><tspan x="0" y="0">Log out</tspan></text>
+    <text id="Manage" transform="translate(20 394)" fill="#fff" font-size="33" font-family="Raleway-Bold, Raleway" font-weight="700"><tspan x="0" y="0">Manage</tspan></text>
+    <text id="New_User" data-name="New User" transform="translate(20 451)" fill="#fff" font-size="33" font-family="Raleway-Bold, Raleway" font-weight="700"><tspan x="0" y="0">New User</tspan></text>
+    <text id="COUNTRIES" transform="translate(20 525)" font-size="40" font-family="RobotoMono-Bold, Roboto Mono" font-weight="700"><tspan x="0" y="0">COUNTRIES</tspan></text>
+    <text id="Manage-2" data-name="Manage" transform="translate(20 591)" fill="#fff" font-size="33" font-family="Raleway-Bold, Raleway" font-weight="700"><tspan x="0" y="0">Manage</tspan></text>
+    <text id="New_Country" data-name="New Country" transform="translate(20 648)" fill="#fff" font-size="33" font-family="Raleway-Bold, Raleway" font-weight="700"><tspan x="0" y="0">New Country</tspan></text>
+    <text id="Account" transform="translate(20 131)" font-size="40" font-family="RobotoMono-Bold, Roboto Mono" font-weight="700"><tspan x="0" y="0">Account</tspan></text>
+    <text id="Flag:" transform="translate(960 139)" font-size="35" font-family="RobotoMono-Bold, Roboto Mono" font-weight="700"><tspan x="0" y="0">Flag:</tspan></text>
+    <g id="Rectangle_70" data-name="Rectangle 70" transform="translate(960 148)" fill="#fff" stroke="#707070" stroke-width="1">
+      <rect width="369" height="150" stroke="none"/>
+      <rect x="0.5" y="0.5" width="368" height="149" fill="none"/>
+    </g>
+    <text id="Flag" transform="translate(1114 230)" font-size="35" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Flag</tspan></text>
+    <line id="Line_2" data-name="Line 2" x2="130" y2="301" transform="translate(1244.5 278.5)" fill="none" stroke="#707070" stroke-width="1"/>
+    <text id="Dit_krijg_je_alleen_op_de_EditCountryPage_te_zien." data-name="Dit krijg je alleen op de
+ EditCountryPage te zien." transform="translate(1455 628)" font-size="35" font-family="SegoeUI, Segoe UI"><tspan x="-178.948" y="0">Dit krijg je alleen op de</tspan><tspan x="-192.731" y="47" xml:space="preserve"> EditCountryPage te zien.</tspan></text>
+  </g>
+</svg>
