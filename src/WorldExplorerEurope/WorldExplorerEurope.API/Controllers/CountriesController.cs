@@ -8,7 +8,7 @@ namespace WorldExplorerEurope.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class CountriesController : ControllerBase
     {
         // GET api/values
         [HttpGet]
