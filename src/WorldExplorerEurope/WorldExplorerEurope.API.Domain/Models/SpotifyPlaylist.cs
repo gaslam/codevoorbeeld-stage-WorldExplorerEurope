@@ -7,7 +7,7 @@ namespace WorldExplorerEurope.API.Domain
     {
         public Guid CountryId { get; set; }
 
-        // Can store multiple tracks via it's Songs.Tracks property
+        // Can store multiple tracks via it's Tracks property
         public SeveralTracks Songs { get; set; }
     }
 }
