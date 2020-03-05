@@ -6,7 +6,6 @@ namespace WorldExplorerEurope.API.Domain.Models
 {
     public class Favourites
     {
-        public Guid UserId { get; set; }
         public Guid CountryId { get; set; }
     }
 }
