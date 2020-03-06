@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace WorldExplorerEurope.API.Domain
+namespace WorldExplorerEurope.API.Domain.Models
 {
-    public class Country
+    public class Country : EntityBase
     {
         public string Name { get; set; }
         public string FlagUrl { get; set; }

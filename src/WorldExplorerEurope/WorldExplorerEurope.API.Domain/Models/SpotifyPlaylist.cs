@@ -1,9 +1,9 @@
 ﻿using SpotifyAPI.Web.Models;
 using System;
 
-namespace WorldExplorerEurope.API.Domain
+namespace WorldExplorerEurope.API.Domain.Models
 {
-    public class SpotifyPlaylist
+    public class SpotifyPlaylist : EntityBase
     {
         public Guid CountryId { get; set; }
 

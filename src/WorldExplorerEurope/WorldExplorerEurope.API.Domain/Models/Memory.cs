@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WorldExplorerEurope.API.Domain.Models
 {
-    public class Memory
+    public class Memory : EntityBase
     {
         public Guid CountryId { get; set; }
         public string FileName { get; set; }
