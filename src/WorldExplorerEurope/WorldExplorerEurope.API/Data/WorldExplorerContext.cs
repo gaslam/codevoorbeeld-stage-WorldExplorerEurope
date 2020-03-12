@@ -26,6 +26,19 @@ namespace WorldExplorerEurope.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<UserFavourites>().ToTable("UserMemories")
+                .HasKey(m => new { m.UserId, m.MemoryId });
+
+            modelBuilder.Entity<UserMemories>()
+                .HasOne(m => m.User)
+                .WithMany(m => m.Memories)
+                .HasForeignKey(m => m.UserId);
+
+            modelBuilder.Entity<UserMemories>()
+                .HasOne(m => m.Memory)
+                .WithMany(m => m.Memories)
+                .HasForeignKey(m => m.MemoryId);
+
             var countries = _restcountriesService.GetCountryData();
             var descriptions = _wikipediaService.GetDescription(countries).Result;
 
