@@ -23,6 +23,11 @@ namespace WorldExplorerEurope.API.Data
         }
 
         public DbSet<Country> Countries { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Favourite> Favourites { get; set; }
+        public DbSet<Memory> Memories { get; set; }
+        public DbSet<SpotifyPlaylist> SpotifyPlaylists { get; set; }
+        public DbSet<Wishlist> Wishlists { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
