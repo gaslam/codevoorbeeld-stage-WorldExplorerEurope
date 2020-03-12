@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -132,6 +134,26 @@ namespace WorldExplorerEurope.API.Data
                 new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = Guid.Parse("5adffe0f-9d91-4bcf-a638-eaafa0f36e5c"), PlaylistId = "5S1GVxkVbKXxoTV8DwBKGi" }, //Ukraine
                 new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = Guid.Parse("9412b49f-062d-46a1-bf54-9e7935715745"), PlaylistId = "1y7E5GXSac77FzesM2ASjx" } //United Kingdom
                 );
+
+            var hasher = new PasswordHasher<User>();
+
+            User user = new User
+            {
+                Id = Guid.Parse("a5311214-564f-4824-ba65-b57042349e49"),
+                FirstName = "Gaspard",
+                LastName = "Lammertyn",
+                BirthDate = Convert.ToDateTime("12/05/1998"),
+                Email = "gaspard.lammertyn@student.howest.be",
+                Nationality = "Belgium",
+                IsAdmin = true
+            };
+            user.Password = hasher.HashPassword(user, "t}F87)8GBaj<");
+
+            modelBuilder.Entity<User>().ToTable("Users")
+                .HasData(
+                    user
+                );
+                
         }
     }
 }
