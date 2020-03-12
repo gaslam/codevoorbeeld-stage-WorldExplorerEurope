@@ -26,7 +26,7 @@ namespace WorldExplorerEurope.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserFavourites>().ToTable("UserMemories")
+            modelBuilder.Entity<UserMemories>().ToTable("UserMemories")
                 .HasKey(m => new { m.UserId, m.MemoryId });
 
             modelBuilder.Entity<UserMemories>()
