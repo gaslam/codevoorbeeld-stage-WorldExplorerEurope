@@ -39,6 +39,19 @@ namespace WorldExplorerEurope.API.Data
                 .WithMany(m => m.Memories)
                 .HasForeignKey(m => m.MemoryId);
 
+            modelBuilder.Entity<UserFavourites>().ToTable("UserFavourites")
+                .HasKey(m => new { m.UserId, m.FavouriteId });
+
+            modelBuilder.Entity<UserFavourites>()
+                .HasOne(m => m.User)
+                .WithMany(m => m.Favourites)
+                .HasForeignKey(m => m.UserId);
+
+            modelBuilder.Entity<UserFavourites>()
+                .HasOne(m => m.Favourite)
+                .WithMany(m => m.Favourites)
+                .HasForeignKey(m => m.FavouriteId);
+
             var countries = _restcountriesService.GetCountryData();
             var descriptions = _wikipediaService.GetDescription(countries).Result;
 
