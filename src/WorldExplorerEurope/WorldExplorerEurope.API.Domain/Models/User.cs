@@ -16,6 +16,7 @@ namespace WorldExplorerEurope.API.Domain.Models
 
         public ICollection<UserMemories> Memories { get; set; }
         public ICollection<UserFavourites> Favourites { get; set; }
+        public ICollection<UserWishlists> Wishlists { get; set; }
 
     }
 }

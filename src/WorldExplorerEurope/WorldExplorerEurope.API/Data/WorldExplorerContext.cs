@@ -57,6 +57,17 @@ namespace WorldExplorerEurope.API.Data
                 .WithMany(m => m.Favourites)
                 .HasForeignKey(m => m.FavouriteId);
 
+            modelBuilder.Entity<UserWishlists>()
+                .HasOne(m => m.User)
+                .WithMany(m => m.Wishlists)
+                .HasForeignKey(m => m.UserId);
+
+            modelBuilder.Entity<UserWishlists>()
+                .HasOne(m => m.Wishlist)
+                .WithMany(m => m.Wishlists)
+                .HasForeignKey(m => m.WishlistId);
+
+
             var countries = _restcountriesService.GetCountryData();
             var descriptions = _wikipediaService.GetDescription(countries).Result;
 
