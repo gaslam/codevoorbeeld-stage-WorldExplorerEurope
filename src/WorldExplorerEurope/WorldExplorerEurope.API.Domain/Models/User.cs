@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WorldExplorerEurope.API.Domain.Models
 {
-    public class User
+    public class User : EntityBase
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -13,6 +13,8 @@ namespace WorldExplorerEurope.API.Domain.Models
         public DateTime BirthDate { get; set; }
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
+
+        public ICollection<UserMemories> Memories { get; set; }
 
     }
 }

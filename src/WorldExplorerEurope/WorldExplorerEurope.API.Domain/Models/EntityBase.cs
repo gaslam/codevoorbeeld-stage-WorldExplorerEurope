@@ -4,9 +4,8 @@ using System.Text;
 
 namespace WorldExplorerEurope.API.Domain.Models
 {
-    public class Wishlist : EntityBase
+    public abstract class EntityBase
     {
-        public Guid UserId { get; set; }
-        public Guid CountryId { get; set; }
+        public Guid Id { get; set; }
     }
 }
