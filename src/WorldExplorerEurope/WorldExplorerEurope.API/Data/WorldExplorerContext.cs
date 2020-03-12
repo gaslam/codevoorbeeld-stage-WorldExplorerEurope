@@ -23,6 +23,11 @@ namespace WorldExplorerEurope.API.Data
         }
 
         public DbSet<Country> Countries { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Favourite> Favourites { get; set; }
+        public DbSet<Memory> Memories { get; set; }
+        public DbSet<SpotifyPlaylist> SpotifyPlaylists { get; set; }
+        public DbSet<Wishlist> Wishlists { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,6 +43,30 @@ namespace WorldExplorerEurope.API.Data
                 .HasOne(m => m.Memory)
                 .WithMany(m => m.Memories)
                 .HasForeignKey(m => m.MemoryId);
+
+            modelBuilder.Entity<UserFavourites>().ToTable("UserFavourites")
+                .HasKey(m => new { m.UserId, m.FavouriteId });
+
+            modelBuilder.Entity<UserFavourites>()
+                .HasOne(m => m.User)
+                .WithMany(m => m.Favourites)
+                .HasForeignKey(m => m.UserId);
+
+            modelBuilder.Entity<UserFavourites>()
+                .HasOne(m => m.Favourite)
+                .WithMany(m => m.Favourites)
+                .HasForeignKey(m => m.FavouriteId);
+
+            modelBuilder.Entity<UserWishlists>()
+                .HasOne(m => m.User)
+                .WithMany(m => m.Wishlists)
+                .HasForeignKey(m => m.UserId);
+
+            modelBuilder.Entity<UserWishlists>()
+                .HasOne(m => m.Wishlist)
+                .WithMany(m => m.Wishlists)
+                .HasForeignKey(m => m.WishlistId);
+
 
             var countries = _restcountriesService.GetCountryData();
             var descriptions = _wikipediaService.GetDescription(countries).Result;

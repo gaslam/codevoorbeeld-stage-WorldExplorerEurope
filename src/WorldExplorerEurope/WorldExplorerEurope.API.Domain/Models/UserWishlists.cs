@@ -4,11 +4,11 @@ using System.Text;
 
 namespace WorldExplorerEurope.API.Domain.Models
 {
-    public class UserFavourites
+    public class UserWishlists : EntityBase
     {
         public Guid UserId { get; set; }
-        public Guid FavouriteId { get; set; }
+        public Guid WishlistId { get; set; }
         public User User { get; set; }
-        public Favourite Favourite { get; set; }
+        public Wishlist Wishlist { get; set; }
     }
 }
