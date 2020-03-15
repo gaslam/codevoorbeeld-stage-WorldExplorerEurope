@@ -11,7 +11,7 @@ namespace WorldExplorerEurope.API.Repositories
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
         private readonly WorldExplorerContext _worldExplorerContext;
-        public Repository(WorldExplorerContext worldExplorerContext) : base(worldExplorerContext)
+        public Repository(WorldExplorerContext worldExplorerContext)
         {
             _worldExplorerContext = worldExplorerContext;
         }
