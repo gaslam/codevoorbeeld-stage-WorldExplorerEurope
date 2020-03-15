@@ -7,6 +7,7 @@ namespace WorldExplorerEurope.API.Domain.DTO
     public class SpotifyPlaylistDto
     {
         public Guid Id { get; set; }
+        public Guid CountryId { get; set; }
         public string playlistId  { get; set; }
     }
 }
