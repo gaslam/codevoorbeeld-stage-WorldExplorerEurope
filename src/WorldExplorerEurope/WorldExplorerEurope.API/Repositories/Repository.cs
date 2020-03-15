@@ -13,7 +13,7 @@ namespace WorldExplorerEurope.API.Repositories
         private readonly WorldExplorerContext _worldExplorerContext;
         public Repository(WorldExplorerContext worldExplorerContext)
         {
-            _worldExplorerContext = worldExplorerContext
+            _worldExplorerContext = worldExplorerContext;
         }
     }
 }
