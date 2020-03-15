@@ -9,4 +9,8 @@
     <PackageReference Include="SpotifyAPI.Web.Auth" Version="4.2.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\" />
+  </ItemGroup>
+
 </Project>
