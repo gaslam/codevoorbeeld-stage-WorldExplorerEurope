@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WorldExplorerEurope.API.Domain.DTO.Base
+namespace WorldExplorerEurope.API.Domain.DTO.Bases
 {
     public abstract class DtoBaseId
     {
