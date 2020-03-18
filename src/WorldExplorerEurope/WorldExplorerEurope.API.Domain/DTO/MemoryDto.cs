@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WorldExplorerEurope.API.Domain.DTO.Bases;
 
 namespace WorldExplorerEurope.API.Domain.DTO
 {
-    public class MemoryDto
+    public class MemoryDto : DtoBaseId
     {
-        public Guid Id { get; set; }
         public string FileName { get; set; }
     }
 }

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WorldExplorerEurope.API.Domain.DTO.Bases;
 
 namespace WorldExplorerEurope.API.Domain.DTO
 {
-    public class SpotifyPlaylistDto
+    public class SpotifyPlaylistDto : DtoBaseCountry
     {
-        public Guid Id { get; set; }
-        public Guid CountryId { get; set; }
         public string playlistId  { get; set; }
     }
 }

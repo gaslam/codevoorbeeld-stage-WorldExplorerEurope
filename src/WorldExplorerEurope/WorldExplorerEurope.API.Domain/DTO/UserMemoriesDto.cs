@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WorldExplorerEurope.API.Domain.DTO.Bases;
 
 namespace WorldExplorerEurope.API.Domain.DTO
 {
-    public class UserMemoriesDto
+    public class UserMemoriesDto : DtoBaseUser
     {
-        public Guid Id { get; set; }
-        public Guid UserId { get; set; }
         public ICollection<MemoryDto> Memories { get; set; }
     }
 }
