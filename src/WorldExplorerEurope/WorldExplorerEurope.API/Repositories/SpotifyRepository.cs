@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WorldExplorerEurope.API.Data;
 using WorldExplorerEurope.API.Domain.Models;
+using WorldExplorerEurope.API.Repositories.Base;
 
 namespace WorldExplorerEurope.API.Repositories
 {

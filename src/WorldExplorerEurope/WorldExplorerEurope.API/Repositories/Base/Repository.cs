@@ -26,6 +26,11 @@ namespace WorldExplorerEurope.API.Repositories.Base
             return _worldExplorerContext.Set<T>().AsNoTracking();
         }
 
+        public async Task<IEnumerable<T>> ListAll()
+        {
+            return _worldExplorerContext.Set<T>().ToList();
+        }
+
         /* <summary>
          Finds the current Entity via it's Id.
          </summary> */
