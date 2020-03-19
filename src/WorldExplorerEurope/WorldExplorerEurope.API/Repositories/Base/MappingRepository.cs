@@ -7,12 +7,13 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using WorldExplorerEurope.API.Data;
+using WorldExplorerEurope.API.Domain.DTO.Bases;
 using WorldExplorerEurope.API.Domain.Interfaces;
 using WorldExplorerEurope.API.Domain.Models;
 
 namespace WorldExplorerEurope.API.Repositories.Base
 {
-    public class MappingRepository<T, Dto> : Repository<T>, IMappingRepository<Dto> where T : EntityBase where Dto : EntityBase
+    public class MappingRepository<T, Dto> : Repository<T>, IMappingRepository<Dto> where T : EntityBase where Dto : DtoBaseId
     {
         protected readonly IMapper _mapper;
 

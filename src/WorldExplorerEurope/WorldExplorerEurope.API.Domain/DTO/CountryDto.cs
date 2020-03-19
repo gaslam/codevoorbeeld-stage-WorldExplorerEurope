@@ -6,7 +6,7 @@ using WorldExplorerEurope.API.Domain.Models;
 
 namespace WorldExplorerEurope.API.Domain.DTO
 {
-    public class CountryDto : EntityBase
+    public class CountryDto : DtoBaseId
     {
         public string Name { get; set; }
         public Uri FlagUrl { get; set; }

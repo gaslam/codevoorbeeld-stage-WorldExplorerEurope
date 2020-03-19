@@ -6,7 +6,7 @@ using WorldExplorerEurope.API.Domain.Models;
 
 namespace WorldExplorerEurope.API.Domain.DTO
 {
-    public class SpotifyCountryDto : EntityBase
+    public class SpotifyCountryDto : DtoBaseId
     {
         public Guid CountryId { get; set; }
         public string Name { get; set; }

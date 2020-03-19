@@ -6,7 +6,7 @@ using WorldExplorerEurope.API.Domain.Models;
 
 namespace WorldExplorerEurope.API.Domain.DTO
 {
-    public class UserDto : EntityBase
+    public class UserDto : DtoBaseId
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
