@@ -10,7 +10,7 @@ using WorldExplorerEurope.API.Repositories.Base;
 
 namespace WorldExplorerEurope.API.Repositories
 {
-    public class SpotifyRepository : MappingRepository<SpotifyPlaylist, SpotifyCountryDto>
+    public class SpotifyRepository : MappingRepository<SpotifyPlaylist, SpotifyPlaylistDto>
     {
         private readonly WorldExplorerContext _worldExplorerContext;
         public SpotifyRepository(WorldExplorerContext worldExplorerContext, IMapper mapper) : base(worldExplorerContext, mapper)

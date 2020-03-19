@@ -31,10 +31,6 @@
     <ProjectReference Include="..\WorldExplorerEurope.API.Domain\WorldExplorerEurope.API.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\Base\" />
-  </ItemGroup>
-
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="http://json.schemastore.org/band-manifest" /></VisualStudio></ProjectExtensions>
 
 </Project>
