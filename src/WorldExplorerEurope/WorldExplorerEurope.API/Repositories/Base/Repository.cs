@@ -12,7 +12,7 @@ namespace WorldExplorerEurope.API.Repositories.Base
 {
     public class Repository<T> : IRepository<T> where T : EntityBase
     {
-        private readonly WorldExplorerContext _worldExplorerContext;
+        protected readonly WorldExplorerContext _worldExplorerContext;
         public Repository(WorldExplorerContext worldExplorerContext)
         {
             _worldExplorerContext = worldExplorerContext;

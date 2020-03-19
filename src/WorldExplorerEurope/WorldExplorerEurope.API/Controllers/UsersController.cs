@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WorldExplorerEurope.API.Controllers.Base;
+using WorldExplorerEurope.API.Domain.DTO;
 using WorldExplorerEurope.API.Domain.Interfaces;
 using WorldExplorerEurope.API.Domain.Models;
 
@@ -11,13 +13,13 @@ namespace WorldExplorerEurope.API.Controllers
 {
     [Route("api/countries/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : ControllerDtoCrudBase<UserDto, IMappingRepository<UserDto>>
     {
-        private readonly IRepository<User> _userRepo;
+        private readonly IMappingRepository<UserDto> _userMappingRepo;
 
-        public UsersController(IRepository<User> userRepo)
+        public UsersController(IMappingRepository<UserDto> userMappingRepo) : base(userMappingRepo)
         {
-            _userRepo = userRepo;
+            _userMappingRepo = userMappingRepo;
         }
     }
 }

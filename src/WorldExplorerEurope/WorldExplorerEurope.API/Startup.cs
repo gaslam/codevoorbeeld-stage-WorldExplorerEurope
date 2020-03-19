@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +14,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using WorldExplorerEurope.API.Data;
 using WorldExplorerEurope.API.Repositories;
+using WorldExplorerEurope.API.Domain.Interfaces;
+using WorldExplorerEurope.API.Domain.Models;
+using WorldExplorerEurope.API.Domain.DTO;
 
 namespace WorldExplorerEurope.API
 {
@@ -31,7 +35,15 @@ namespace WorldExplorerEurope.API
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<WorldExplorerContext>(options => options
                 .UseSqlServer(Configuration.GetConnectionString("WorldExplorerService")));
-            services.AddScoped<UserRepository>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddScoped<IRepository<User>, UserRepository>();
+            services.AddScoped<IMappingRepository<UserDto>, UserRepository>();
+            services.AddScoped<IRepository<Country>, CountryRepository>();
+            services.AddScoped<IMappingRepository<CountryDto>, CountryRepository>();
+            services.AddScoped<IRepository<SpotifyPlaylist>, SpotifyRepository>();
+            services.AddScoped<IMappingRepository<SpotifyPlaylistDto>, SpotifyRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
