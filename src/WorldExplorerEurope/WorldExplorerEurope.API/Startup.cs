@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using WorldExplorerEurope.API.Data;
+using WorldExplorerEurope.API.Repositories;
 
 namespace WorldExplorerEurope.API
 {
@@ -30,6 +31,7 @@ namespace WorldExplorerEurope.API
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<WorldExplorerContext>(options => options
                 .UseSqlServer(Configuration.GetConnectionString("WorldExplorerService")));
+            services.AddScoped<UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,8 +47,12 @@ namespace WorldExplorerEurope.API
                 app.UseHsts();
             }
 
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            endpoints.MapControllers());
+
             app.UseHttpsRedirection();
-            app.UseMvc();
         }
     }
 }

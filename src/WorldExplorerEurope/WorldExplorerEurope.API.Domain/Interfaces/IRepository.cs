@@ -12,6 +12,7 @@ namespace WorldExplorerEurope.API.Domain.Interfaces
     {
         Task<T> GetById(Guid Id);
         IQueryable<T> GetAll();
+        Task<IEnumerable<T>> ListAll();
         IQueryable<T> GetSearchResults(Expression<Func<T, bool>> predicate);
         Task<T> Add(T Entity);
         Task<T> Update(T Entity);
