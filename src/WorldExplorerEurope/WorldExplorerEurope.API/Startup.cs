@@ -17,6 +17,7 @@ using WorldExplorerEurope.API.Repositories;
 using WorldExplorerEurope.API.Domain.Interfaces;
 using WorldExplorerEurope.API.Domain.Models;
 using WorldExplorerEurope.API.Domain.DTO;
+using Microsoft.OpenApi.Models;
 
 namespace WorldExplorerEurope.API
 {
@@ -44,6 +45,11 @@ namespace WorldExplorerEurope.API
             services.AddScoped<IMappingRepository<CountryDto>, CountryRepository>();
             services.AddScoped<IRepository<SpotifyPlaylist>, SpotifyRepository>();
             services.AddScoped<IMappingRepository<SpotifyPlaylistDto>, SpotifyRepository>();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WorldExplorer API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +71,13 @@ namespace WorldExplorerEurope.API
             endpoints.MapControllers());
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "WorldExplorer API");
+                c.RoutePrefix = string.Empty;
+            });
         }
     }
 }
