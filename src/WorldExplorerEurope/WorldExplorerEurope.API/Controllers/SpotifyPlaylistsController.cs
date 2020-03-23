@@ -31,7 +31,7 @@ namespace WorldExplorerEurope.API.Controllers
          </Summary>
          */
         [HttpGet("check")]
-        private async Task<IActionResult> CheckToken()
+        public async Task<IActionResult> CheckToken()
         {
             bool check = _spotify.CheckClientCredentials();
             if(check == false)
