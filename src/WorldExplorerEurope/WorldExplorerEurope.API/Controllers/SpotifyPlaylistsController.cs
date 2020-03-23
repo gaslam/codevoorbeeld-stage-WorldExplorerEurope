@@ -36,7 +36,7 @@ namespace WorldExplorerEurope.API.Controllers
         [HttpGet("check")]
         public async Task<IActionResult> CheckToken()
         {
-            bool check = _spotify.CheckClientCredentials();
+            bool check = _spotify.CheckClientCredentials().Result;
             if(check == false)
             {
                 return BadRequest("Credentials not valid!!");
@@ -58,7 +58,7 @@ namespace WorldExplorerEurope.API.Controllers
                 {
                     CountryId = playlist.CountryId,
                     CountryName = country.Name,
-                    Url = new Uri(spotifyPlaylist.Uri),
+                    Url = new Uri(spotifyPlaylist.Result.Uri),
                     PlaylistId = playlist.PlaylistId,
                 });
             }
@@ -66,13 +66,13 @@ namespace WorldExplorerEurope.API.Controllers
             {
                 var spotifyPlaylistTracks = _spotify.GetTracks(playlist.PlaylistId);
                 int number = 1;
-                for(int i = 0; i > spotifyPlaylistTracks.Tracks.Count; i++)
+                for(int i = 0; i > spotifyPlaylistTracks.Result.Tracks.Count; i++)
                 {
                     playlist.Top5Tracks.Add(new SpotifyBasicTracksDto
                     {
-                        Name = spotifyPlaylistTracks.Tracks[i].Name,
+                        Name = spotifyPlaylistTracks.Result.Tracks[i].Name,
                         Number = number,
-                        PreviewUrl = new Uri(spotifyPlaylistTracks.Tracks[i].PreviewUrl)
+                        PreviewUrl = new Uri(spotifyPlaylistTracks.Result.Tracks[i].PreviewUrl)
                     });
                 }
             }

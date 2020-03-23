@@ -1,5 +1,6 @@
 ﻿using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
+using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,20 @@ namespace WorldExplorerEurope.API.Services
     {
         //Contains all the code for getting the spotify API data.
         private static SpotifyWebAPI _spotify;
-        private const string clientId = "";
-        private const string clientSecret = "";
+        private const string clientId = "e1e36ceac985420e9c65c12f450045da";
+        private const string clientSecret = "5d151d54fa7a4be9a5d473201f072ea5";
         // Is used for to create the tokens to access the API.
         private static Token token = new Token();
         //Is Used to get the credentials of the application for the spotify API.
         private static CredentialsAuth credentials;
         public Spotify()
         {
-            AccessAPI();
+            CallAPI();
+        }
+
+        private async void CallAPI()
+        {
+            await AccessAPI();
         }
 
         /*
@@ -30,7 +36,7 @@ namespace WorldExplorerEurope.API.Services
             This will let us access the Spotify playlists in (a later method).
          </Summary> 
         */
-        private async void AccessAPI()
+        private async Task<SpotifyWebAPI> AccessAPI()
         {
             credentials = new CredentialsAuth(clientId, clientSecret);
             token = await credentials.GetToken();
@@ -39,6 +45,7 @@ namespace WorldExplorerEurope.API.Services
                 AccessToken = token.AccessToken,
                 TokenType = token.TokenType
             };
+            return _spotify;
         }
 
         /*
@@ -48,13 +55,13 @@ namespace WorldExplorerEurope.API.Services
             AccessAPI will be called again.
          </Summary> 
         */
-        public bool CheckClientCredentials()
+        public async Task<bool> CheckClientCredentials()
         {
             try
             {
                 if (token.IsExpired())
                 {
-                    AccessAPI();
+                    await AccessAPI();
                 }
             }
             catch
@@ -64,17 +71,27 @@ namespace WorldExplorerEurope.API.Services
             return true;
         }
 
-        public SeveralTracks GetTracks(string id)
+        public async Task<SeveralTracks> GetTracks(string id)
         {
+            if (token.IsExpired())
+            {
+                await AccessAPI();
+            }
             var spotifyPlaylist = _spotify.GetPlaylistTracks("", id, 1000, 0, "BE");
             SeveralTracks top5Tracks = new SeveralTracks();
             spotifyPlaylist.Items.ForEach(track => top5Tracks.Tracks.Add(track.Track));
             return top5Tracks;
         }
 
-        public FullPlaylist GetPlaylist(string id)
+        public async Task<SimplePlaylist> GetPlaylist(string country)
         {
-            return _spotify.GetPlaylist("", id, "BE");
+            if (token.IsExpired())
+            {
+                await AccessAPI();
+            }
+            var playlist = _spotify.SearchItems($"{country}", SearchType.Playlist, 1, 0, "BE");
+
+            return playlist.Playlists.Items[0];
         }
     }
 }
