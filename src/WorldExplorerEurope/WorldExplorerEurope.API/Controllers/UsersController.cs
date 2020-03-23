@@ -39,5 +39,26 @@ namespace WorldExplorerEurope.API.Controllers
             }
             return Ok(userDto);
         }
+
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllBasicUsers()
+        {
+            var users = _userMappingRepo.GetAll();
+            List<UserBasicDto> basicUsers = new List<UserBasicDto>();
+            foreach (var user in users)
+            {
+                basicUsers.Add(new UserBasicDto
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    Nationality = user.Nationality,
+                    BirthDate = user.BirthDate
+                });
+            }
+
+            return Ok(basicUsers);
+        }
     }
 }
