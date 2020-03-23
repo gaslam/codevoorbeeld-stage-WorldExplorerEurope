@@ -56,12 +56,12 @@ namespace WorldExplorerEurope.API.Services
                 {
                     AccessAPI();
                 }
-                return true;
             }
             catch
             {
                 return false;
             }
+            return true;
         }
     }
 }
