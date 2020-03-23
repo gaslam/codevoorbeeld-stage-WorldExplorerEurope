@@ -8,6 +8,7 @@ using WorldExplorerEurope.API.Controllers.Base;
 using WorldExplorerEurope.API.Domain.DTO;
 using WorldExplorerEurope.API.Domain.Interfaces;
 using WorldExplorerEurope.API.Domain.Models;
+using WorldExplorerEurope.API.Services;
 
 namespace WorldExplorerEurope.API.Controllers
 {
@@ -16,10 +17,12 @@ namespace WorldExplorerEurope.API.Controllers
     public class SpotifyPlaylistsController : ControllerDtoCrudBase<SpotifyPlaylistDto, IMappingRepository<SpotifyPlaylistDto>>
     {
         private readonly IMappingRepository<SpotifyPlaylistDto> _playlistMappingRepo;
+        private static Spotify _spotify;
 
         public SpotifyPlaylistsController(IMappingRepository<SpotifyPlaylistDto> playlistMappingRepo) : base(playlistMappingRepo)
         {
             _playlistMappingRepo = playlistMappingRepo;
+            _spotify = new Spotify();
         }
     }
 }
