@@ -63,5 +63,18 @@ namespace WorldExplorerEurope.API.Services
             }
             return true;
         }
+
+        public SeveralTracks GetTracks(string id)
+        {
+            var spotifyPlaylist = _spotify.GetPlaylistTracks("", id, 1000, 0, "BE");
+            SeveralTracks top5Tracks = new SeveralTracks();
+            spotifyPlaylist.Items.ForEach(track => top5Tracks.Tracks.Add(track.Track));
+            return top5Tracks;
+        }
+
+        public FullPlaylist GetPlaylist(string id)
+        {
+            return _spotify.GetPlaylist("", id, "BE");
+        }
     }
 }

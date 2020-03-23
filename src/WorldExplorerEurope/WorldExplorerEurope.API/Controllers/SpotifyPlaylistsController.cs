@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WorldExplorerEurope.API.Controllers.Base;
+using WorldExplorerEurope.API.Data;
 using WorldExplorerEurope.API.Domain.DTO;
 using WorldExplorerEurope.API.Domain.Interfaces;
 using WorldExplorerEurope.API.Domain.Models;
@@ -18,11 +19,13 @@ namespace WorldExplorerEurope.API.Controllers
     {
         private readonly IMappingRepository<SpotifyPlaylistDto> _playlistMappingRepo;
         private static Spotify _spotify;
+        private readonly WorldExplorerContext _worldExplorerContext;
 
-        public SpotifyPlaylistsController(IMappingRepository<SpotifyPlaylistDto> playlistMappingRepo) : base(playlistMappingRepo)
+        public SpotifyPlaylistsController(IMappingRepository<SpotifyPlaylistDto> playlistMappingRepo, WorldExplorerContext worldExplorerContext) : base(playlistMappingRepo)
         {
             _playlistMappingRepo = playlistMappingRepo;
             _spotify = new Spotify();
+            _worldExplorerContext = worldExplorerContext;
         }
         /*
             <Summary>
@@ -39,6 +42,41 @@ namespace WorldExplorerEurope.API.Controllers
                 return BadRequest("Credentials not valid!!");
             }
             return Ok();
+        }
+
+        [HttpGet("all")]
+        public async Task<IActionResult> GetBasicSpotifyPlaylists()
+        {
+            var playlists = _mappingRepository.GetAll();
+            List<SpotifyBasicDto> spotifyBasicDtos = new List<SpotifyBasicDto>();
+            foreach (var playlist in playlists)
+            {
+                var spotifyPlaylist = _spotify.GetPlaylist(playlist.PlaylistId);
+                var spotifyPlaylistTracks = _spotify.GetTracks(playlist.PlaylistId);
+                var country = _worldExplorerContext.Countries.FirstOrDefault(m => m.Id == playlist.CountryId);
+                spotifyBasicDtos.Add( new SpotifyBasicDto
+                {
+                    CountryId = playlist.CountryId,
+                    CountryName = country.Name,
+                    Url = new Uri(spotifyPlaylist.Uri),
+                    PlaylistId = playlist.PlaylistId,
+                });
+            }
+            foreach(var playlist in spotifyBasicDtos)
+            {
+                var spotifyPlaylistTracks = _spotify.GetTracks(playlist.PlaylistId);
+                int number = 1;
+                for(int i = 0; i > spotifyPlaylistTracks.Tracks.Count; i++)
+                {
+                    playlist.Top5Tracks.Add(new SpotifyBasicTracksDto
+                    {
+                        Name = spotifyPlaylistTracks.Tracks[i].Name,
+                        Number = number,
+                        PreviewUrl = new Uri(spotifyPlaylistTracks.Tracks[i].PreviewUrl)
+                    });
+                }
+            }
+            return Ok(playlists);
         }
     }
 }
