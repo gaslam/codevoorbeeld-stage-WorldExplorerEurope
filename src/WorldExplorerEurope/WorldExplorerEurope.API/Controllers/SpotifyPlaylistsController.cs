@@ -24,5 +24,21 @@ namespace WorldExplorerEurope.API.Controllers
             _playlistMappingRepo = playlistMappingRepo;
             _spotify = new Spotify();
         }
+        /*
+         <Summary>
+            Checks if token for Spotify API is valid.
+            For more info right click CheckClientCredentials and choose Go to Definition
+         </Summary>
+         */
+        [HttpGet("check")]
+        private async Task<IActionResult> CheckToken()
+        {
+            bool check = _spotify.CheckClientCredentials();
+            if(check == false)
+            {
+                return BadRequest("Could not validate credentials");
+            }
+            return Ok();
+        }
     }
 }

@@ -48,13 +48,20 @@ namespace WorldExplorerEurope.API.Services
             AccessAPI will be called again.
          </Summary> 
         */
-        public void CheckClientCredentials()
+        public bool CheckClientCredentials()
         {
-
-            if (token.IsExpired())
+            try
             {
-                AccessAPI();
+                if (token.IsExpired())
+                {
+                    AccessAPI();
+                }
             }
+            catch
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
