@@ -14,6 +14,8 @@ namespace WorldExplorerEurope.API.Services.AutoMapper.Profiles
         {
             CreateMap<Country, CountryDto>()
                 .ForMember(dest => dest.FlagUrl, opt => opt.MapFrom(src => src.Flag));
+            CreateMap<CountryDto, Country>()
+                .ForMember(dest => dest.Flag, opt => opt.MapFrom(src => src.FlagUrl));
         }
     }
 }

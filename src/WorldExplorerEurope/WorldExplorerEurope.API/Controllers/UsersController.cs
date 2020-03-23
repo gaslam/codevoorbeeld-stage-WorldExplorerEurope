@@ -23,7 +23,7 @@ namespace WorldExplorerEurope.API.Controllers
             _userMappingRepo = userMappingRepo;
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<IActionResult> login([FromBody]UserDto userDto)
         {
             var users = _userMappingRepo.GetAll();

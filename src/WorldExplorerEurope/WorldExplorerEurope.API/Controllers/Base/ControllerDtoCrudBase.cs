@@ -35,7 +35,7 @@ namespace WorldExplorerEurope.API.Controllers.Base
             return Ok(dto);
         }
 
-        [HttpPost("add/{id}")]
+        [HttpPost]
         public async Task<IActionResult> Add([FromBody]Dto dto)
         {
             if (!ModelState.IsValid)
