@@ -24,20 +24,20 @@ namespace WorldExplorerEurope.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> login([FromBody]UserDto userDto)
+        public async Task<IActionResult> login([FromBody]UserLoginDto userLoginDto)
         {
             var users = _userMappingRepo.GetAll();
-            var user = users.FirstOrDefault(m => m.Email == userDto.Email);
+            var user = users.FirstOrDefault(m => m.Email == userLoginDto.Email);
             if (user == null)
             {
                 return NotFound("User not found, enter valid credentials!!!");
             }
-            var passwordHasher = new PasswordHasher<UserDto>();
-            if (passwordHasher.VerifyHashedPassword(userDto, user.Password, userDto.Password) == PasswordVerificationResult.Failed)
+            var passwordHasher = new PasswordHasher<UserLoginDto>();
+            if (passwordHasher.VerifyHashedPassword(userLoginDto, user.Password, userLoginDto.Password) == PasswordVerificationResult.Failed)
             {
                 return BadRequest("Password Incorrect!!");
             }
-            return Ok(userDto);
+            return Ok(user);
         }
     }
 }
