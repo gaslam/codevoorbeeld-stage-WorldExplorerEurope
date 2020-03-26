@@ -14,12 +14,9 @@ namespace WorldExplorerEurope.API.Data
     public class WorldExplorerContext : DbContext
     {
         private readonly RestcountriesService _restcountriesService;
-        private readonly WikipediaService _wikipediaService;
-
         public WorldExplorerContext(DbContextOptions<WorldExplorerContext> options) : base(options)
         {
             _restcountriesService = new RestcountriesService();
-            _wikipediaService = new WikipediaService();
         }
 
         public DbSet<Country> Countries { get; set; }
@@ -69,7 +66,6 @@ namespace WorldExplorerEurope.API.Data
 
 
             var countries = _restcountriesService.GetCountryData();
-            var descriptions = _wikipediaService.GetDescription(countries).Result;
 
             #region countries
 
