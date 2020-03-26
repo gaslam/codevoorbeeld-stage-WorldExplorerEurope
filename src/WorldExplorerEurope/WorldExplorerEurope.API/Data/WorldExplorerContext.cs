@@ -146,7 +146,7 @@ namespace WorldExplorerEurope.API.Data
             #region SpotifyPlaylists
             modelBuilder.Entity<SpotifyPlaylist>().ToTable("CountrySpotifyPlaylist")
                 .HasData(
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[0], Searchterm = $"{countries[0].demonym} music" }, //Åland_Islands
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[0], Searchterm = $"{countries[14].demonym} music" }, //Åland_Islands
                 new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[1], Searchterm = $"{countries[1].demonym} music" }, //Albania
                 new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[3], Searchterm = $"{countries[3].demonym} music" }, //Austria
                 new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[4], Searchterm = $"{countries[4].demonym} music" }, //Belarus
@@ -184,7 +184,7 @@ namespace WorldExplorerEurope.API.Data
                 new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[43], Searchterm = $"{countries[43].demonym} music" }, //San Marino
                 new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[44], Searchterm = $"{countries[44].demonym} music" }, //Serbia
                 new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[45], Searchterm = $"{countries[45].demonym} music" }, //Slovakia
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[47], Searchterm = $"{countries[47].demonym} music" }, //Spain
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[47], Searchterm = $"{countries[48].demonym} music" }, //Spain
                 new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[48], Searchterm = $"{countries[48].demonym} music" }, //Svalbard And Jan Mayen
                 new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[49], Searchterm = $"{countries[49].demonym} music" }, //Sweden
                 new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[50], Searchterm = $"{countries[50].demonym} music" }, //Switzerland
