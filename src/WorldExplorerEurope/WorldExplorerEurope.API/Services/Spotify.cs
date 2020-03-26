@@ -83,13 +83,13 @@ namespace WorldExplorerEurope.API.Services
             return top5Tracks;
         }
 
-        public async Task<SimplePlaylist> GetPlaylist(string country)
+        public async Task<SimplePlaylist> GetPlaylist(string searchterm)
         {
             if (token.IsExpired())
             {
                 await AccessAPI();
             }
-            var playlist = _spotify.SearchItems($"{country}", SearchType.Playlist, 1, 0, "BE");
+            var playlist = _spotify.SearchItems($"{searchterm}", SearchType.Playlist, 1, 0, "BE");
 
             return playlist.Playlists.Items[0];
         }
