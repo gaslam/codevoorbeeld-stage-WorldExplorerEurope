@@ -7,7 +7,7 @@ namespace WorldExplorerEurope.API.Domain.DTO
 {
     public class SpotifyTracksDto
     {
-        public string PlaylistId  { get; set; }
+        public string Searchterm  { get; set; }
 
         //Contains the tracks from Spotify via it's .Tracks property
         public SeveralTracks PlaylistTracks { get; set; }

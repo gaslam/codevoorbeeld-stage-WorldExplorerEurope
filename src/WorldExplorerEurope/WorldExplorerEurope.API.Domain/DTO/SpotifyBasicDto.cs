@@ -9,7 +9,7 @@ namespace WorldExplorerEurope.API.Domain.DTO
     {
         public Guid CountryId { get; set; }
         public string CountryName { get; set; }
-        public string PlaylistId { get; set; }
+        public string Searchterm { get; set; }
         public List<SpotifyBasicTracksDto> Top5Tracks { get; set; }
         public Uri Url { get; set; }
     }

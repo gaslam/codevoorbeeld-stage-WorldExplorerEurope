@@ -51,20 +51,20 @@ namespace WorldExplorerEurope.API.Controllers
             List<SpotifyBasicDto> spotifyBasicDtos = new List<SpotifyBasicDto>();
             foreach (var playlist in playlists)
             {
-                var spotifyPlaylist = _spotify.GetPlaylist(playlist.PlaylistId);
-                var spotifyPlaylistTracks = _spotify.GetTracks(playlist.PlaylistId);
+                var spotifyPlaylist = _spotify.GetPlaylist(playlist.Searchterm);
+                var spotifyPlaylistTracks = _spotify.GetTracks(playlist.Searchterm);
                 var country = _worldExplorerContext.Countries.FirstOrDefault(m => m.Id == playlist.CountryId);
                 spotifyBasicDtos.Add( new SpotifyBasicDto
                 {
                     CountryId = playlist.CountryId,
                     CountryName = country.Name,
                     Url = new Uri(spotifyPlaylist.Result.Uri),
-                    PlaylistId = playlist.PlaylistId,
+                    Searchterm = playlist.Searchterm,
                 });
             }
             foreach(var playlist in spotifyBasicDtos)
             {
-                var spotifyPlaylistTracks = _spotify.GetTracks(playlist.PlaylistId);
+                var spotifyPlaylistTracks = _spotify.GetTracks(playlist.Searchterm);
                 int number = 1;
                 for(int i = 0; i > spotifyPlaylistTracks.Result.Tracks.Count; i++)
                 {

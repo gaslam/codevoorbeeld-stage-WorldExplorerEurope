@@ -142,53 +142,54 @@ namespace WorldExplorerEurope.API.Data
                 );
             #endregion
 
+            //I wanted find results with a playlistId, but it's not possible. So instead, I went with a searchterm.
             #region SpotifyPlaylists
             modelBuilder.Entity<SpotifyPlaylist>().ToTable("CountrySpotifyPlaylist")
                 .HasData(
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[0], PlaylistId ="2CusBjVWAtRWy0L5BfmikW" }, //Åland_Islands
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[1], PlaylistId ="7l0CFkcQuUzGolpc36QMIC" }, //Albania
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[3], PlaylistId ="53lWeMXMoJ2wWUS1nYnBgl" }, //Austria
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[4], PlaylistId ="5Gu9Cbjqk2MAXo1yY09lCk" }, //Belarus
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[5], PlaylistId ="50AOO2iX1bfP12JDe2cSAN" }, //Belgium
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[7], PlaylistId ="6DpX8j1kTO55ZazVWIUJ9H" }, //Bulgaria
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[8], PlaylistId ="0LexRqlNAFHzIG3upGcA0S" }, //Croatia
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[9], PlaylistId = "2CusBjVWAtRWy0L5BfmikW" }, //Cyprus
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[10], PlaylistId ="253ARKQpYyLw3VYbIiy2zn" }, //Czech Republic
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[11], PlaylistId ="7nUxZrzOz1FS67LYqsjdIv" }, //Denmark
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[12], PlaylistId ="1ObBKzabSHf6WD4VZI8fJU" }, //Estonia
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[13], PlaylistId ="5EC6uJxihNWkD5ZlYXKpL5" }, //Faroe Islands
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[14], PlaylistId ="2CusBjVWAtRWy0L5BfmikW" }, //Finland
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[15], PlaylistId ="0QgtRvswo2Ugn0B1MTHQkW" }, //France
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[16], PlaylistId ="7Cdk1T18F4mJKNPJxmP8o3" }, //Germany
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[17], PlaylistId ="30EHPgCW4KRgOR4VumFHfs" }, //Gibraltar
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[18], PlaylistId ="1s8ckUBY7ZZjrJMPZ4BtOj" }, //Greece
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[21], PlaylistId ="7LsbwkqPWuIVjM8OmqJyJh" }, //I'm so Hungary
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[22], PlaylistId ="2dvjKJLYeizywy2NQiKlVO" }, //Iceland
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[23], PlaylistId ="2zesk6vpZhemqH9FbZKZnq" }, //Ireland
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[24], PlaylistId ="2zesk6vpZhemqH9FbZKZnq" }, //Isle of Man
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[25], PlaylistId ="0ylcsCmX0r03zT9yISmFWp" }, //Italy
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[29], PlaylistId ="12CfDHYf2nkZANtS9f9Vew" }, //Lithuania
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[30], PlaylistId ="09TxUze3BuYVNvMY6d418n" }, //Luxembourg
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[31], PlaylistId ="6wk61XRax6dMvX3WClLYbH" }, //Macedonia
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[33], PlaylistId ="3ZzdoANeDnNgpPDN8BdL59" }, //Moldova
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[34], PlaylistId ="3gl4XsDZjDEhP6ENWG0SSm" }, //Monaco
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[35], PlaylistId ="4AJvqhZvRE796GP9RYNrYc" }, //Montenegro
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[36], PlaylistId ="0FRAi3HnfdGT5Gn69MvYlT" }, //The Netherlands
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[37], PlaylistId ="6KgYE0tontk4mf54YQfXXS" }, //Norway
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[38], PlaylistId ="29XoM5S9Yc6Heflhp9fIoC" }, //Poland
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[39], PlaylistId ="5fpIpFlXUplr5Uy1J1qHnO" }, //Portugal
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[40], PlaylistId ="47dFbcLDn04CX7UorU8Iq8" }, //Republic of Kosovo
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[41], PlaylistId ="0g5twCr1C6oituq3La2Div" }, //Romania
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[42], PlaylistId ="6d3Zwzras2ghumJvnlIqsI" }, //Russia
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[43], PlaylistId ="7BSjWFXtpiJxdvzMSBl7Sq" }, //San Marino
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[44], PlaylistId ="1nN2hfHzcXNsVeGAwXev3s" }, //Serbia
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[45], PlaylistId ="65nrfnJcCxTLsyyjf8WCXe" }, //Slovakia
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[47], PlaylistId ="1irDloS9VCX40czYAS2klR" }, //Spain
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[48], PlaylistId ="6KgYE0tontk4mf54YQfXXS" }, //Svalbard And Jan Mayen
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[49], PlaylistId ="3BeBGfOciz2pHhmMYGF7Qq" }, //Sweden
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[50], PlaylistId ="7KCEnXSAo8e4aHkC3Barql" }, //Switzerland
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[51], PlaylistId ="5S1GVxkVbKXxoTV8DwBKGi" }, //Ukraine
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[52], PlaylistId ="1y7E5GXSac77FzesM2ASjx" } //United Kingdom
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[0], Searchterm = $"{countries[0].demonym} music" }, //Åland_Islands
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[1], Searchterm = $"{countries[1].demonym} music" }, //Albania
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[3], Searchterm = $"{countries[3].demonym} music" }, //Austria
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[4], Searchterm = $"{countries[4].demonym} music" }, //Belarus
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[5], Searchterm = $"{countries[5].demonym} music" }, //Belgium
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[7], Searchterm = $"{countries[7].demonym} music" }, //Bulgaria
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[8], Searchterm = $"{countries[8].demonym} music" }, //Croatia
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[9], Searchterm = $"{countries[9].demonym} music" }, //Cyprus
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[10], Searchterm = $"{countries[10].demonym} music" }, //Czech Republic
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[11], Searchterm = $"{countries[11].demonym} music" }, //Denmark
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[12], Searchterm = $"{countries[12].demonym} music" }, //Estonia
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[13], Searchterm = $"{countries[13].demonym} music" }, //Faroe Islands
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[14], Searchterm = $"{countries[14].demonym} music" }, //Finland
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[15], Searchterm = $"{countries[15].demonym} music" }, //France
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[16], Searchterm = $"{countries[16].demonym} music" }, //Germany
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[17], Searchterm = $"{countries[17].demonym} music" }, //Gibraltar
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[18], Searchterm = $"{countries[18].demonym} music" }, //Greece
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[21], Searchterm = $"{countries[21].demonym} music" }, //I'm so Hungary
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[22], Searchterm = $"{countries[22].demonym} music" }, //Iceland
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[23], Searchterm = $"{countries[23].demonym} music" }, //Ireland
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[24], Searchterm = $"{countries[24].demonym} music" }, //Isle of Man
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[25], Searchterm = $"{countries[25].demonym} music" }, //Italy
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[29], Searchterm = $"{countries[29].demonym} music" }, //Lithuania
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[30], Searchterm = $"{countries[30].demonym} music" }, //Luxembourg
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[31], Searchterm = $"{countries[31].demonym} music" }, //Macedonia
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[33], Searchterm = $"{countries[33].demonym} music" }, //Moldova
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[34], Searchterm = $"{countries[34].demonym} music" }, //Monaco
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[35], Searchterm = $"{countries[35].demonym} music" }, //Montenegro
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[36], Searchterm = $"{countries[36].demonym} music" }, //The Netherlands
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[37], Searchterm = $"{countries[37].demonym} music" }, //Norway
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[38], Searchterm = $"{countries[38].demonym} music" }, //Poland
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[39], Searchterm = $"{countries[39].demonym} music" }, //Portugal
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[40], Searchterm = $"{countries[40].demonym} music" }, //Republic of Kosovo
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[41], Searchterm = $"{countries[41].demonym} music" }, //Romania
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[42], Searchterm = $"{countries[42].demonym} music" }, //Russia
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[43], Searchterm = $"{countries[43].demonym} music" }, //San Marino
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[44], Searchterm = $"{countries[44].demonym} music" }, //Serbia
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[45], Searchterm = $"{countries[45].demonym} music" }, //Slovakia
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[47], Searchterm = $"{countries[47].demonym} music" }, //Spain
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[48], Searchterm = $"{countries[48].demonym} music" }, //Svalbard And Jan Mayen
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[49], Searchterm = $"{countries[49].demonym} music" }, //Sweden
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[50], Searchterm = $"{countries[50].demonym} music" }, //Switzerland
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[51], Searchterm = $"{countries[51].demonym} music" }, //Ukraine
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[52], Searchterm = $"{countries[52].demonym} music" } //United Kingdom
                 );
             #endregion
 
