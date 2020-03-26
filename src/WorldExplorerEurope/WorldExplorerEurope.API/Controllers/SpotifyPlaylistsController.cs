@@ -46,7 +46,7 @@ namespace WorldExplorerEurope.API.Controllers
             return Ok();
         }
 
-        [HttpGet("basic")]
+        [HttpGet("playlists")]
         public async Task<IActionResult> GetBasicSpotifyPlaylists()
         {
             var playlists = _mappingRepository.GetAll();
@@ -78,6 +78,41 @@ namespace WorldExplorerEurope.API.Controllers
                 spotifyBasicDtos.Add(spotifyBasicDto);
             }
             return Ok(spotifyBasicDtos);
+        }
+
+        [HttpGet("playlists/{id}")]
+        public async Task<IActionResult> GetBasicSpotifyPlaylist([FromRoute]Guid id)
+        {
+            var playlist = await _mappingRepository.GetById(id);
+            if (playlist == null)
+            {
+                return NotFound($"Playlist with id: {id} is not valid.");
+            }
+
+            var fullplaylist = await _spotify.GetFullPlaylist(playlist.PlaylistId);
+            var tracks = await _spotify.GetFirst5Tracks(fullplaylist);
+            var country = getCountry(playlist.CountryId);
+
+            SpotifyBasicDto spotifyBasicDto = new SpotifyBasicDto()
+            {
+                CountryId = country.Id,
+                CountryName = country.Name,
+                PlaylistId = playlist.PlaylistId,
+                Url = new Uri($"https://open.spotify.com/playlist/{playlist.PlaylistId}")
+            };
+            spotifyBasicDto.Playlist = new List<SpotifyBasicTracksDto>();
+            foreach (var track in tracks)
+            {
+                spotifyBasicDto.Playlist.Add(
+                    new SpotifyBasicTracksDto
+                    {
+                        Artists = track.Artists,
+                        Number = track.Number,
+                        Name = track.Name,
+                        PreviewUrl = track.PreviewUrl
+                    });
+            }
+            return Ok(spotifyBasicDto);
         }
 
         private CountryDto getCountry(Guid countryId)
