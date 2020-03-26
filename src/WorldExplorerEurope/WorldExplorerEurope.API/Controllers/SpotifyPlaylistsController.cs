@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using WorldExplorerEurope.API.Controllers.Base;
 using WorldExplorerEurope.API.Data;
 using WorldExplorerEurope.API.Domain.DTO;
@@ -18,16 +20,14 @@ namespace WorldExplorerEurope.API.Controllers
     public class SpotifyPlaylistsController : ControllerDtoCrudBase<SpotifyPlaylistDto, IMappingRepository<SpotifyPlaylistDto>>
     {
         private readonly IMappingRepository<SpotifyPlaylistDto> _playlistMappingRepo;
-        private readonly IMappingRepository<CountryDto> _countryMappingRepo;
         private static Spotify _spotify;
         private readonly WorldExplorerContext _worldExplorerContext;
 
-        public SpotifyPlaylistsController(IMappingRepository<SpotifyPlaylistDto> playlistMappingRepo, IMappingRepository<CountryDto> countryMappingRepo, WorldExplorerContext worldExplorerContext) : base(playlistMappingRepo)
+        public SpotifyPlaylistsController(IMappingRepository<SpotifyPlaylistDto> playlistMappingRepo, WorldExplorerContext worldExplorerContext) : base(playlistMappingRepo)
         {
             _playlistMappingRepo = playlistMappingRepo;
             _spotify = new Spotify();
             _worldExplorerContext = worldExplorerContext;
-            _countryMappingRepo = countryMappingRepo;
         }
         /*
             <Summary>
@@ -53,32 +53,33 @@ namespace WorldExplorerEurope.API.Controllers
             List<SpotifyBasicDto> spotifyBasicDtos = new List<SpotifyBasicDto>();
             foreach (var playlist in playlists)
             {
-                var spotifyPlaylist = _spotify.GetPlaylist(playlist.Searchterm);
-                var spotifyPlaylistTracks = _spotify.GetTracks(playlist.Searchterm);
-                var country = await _countryMappingRepo.GetById(playlist.CountryId);
-                spotifyBasicDtos.Add( new SpotifyBasicDto
+                var spotifyPlaylist = _spotify.GetPlaylist(playlist.Searchterm).Result;
+                var country = getCountry(playlist.CountryId);
+                var tracks = _spotify.GetTracks(spotifyPlaylist.Id);
+                if(spotifyPlaylist!= null)
                 {
-                    CountryId = playlist.CountryId,
-                    CountryName = country.Name,
-                    Url = new Uri(spotifyPlaylist.Result.Uri),
-                    Searchterm = playlist.Searchterm,
-                });
-            }
-            foreach(var playlist in spotifyBasicDtos)
-            {
-                var spotifyPlaylistTracks = _spotify.GetTracks(playlist.Searchterm);
-                int number = 1;
-                for(int i = 0; i > spotifyPlaylistTracks.Result.Tracks.Count; i++)
-                {
-                    playlist.Playlist.Add(new SpotifyBasicTracksDto
+                    spotifyBasicDtos.Add(new SpotifyBasicDto
                     {
-                        Name = spotifyPlaylistTracks.Result.Tracks[i].Name,
-                        Number = number,
-                        PreviewUrl = new Uri(spotifyPlaylistTracks.Result.Tracks[i].PreviewUrl)
+                        CountryId = playlist.CountryId,
+                        CountryName = country.Name,
+                        Url = new Uri(spotifyPlaylist.Uri),
+                        Searchterm = playlist.Searchterm,
+                        Playlist = spotifyPlaylist
                     });
                 }
             }
-            return Ok(playlists);
+            return Ok(spotifyBasicDtos);
+        }
+
+        private CountryDto getCountry(Guid countryId)
+        {
+            using (var webClient = new WebClient())
+            {
+                var baseUrl = $"https://localhost:5001/api/countries/{countryId}";
+                string rawJSON = webClient.DownloadString(baseUrl);
+                var country = JsonConvert.DeserializeObject<CountryDto>(rawJSON);
+                return country;
+            }
         }
     }
 }

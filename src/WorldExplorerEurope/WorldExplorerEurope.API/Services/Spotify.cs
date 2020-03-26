@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WorldExplorerEurope.API.Domain.DTO;
 
 namespace WorldExplorerEurope.API.Services
 {
@@ -71,27 +72,19 @@ namespace WorldExplorerEurope.API.Services
             return true;
         }
 
-        public async Task<SeveralTracks> GetTracks(string id)
+        public async Task<List<SpotifyBasicTracksDto>> GetTracks(string id)
         {
             if (token.IsExpired())
             {
                 await AccessAPI();
             }
-            var spotifyPlaylist = _spotify.GetPlaylistTracks("", id, 1000, 0, "BE");
-            SeveralTracks top5Tracks = new SeveralTracks();
-            spotifyPlaylist.Items.ForEach(track => top5Tracks.Tracks.Add(track.Track));
-            return top5Tracks;
+            var spotifyPlaylist = _spotify.GetPlaylistTracks(id, "", 100, 2, "BE");
+            return AddTracks(spotifyPlaylist);
         }
 
-        public async Task<SimplePlaylist> GetPlaylist(string searchterm)
+        private List<SpotifyBasicTracksDto> AddTracks(Paging<PlaylistTrack>tracks)
         {
-            if (token.IsExpired())
-            {
-                await AccessAPI();
-            }
-            var playlist = _spotify.SearchItems($"{searchterm}", SearchType.Playlist, 1, 0, "BE");
-
-            return playlist.Playlists.Items[0];
+            return null;
         }
     }
 }
