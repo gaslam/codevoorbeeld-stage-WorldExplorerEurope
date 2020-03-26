@@ -8,6 +8,7 @@ namespace WorldExplorerEurope.API.Domain.DTO
     {
         public int Number { get; set; }
         public string Name { get; set; }
+        public string Artists { get; set; }
         public Uri PreviewUrl { get; set; }
     }
 }

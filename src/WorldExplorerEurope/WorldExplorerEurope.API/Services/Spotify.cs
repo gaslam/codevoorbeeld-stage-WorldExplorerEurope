@@ -5,6 +5,7 @@ using SpotifyAPI.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using WorldExplorerEurope.API.Domain.DTO;
 
@@ -72,19 +73,58 @@ namespace WorldExplorerEurope.API.Services
             return true;
         }
 
-        public async Task<List<SpotifyBasicTracksDto>> GetTracks(string id)
+        public async Task<List<SpotifyBasicTracksDto>> GetFirst5Tracks(FullPlaylist playlist)
         {
             if (token.IsExpired())
             {
                 await AccessAPI();
             }
-            var spotifyPlaylist = _spotify.GetPlaylistTracks(id, "", 100, 2, "BE");
-            return AddTracks(spotifyPlaylist);
+
+            var tracks = await _spotify.GetPlaylistTracksAsync(playlist.Id, "", 5, 1, "BE");
+            List<SpotifyBasicTracksDto> spotifyBasicTracks = new List<SpotifyBasicTracksDto>();
+            for (int i = 0; i < tracks.Items.Count; i++)
+            {
+                var track = tracks.Items[i];
+                  SpotifyBasicTracksDto spotifyBasicTracksDto =  new SpotifyBasicTracksDto
+                    {
+                        Number = i + 1,
+                        Name = track.Track.Name,
+                        Artists = ConvertArtistsToString(track.Track.Artists)
+                    };
+                if(track.Track.PreviewUrl == null)
+                {
+                    //Cannot pass empty url's so if 
+                    spotifyBasicTracksDto.PreviewUrl = new Uri("https://www.spotify.com/");
+                }
+                else
+                {
+                    spotifyBasicTracksDto.PreviewUrl = new Uri(track.Track.PreviewUrl);
+                }
+                spotifyBasicTracks.Add(spotifyBasicTracksDto);
+            }
+            return spotifyBasicTracks;
         }
 
-        private List<SpotifyBasicTracksDto> AddTracks(Paging<PlaylistTrack>tracks)
+        private string ConvertArtistsToString(List<SimpleArtist> artists)
         {
-            return null;
+            StringBuilder combinedArtists = new StringBuilder();
+            if(artists.Count == 1)
+            {
+                combinedArtists.Append(artists[0].Name);
+            }
+            else
+            {
+                foreach (var artist in artists)
+                {
+                    combinedArtists.Append(artist.Name).Append(", ");
+                }
+            }
+            return combinedArtists.ToString();
+        }
+
+        public async Task<FullPlaylist> GetFullPlaylist(string id)
+        {
+            return await _spotify.GetPlaylistAsync(id, "", "BE");
         }
     }
 }
