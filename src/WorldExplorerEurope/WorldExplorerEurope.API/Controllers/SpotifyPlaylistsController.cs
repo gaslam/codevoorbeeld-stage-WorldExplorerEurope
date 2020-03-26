@@ -51,24 +51,8 @@ namespace WorldExplorerEurope.API.Controllers
         {
             var playlists = _mappingRepository.GetAll();
             List<SpotifyBasicDto> spotifyBasicDtos = new List<SpotifyBasicDto>();
-            foreach (var playlist in playlists)
-            {
-                var spotifyPlaylist = _spotify.GetPlaylist(playlist.Searchterm).Result;
-                var country = getCountry(playlist.CountryId);
-                var tracks = _spotify.GetTracks(spotifyPlaylist.Id);
-                if(spotifyPlaylist!= null)
-                {
-                    spotifyBasicDtos.Add(new SpotifyBasicDto
-                    {
-                        CountryId = playlist.CountryId,
-                        CountryName = country.Name,
-                        Url = new Uri(spotifyPlaylist.Uri),
-                        Searchterm = playlist.Searchterm,
-                        Playlist = spotifyPlaylist
-                    });
-                }
-            }
-            return Ok(spotifyBasicDtos);
+
+            return Ok();
         }
 
         private CountryDto getCountry(Guid countryId)
