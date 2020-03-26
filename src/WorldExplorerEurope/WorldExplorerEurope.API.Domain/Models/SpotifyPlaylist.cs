@@ -6,6 +6,6 @@ namespace WorldExplorerEurope.API.Domain.Models
     public class SpotifyPlaylist : EntityBase
     {
         public Guid CountryId { get; set; }
-        public string Searchterm { get; set; }
+        public string PlaylistId { get; set; }
     }
 }
