@@ -46,7 +46,7 @@ namespace WorldExplorerEurope.API.Controllers
             return Ok();
         }
 
-        [HttpGet("all")]
+        [HttpGet("basic")]
         public async Task<IActionResult> GetBasicSpotifyPlaylists()
         {
             var playlists = _mappingRepository.GetAll();
