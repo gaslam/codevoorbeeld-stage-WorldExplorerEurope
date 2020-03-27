@@ -1,10 +1,13 @@
 ﻿using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
+using SpotifyAPI.Web.Enums;
 using SpotifyAPI.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using WorldExplorerEurope.API.Domain.DTO;
 
 namespace WorldExplorerEurope.API.Services
 {
@@ -12,15 +15,20 @@ namespace WorldExplorerEurope.API.Services
     {
         //Contains all the code for getting the spotify API data.
         private static SpotifyWebAPI _spotify;
-        private const string clientId = "";
-        private const string clientSecret = "";
+        private const string clientId = "e1e36ceac985420e9c65c12f450045da";
+        private const string clientSecret = "5d151d54fa7a4be9a5d473201f072ea5";
         // Is used for to create the tokens to access the API.
         private static Token token = new Token();
         //Is Used to get the credentials of the application for the spotify API.
         private static CredentialsAuth credentials;
         public Spotify()
         {
-            AccessAPI();
+            CallAPI();
+        }
+
+        private async void CallAPI()
+        {
+            await AccessAPI();
         }
 
         /*
@@ -30,7 +38,7 @@ namespace WorldExplorerEurope.API.Services
             This will let us access the Spotify playlists in (a later method).
          </Summary> 
         */
-        private async void AccessAPI()
+        private async Task<SpotifyWebAPI> AccessAPI()
         {
             credentials = new CredentialsAuth(clientId, clientSecret);
             token = await credentials.GetToken();
@@ -39,6 +47,7 @@ namespace WorldExplorerEurope.API.Services
                 AccessToken = token.AccessToken,
                 TokenType = token.TokenType
             };
+            return _spotify;
         }
 
         /*
@@ -48,13 +57,13 @@ namespace WorldExplorerEurope.API.Services
             AccessAPI will be called again.
          </Summary> 
         */
-        public bool CheckClientCredentials()
+        public async Task<bool> CheckClientCredentials()
         {
             try
             {
                 if (token.IsExpired())
                 {
-                    AccessAPI();
+                    await AccessAPI();
                 }
             }
             catch
@@ -64,17 +73,58 @@ namespace WorldExplorerEurope.API.Services
             return true;
         }
 
-        public SeveralTracks GetTracks(string id)
+        public async Task<List<SpotifyBasicTracksDto>> GetFirst5Tracks(FullPlaylist playlist)
         {
-            var spotifyPlaylist = _spotify.GetPlaylistTracks("", id, 1000, 0, "BE");
-            SeveralTracks top5Tracks = new SeveralTracks();
-            spotifyPlaylist.Items.ForEach(track => top5Tracks.Tracks.Add(track.Track));
-            return top5Tracks;
+            if (token.IsExpired())
+            {
+                await AccessAPI();
+            }
+
+            var tracks = await _spotify.GetPlaylistTracksAsync(playlist.Id, "", 5, 1, "BE");
+            List<SpotifyBasicTracksDto> spotifyBasicTracks = new List<SpotifyBasicTracksDto>();
+            for (int i = 0; i < tracks.Items.Count; i++)
+            {
+                var track = tracks.Items[i];
+                  SpotifyBasicTracksDto spotifyBasicTracksDto =  new SpotifyBasicTracksDto
+                    {
+                        Number = i + 1,
+                        Name = track.Track.Name,
+                        Artists = ConvertArtistsToString(track.Track.Artists)
+                    };
+                if(track.Track.PreviewUrl == null)
+                {
+                    //Cannot pass empty url's so if 
+                    spotifyBasicTracksDto.PreviewUrl = new Uri("https://www.spotify.com/");
+                }
+                else
+                {
+                    spotifyBasicTracksDto.PreviewUrl = new Uri(track.Track.PreviewUrl);
+                }
+                spotifyBasicTracks.Add(spotifyBasicTracksDto);
+            }
+            return spotifyBasicTracks;
         }
 
-        public FullPlaylist GetPlaylist(string id)
+        private string ConvertArtistsToString(List<SimpleArtist> artists)
         {
-            return _spotify.GetPlaylist("", id, "BE");
+            StringBuilder combinedArtists = new StringBuilder();
+            if(artists.Count == 1)
+            {
+                combinedArtists.Append(artists[0].Name);
+            }
+            else
+            {
+                foreach (var artist in artists)
+                {
+                    combinedArtists.Append(artist.Name).Append(", ");
+                }
+            }
+            return combinedArtists.ToString();
+        }
+
+        public async Task<FullPlaylist> GetFullPlaylist(string id)
+        {
+            return await _spotify.GetPlaylistAsync(id, "", "BE");
         }
     }
 }

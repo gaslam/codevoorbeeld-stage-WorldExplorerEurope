@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using WorldExplorerEurope.API.Controllers.Base;
 using WorldExplorerEurope.API.Data;
 using WorldExplorerEurope.API.Domain.DTO;
@@ -36,7 +38,7 @@ namespace WorldExplorerEurope.API.Controllers
         [HttpGet("check")]
         public async Task<IActionResult> CheckToken()
         {
-            bool check = _spotify.CheckClientCredentials();
+            bool check = _spotify.CheckClientCredentials().Result;
             if(check == false)
             {
                 return BadRequest("Credentials not valid!!");
@@ -44,39 +46,84 @@ namespace WorldExplorerEurope.API.Controllers
             return Ok();
         }
 
-        [HttpGet("all")]
+        [HttpGet("playlists")]
         public async Task<IActionResult> GetBasicSpotifyPlaylists()
         {
             var playlists = _mappingRepository.GetAll();
             List<SpotifyBasicDto> spotifyBasicDtos = new List<SpotifyBasicDto>();
-            foreach (var playlist in playlists)
+            foreach(var playlist in playlists)
             {
-                var spotifyPlaylist = _spotify.GetPlaylist(playlist.PlaylistId);
-                var spotifyPlaylistTracks = _spotify.GetTracks(playlist.PlaylistId);
-                var country = _worldExplorerContext.Countries.FirstOrDefault(m => m.Id == playlist.CountryId);
-                spotifyBasicDtos.Add( new SpotifyBasicDto
+                var country = getCountry(playlist.CountryId);
+                var newPlaylist = await _spotify.GetFullPlaylist(playlist.PlaylistId);
+                var tracks = await _spotify.GetFirst5Tracks(newPlaylist);
+                SpotifyBasicDto spotifyBasicDto = new SpotifyBasicDto()
                 {
-                    CountryId = playlist.CountryId,
+                    CountryId = country.Id,
                     CountryName = country.Name,
-                    Url = new Uri(spotifyPlaylist.Uri),
                     PlaylistId = playlist.PlaylistId,
-                });
-            }
-            foreach(var playlist in spotifyBasicDtos)
-            {
-                var spotifyPlaylistTracks = _spotify.GetTracks(playlist.PlaylistId);
-                int number = 1;
-                for(int i = 0; i > spotifyPlaylistTracks.Tracks.Count; i++)
+                    Url = new Uri($"https://open.spotify.com/playlist/{playlist.PlaylistId}")
+                };
+                spotifyBasicDto.Playlist = new List<SpotifyBasicTracksDto>();
+                foreach(var track in tracks)
                 {
-                    playlist.Top5Tracks.Add(new SpotifyBasicTracksDto
-                    {
-                        Name = spotifyPlaylistTracks.Tracks[i].Name,
-                        Number = number,
-                        PreviewUrl = new Uri(spotifyPlaylistTracks.Tracks[i].PreviewUrl)
-                    });
+                    spotifyBasicDto.Playlist.Add(
+                        new SpotifyBasicTracksDto
+                        {
+                            Artists = track.Artists,
+                            Number = track.Number,
+                            Name = track.Name,
+                            PreviewUrl = track.PreviewUrl
+                        });
                 }
+                spotifyBasicDtos.Add(spotifyBasicDto);
             }
-            return Ok(playlists);
+            return Ok(spotifyBasicDtos);
+        }
+
+        [HttpGet("playlists/{id}")]
+        public async Task<IActionResult> GetBasicSpotifyPlaylist([FromRoute]Guid id)
+        {
+            var playlist = await _mappingRepository.GetById(id);
+            if (playlist == null)
+            {
+                return NotFound($"Playlist with id: {id} is not valid.");
+            }
+
+            var fullplaylist = await _spotify.GetFullPlaylist(playlist.PlaylistId);
+            var tracks = await _spotify.GetFirst5Tracks(fullplaylist);
+            var country = getCountry(playlist.CountryId);
+
+            SpotifyBasicDto spotifyBasicDto = new SpotifyBasicDto()
+            {
+                CountryId = country.Id,
+                CountryName = country.Name,
+                PlaylistId = playlist.PlaylistId,
+                Url = new Uri($"https://open.spotify.com/playlist/{playlist.PlaylistId}")
+            };
+            spotifyBasicDto.Playlist = new List<SpotifyBasicTracksDto>();
+            foreach (var track in tracks)
+            {
+                spotifyBasicDto.Playlist.Add(
+                    new SpotifyBasicTracksDto
+                    {
+                        Artists = track.Artists,
+                        Number = track.Number,
+                        Name = track.Name,
+                        PreviewUrl = track.PreviewUrl
+                    });
+            }
+            return Ok(spotifyBasicDto);
+        }
+
+        private CountryDto getCountry(Guid countryId)
+        {
+            using (var webClient = new WebClient())
+            {
+                var baseUrl = $"https://localhost:5001/api/countries/{countryId}";
+                string rawJSON = webClient.DownloadString(baseUrl);
+                var country = JsonConvert.DeserializeObject<CountryDto>(rawJSON);
+                return country;
+            }
         }
     }
 }

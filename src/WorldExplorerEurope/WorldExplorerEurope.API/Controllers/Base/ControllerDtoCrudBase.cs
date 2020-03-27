@@ -24,7 +24,7 @@ namespace WorldExplorerEurope.API.Controllers.Base
         }
 
         [HttpGet("{id}")]
-        public virtual async Task<IActionResult> GetById(Guid id)
+        public virtual async Task<IActionResult> GetById([FromRoute]Guid id)
         {
             var dto = await _mappingRepository.GetById(id);
             if (dto == null)
