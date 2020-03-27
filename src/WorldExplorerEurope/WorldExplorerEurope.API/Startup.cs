@@ -70,7 +70,7 @@ namespace WorldExplorerEurope.API
             app.UseEndpoints(endpoints =>
             endpoints.MapControllers());
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
