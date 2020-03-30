@@ -1,4 +1,5 @@
 ﻿using System;
+using WorldExplorerEurope.App.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +11,7 @@ namespace WorldExplorerEurope.App
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new LoginPage();
         }
 
         protected override void OnStart()

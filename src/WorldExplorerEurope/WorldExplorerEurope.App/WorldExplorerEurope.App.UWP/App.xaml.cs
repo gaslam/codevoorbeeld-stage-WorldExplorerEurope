@@ -1,4 +1,6 @@
-﻿using System;
+using Syncfusion.XForms.UWP.DataForm;
+using System.Reflection;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,6 +16,13 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Syncfusion.SfNumericTextBox.XForms.UWP;
+using Syncfusion.SfNumericUpDown.XForms.UWP;
+using Syncfusion.XForms.UWP.Buttons;
+using Syncfusion.XForms.UWP.ComboBox;
+using Syncfusion.XForms.UWP.MaskedEdit;
+using Syncfusion.XForms.UWP.TextInputLayout;
+using Syncfusion.SfAutoComplete.XForms.UWP;
 
 namespace WorldExplorerEurope.App.UWP
 {
@@ -52,7 +61,24 @@ namespace WorldExplorerEurope.App.UWP
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                Xamarin.Forms.Forms.Init(e);
+                List<Assembly> assembliesToInclude = new List<Assembly>();
+                assembliesToInclude.Add(typeof(SfDataFormRenderer).GetTypeInfo().Assembly);
+                Xamarin.Forms.Forms.Init(e, assembliesToInclude);
+
+                //Now, add all the assemblies your app uses
+                assembliesToInclude.Add(typeof(SfDataFormRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfNumericTextBoxRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfNumericUpDownRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfSegmentedControlRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfComboBoxRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfCheckBoxRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfRadioButtonRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfMaskedEditRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfTextInputLayoutRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfAutoCompleteRenderer).GetTypeInfo().Assembly);
+
+                // replaces Xamarin.Forms.Forms.Init(e);        
+                Xamarin.Forms.Forms.Init(e, assembliesToInclude);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
@@ -70,6 +96,8 @@ namespace WorldExplorerEurope.App.UWP
                 // parameter
                 rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
+            rootFrame.NavigationFailed += OnNavigationFailed;
+
             // Ensure the current window is active
             Window.Current.Activate();
         }
