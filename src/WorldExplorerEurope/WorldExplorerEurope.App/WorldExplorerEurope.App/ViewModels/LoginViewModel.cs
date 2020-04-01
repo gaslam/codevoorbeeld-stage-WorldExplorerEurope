@@ -42,7 +42,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 };
                 using (var httpClient = new HttpClient())
                 {
-                    string url = $"http://192.168.0.181:5000/api/countries/users/login";
+                    string url = $"{WorldExplorerAPIService.BaseUrl}/login";
                     var rawJSON = JsonConvert.SerializeObject(userLogin);
                     var content = new StringContent(rawJSON, Encoding.UTF8, "application/json");
                     HttpResponseMessage responseMessage = await httpClient.PostAsync(url, content);
