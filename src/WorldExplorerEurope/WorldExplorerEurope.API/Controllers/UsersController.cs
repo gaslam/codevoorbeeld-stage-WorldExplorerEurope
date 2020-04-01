@@ -32,8 +32,9 @@ namespace WorldExplorerEurope.API.Controllers
             {
                 return NotFound("User not found, enter valid credentials!!!");
             }
-            var passwordHasher = new PasswordHasher<UserLoginDto>();
-            if (passwordHasher.VerifyHashedPassword(userLoginDto, user.Password, userLoginDto.Password) == PasswordVerificationResult.Failed)
+            var passwordHasher = new PasswordHasher<UserDto>();
+            var verify = passwordHasher.VerifyHashedPassword(user, user.Password, userLoginDto.Password);
+            if (verify.Equals(PasswordVerificationResult.Failed))
             {
                 return BadRequest("Password Incorrect!!");
             }
