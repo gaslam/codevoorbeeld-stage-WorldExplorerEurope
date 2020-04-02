@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using WorldExplorerEurope.API.Domain.DTO.Bases;
@@ -16,8 +17,13 @@ namespace WorldExplorerEurope.API.Domain.DTO
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
 
+        [JsonIgnore]
         public ICollection<UserMemories> Memories { get; set; }
+
+        [JsonIgnore]
         public ICollection<UserFavourites> Favourites { get; set; }
+
+        [JsonIgnore]
         public ICollection<UserWishlists> Wishlists { get; set; }
     }
 }

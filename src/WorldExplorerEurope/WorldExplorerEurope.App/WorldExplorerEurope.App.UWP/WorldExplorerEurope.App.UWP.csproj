@@ -143,8 +143,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Syncfusion.Xamarin.SfDataForm">
+      <Version>17.4.0.55</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.3.0.908675" />
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.1.9"/>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.1.9" />
     <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +155,90 @@
       <Project>{E176B05C-32C4-48B1-991C-CD25E62288EE}</Project>
       <Name>WorldExplorerEurope.App</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-BlackItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-Bold.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-BoldItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-ExtraBold.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-ExtraBoldItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-ExtraLight.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-ExtraLightItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-Italic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-Light.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-LightItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-Medium.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-MediumItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-SemiBold.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-SemiBoldItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-Thin.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-ThinItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Fonts\Raleway-Black.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-Bold.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-BoldItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-Italic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-Light.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-LightItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-Medium.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-MediumItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-Thin.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-ThinItalic.ttf" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

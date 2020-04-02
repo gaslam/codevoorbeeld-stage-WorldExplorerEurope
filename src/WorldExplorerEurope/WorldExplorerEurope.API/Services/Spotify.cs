@@ -15,8 +15,8 @@ namespace WorldExplorerEurope.API.Services
     {
         //Contains all the code for getting the spotify API data.
         private static SpotifyWebAPI _spotify;
-        private const string clientId = "e1e36ceac985420e9c65c12f450045da";
-        private const string clientSecret = "5d151d54fa7a4be9a5d473201f072ea5";
+        private const string clientId = "";
+        private const string clientSecret = "";
         // Is used for to create the tokens to access the API.
         private static Token token = new Token();
         //Is Used to get the credentials of the application for the spotify API.

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -32,6 +32,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
+    <MandroidI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,6 +54,9 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Syncfusion.Xamarin.SfDataForm">
+      <Version>17.4.0.55</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.3.0.908675" />
     <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
   </ItemGroup>
@@ -62,6 +66,34 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\RobotoMono-ThinItalic.ttf" />
+    <AndroidAsset Include="Assets\Raleway-Black.ttf" />
+    <AndroidAsset Include="Assets\Raleway-BlackItalic.ttf" />
+    <AndroidAsset Include="Assets\Raleway-Bold.ttf" />
+    <AndroidAsset Include="Assets\Raleway-BoldItalic.ttf" />
+    <AndroidAsset Include="Assets\Raleway-ExtraBold.ttf" />
+    <AndroidAsset Include="Assets\Raleway-ExtraBoldItalic.ttf" />
+    <AndroidAsset Include="Assets\Raleway-ExtraLight.ttf" />
+    <AndroidAsset Include="Assets\Raleway-ExtraLightItalic.ttf" />
+    <AndroidAsset Include="Assets\Raleway-Italic.ttf" />
+    <AndroidAsset Include="Assets\Raleway-Light.ttf" />
+    <AndroidAsset Include="Assets\Raleway-LightItalic.ttf" />
+    <AndroidAsset Include="Assets\Raleway-Medium.ttf" />
+    <AndroidAsset Include="Assets\Raleway-MediumItalic.ttf" />
+    <AndroidAsset Include="Assets\Raleway-Regular.ttf" />
+    <AndroidAsset Include="Assets\Raleway-SemiBold.ttf" />
+    <AndroidAsset Include="Assets\Raleway-SemiBoldItalic.ttf" />
+    <AndroidAsset Include="Assets\Raleway-Thin.ttf" />
+    <AndroidAsset Include="Assets\Raleway-ThinItalic.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-Bold.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-BoldItalic.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-Italic.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-Light.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-LightItalic.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-Medium.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-MediumItalic.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-Regular.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-Thin.ttf" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
@@ -93,5 +125,5 @@
       <Name>WorldExplorerEurope.App</Name>
     </ProjectReference>
   </ItemGroup>
- <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
