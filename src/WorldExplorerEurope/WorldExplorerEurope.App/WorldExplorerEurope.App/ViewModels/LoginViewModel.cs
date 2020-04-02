@@ -60,7 +60,7 @@ namespace WorldExplorerEurope.App.ViewModels
         private void DataForm_AutoGeneratingDataFormItem(object sender, AutoGeneratingDataFormItemEventArgs e)
         {
             var name = e.DataFormItem.Name;
-            switch (name)
+            /*switch (name)
             {
                 case "Email":
                     e.DataFormItem = new DataFormTextItem() { Name = "Email", Editor = "Text", PlaceHolderText = "Enter Email", KeyBoard = Keyboard.Email };
@@ -72,7 +72,7 @@ namespace WorldExplorerEurope.App.ViewModels
                     e.DataFormItem.HintLabelStyle = new LabelStyle { FontFamily = Device.OnPlatform("ROBOTOMONO-REGULAR", "ROBOTOMONO-REGULAR.TTF#ROBOTOMONO-REGULAR", "Assets/Fonts/ROBOTOMONO-REGULAR.TTF#ROBOTOMONO"), FontSize = 16 };
                     e.DataFormItem.HelperLabelStyle = new LabelStyle { FontFamily = Device.OnPlatform("ROBOTOMONO-REGULAR", "ROBOTOMONO-REGULAR.TTF#ROBOTOMONO-REGULAR", "Assets/Fonts/ROBOTOMONO-REGULAR.TTF#ROBOTOMONO") };
                     break;
-            }
+            }*/
         }
     }
 }

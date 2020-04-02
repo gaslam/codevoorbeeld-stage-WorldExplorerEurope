@@ -157,9 +157,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\ROBOTOMONO-THINITALIC.TTF" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidAsset Include="Assets\Fonts\Raleway-BlackItalic.ttf" />
   </ItemGroup>
   <ItemGroup>
@@ -211,34 +208,37 @@
     <AndroidAsset Include="Assets\Fonts\Raleway-ThinItalic.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\ROBOTOMONO-BOLD.TTF" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\ROBOTOMONO-BOLDITALIC.TTF" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\ROBOTOMONO-ITALIC.TTF" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\ROBOTOMONO-LIGHT.TTF" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\ROBOTOMONO-LIGHTITALIC.TTF" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\ROBOTOMONO-MEDIUM.TTF" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\ROBOTOMONO-MEDIUMITALIC.TTF" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\ROBOTOMONO-REGULAR.TTF" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\ROBOTOMONO-THIN.TTF" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidAsset Include="Assets\Fonts\Raleway-Black.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-Bold.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-BoldItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-Italic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-Light.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-LightItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-Medium.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-MediumItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-Thin.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoMono-ThinItalic.ttf" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

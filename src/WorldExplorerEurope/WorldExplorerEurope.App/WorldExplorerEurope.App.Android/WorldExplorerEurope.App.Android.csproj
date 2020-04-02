@@ -66,13 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Raleway-Medium.ttf" />
-    <AndroidAsset Include="Assets\Raleway-MediumItalic.ttf" />
-    <AndroidAsset Include="Assets\Raleway-Regular.ttf" />
-    <AndroidAsset Include="Assets\Raleway-SemiBold.ttf" />
-    <AndroidAsset Include="Assets\Raleway-SemiBoldItalic.ttf" />
-    <AndroidAsset Include="Assets\Raleway-Thin.ttf" />
-    <AndroidAsset Include="Assets\Raleway-ThinItalic.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-ThinItalic.ttf" />
     <AndroidAsset Include="Assets\Raleway-Black.ttf" />
     <AndroidAsset Include="Assets\Raleway-BlackItalic.ttf" />
     <AndroidAsset Include="Assets\Raleway-Bold.ttf" />
@@ -84,16 +78,22 @@
     <AndroidAsset Include="Assets\Raleway-Italic.ttf" />
     <AndroidAsset Include="Assets\Raleway-Light.ttf" />
     <AndroidAsset Include="Assets\Raleway-LightItalic.ttf" />
-    <AndroidAsset Include="Assets\ROBOTOMONO-LIGHT.TTF" />
-    <AndroidAsset Include="Assets\ROBOTOMONO-MEDIUM.TTF" />
-    <AndroidAsset Include="Assets\ROBOTOMONO-REGULAR.TTF" />
-    <AndroidAsset Include="Assets\ROBOTOMONO-THIN.TTF" />
-    <AndroidAsset Include="Assets\ROBOTOMONO-LIGHTITALIC.TTF" />
-    <AndroidAsset Include="Assets\ROBOTOMONO-MEDIUMITALIC.TTF" />
-    <AndroidAsset Include="Assets\ROBOTOMONO-BOLD.TTF" />
-    <AndroidAsset Include="Assets\ROBOTOMONO-BOLDITALIC.TTF" />
-    <AndroidAsset Include="Assets\ROBOTOMONO-ITALIC.TTF" />
-    <AndroidAsset Include="Assets\ROBOTOMONO-THINITALIC.TTF" />
+    <AndroidAsset Include="Assets\Raleway-Medium.ttf" />
+    <AndroidAsset Include="Assets\Raleway-MediumItalic.ttf" />
+    <AndroidAsset Include="Assets\Raleway-Regular.ttf" />
+    <AndroidAsset Include="Assets\Raleway-SemiBold.ttf" />
+    <AndroidAsset Include="Assets\Raleway-SemiBoldItalic.ttf" />
+    <AndroidAsset Include="Assets\Raleway-Thin.ttf" />
+    <AndroidAsset Include="Assets\Raleway-ThinItalic.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-Bold.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-BoldItalic.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-Italic.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-Light.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-LightItalic.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-Medium.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-MediumItalic.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-Regular.ttf" />
+    <AndroidAsset Include="Assets\RobotoMono-Thin.ttf" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
