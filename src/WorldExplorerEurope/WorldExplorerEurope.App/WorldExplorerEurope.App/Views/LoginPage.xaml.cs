@@ -30,13 +30,13 @@ namespace WorldExplorerEurope.App.Views
                 case "Email":
                     e.DataFormItem = new DataFormTextItem() { Name = "Email", Editor = "Text", PlaceHolderText = "Enter Email", KeyBoard = Keyboard.Email };
                     e.DataFormItem.HintLabelStyle =  new LabelStyle() { FontFamily = Device.OnPlatform("Raleway-Light.ttf", "Raleway-Light.ttf#Raleway Light", "Assets/Fonts/Raleway-Light.ttf#Raleway Light"), FontSize = 16 };
-                    e.DataFormItem.HelperLabelStyle = new LabelStyle() { FontFamily = Device.OnPlatform("ROBOTOMONO-REGULAR.TTF", "ROBOTOMONO-REGULAR.TTF#ROBOTO MONO", "Assets/Fonts/ROBOTOMONO-REGULAR.TTF#ROBOTO MONO"), FontSize = 16 };
+                    e.DataFormItem.HelperLabelStyle = new LabelStyle() { FontFamily = Device.OnPlatform("ROBOTOMONO-REGULAR.TTF", "ROBOTOMONO-REGULAR.TTF#ROBOTO MONO", "Assets/Fonts/ROBOTOMONO-REGULAR.TTF#ROBOTO MONO")};
 
                     break;
                 case "Password":
                     e.DataFormItem = new DataFormTextItem() { Name = "Password", Editor = "Password", PlaceHolderText = "Enter Password", KeyBoard = Keyboard.Text };
                     e.DataFormItem.HintLabelStyle = new LabelStyle() { FontFamily = Device.OnPlatform("Raleway-Light.ttf", "Raleway-Light.ttf#Raleway Light", "Assets/Fonts/Raleway-Light.ttf#Raleway Light"), FontSize = 16 };
-                    e.DataFormItem.HelperLabelStyle = new LabelStyle() { FontFamily = Device.OnPlatform("ROBOTOMONO-REGULAR.TTF", "ROBOTOMONO-REGULAR.TTF#ROBOTO MONO", "Assets/Fonts/ROBOTOMONO-REGULAR.TTF#ROBOTO MONO"), FontSize = 16 };
+                    e.DataFormItem.HelperLabelStyle = new LabelStyle() { FontFamily = Device.OnPlatform("ROBOTOMONO-REGULAR.TTF", "ROBOTOMONO-REGULAR.TTF#ROBOTO MONO", "Assets/Fonts/ROBOTOMONO-REGULAR.TTF#ROBOTO MONO") };
                     break;
             }
         }
