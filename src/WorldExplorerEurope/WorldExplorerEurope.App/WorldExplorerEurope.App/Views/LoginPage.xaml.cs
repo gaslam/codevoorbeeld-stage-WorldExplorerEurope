@@ -20,6 +20,22 @@ namespace WorldExplorerEurope.App.Views
             BindingContext = loginViewModel;
             btnLogin.Command = loginViewModel.LoginCommand;
             dataForm.DataObject = loginViewModel.newUser;
+            SizeChanged += ChangeMainPageSize;
+        }
+
+        private void ChangeMainPageSize(object sender, EventArgs e)
+        {
+            bool portrait = this.Height > this.Width;
+            if(portrait == true)
+            {
+                txtLogin.Margin = new Thickness { Top = 40 };
+                txtLogin.FontSize = 80;
+            }
+            else
+            {
+                txtLogin.Margin = new Thickness(0, 0, 0, 0);
+                txtLogin.FontSize = 60;
+            }
         }
 
         private void DataForm_AutoGeneratingDataFormItem(object sender, AutoGeneratingDataFormItemEventArgs e)
