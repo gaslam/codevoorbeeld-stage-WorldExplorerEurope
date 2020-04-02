@@ -16,7 +16,7 @@ namespace WorldExplorerEurope.App.Views
         public LoginPage()
         {
             InitializeComponent();
-            LoginViewModel loginViewModel = new LoginViewModel();
+            LoginViewModel loginViewModel = new LoginViewModel(Navigation);
             BindingContext = loginViewModel;
             btnLogin.Command = loginViewModel.LoginCommand;
             dataForm.DataObject = loginViewModel.newUser;
