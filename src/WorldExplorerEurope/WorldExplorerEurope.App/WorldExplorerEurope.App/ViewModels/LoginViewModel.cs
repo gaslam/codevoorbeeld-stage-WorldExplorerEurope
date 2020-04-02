@@ -12,15 +12,17 @@ using WorldExplorerEurope.App.Domain.DTO;
 using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services.API;
 using WorldExplorerEurope.App.ViewModels.Syncfusion;
+using WorldExplorerEurope.App.Views;
 using Xamarin.Forms;
 
 namespace WorldExplorerEurope.App.ViewModels
 {
     public class LoginViewModel
     {
-
-        public LoginViewModel()
+        private INavigation Navigation; 
+        public LoginViewModel(INavigation PageNav)
         {
+            Navigation = PageNav;
             this.user = new UserLogin();
         }
 
@@ -53,26 +55,8 @@ namespace WorldExplorerEurope.App.ViewModels
         public ICommand RegisterCommand => new Command(
             async () =>
                 {
-
+                    await Navigation.PushModalAsync(new RegisterPage(), true);
                 }
             );
-
-        private void DataForm_AutoGeneratingDataFormItem(object sender, AutoGeneratingDataFormItemEventArgs e)
-        {
-            var name = e.DataFormItem.Name;
-            /*switch (name)
-            {
-                case "Email":
-                    e.DataFormItem = new DataFormTextItem() { Name = "Email", Editor = "Text", PlaceHolderText = "Enter Email", KeyBoard = Keyboard.Email };
-                    e.DataFormItem.HintLabelStyle = new LabelStyle { FontFamily = Device.OnPlatform("ROBOTOMONO-REGULAR", "ROBOTOMONO-REGULAR.TTF#ROBOTOMONO-REGULAR", "Assets/Fonts/ROBOTOMONO-REGULAR.TTF#ROBOTOMONO"), FontSize = 16 };
-                    e.DataFormItem.HelperLabelStyle = new LabelStyle { FontFamily = Device.OnPlatform("ROBOTOMONO-REGULAR", "ROBOTOMONO-REGULAR.TTF#ROBOTOMONO-REGULAR", "Assets/Fonts/ROBOTOMONO-REGULAR.TTF#ROBOTOMONO")};
-                    break;
-                case "Password":
-                    e.DataFormItem = new DataFormTextItem() { Name = "Password", Editor = "Password", PlaceHolderText = "Enter Password", KeyBoard = Keyboard.Text };
-                    e.DataFormItem.HintLabelStyle = new LabelStyle { FontFamily = Device.OnPlatform("ROBOTOMONO-REGULAR", "ROBOTOMONO-REGULAR.TTF#ROBOTOMONO-REGULAR", "Assets/Fonts/ROBOTOMONO-REGULAR.TTF#ROBOTOMONO"), FontSize = 16 };
-                    e.DataFormItem.HelperLabelStyle = new LabelStyle { FontFamily = Device.OnPlatform("ROBOTOMONO-REGULAR", "ROBOTOMONO-REGULAR.TTF#ROBOTOMONO-REGULAR", "Assets/Fonts/ROBOTOMONO-REGULAR.TTF#ROBOTOMONO") };
-                    break;
-            }*/
-        }
     }
 }

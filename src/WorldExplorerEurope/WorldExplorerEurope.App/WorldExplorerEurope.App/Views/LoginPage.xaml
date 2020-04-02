@@ -36,7 +36,7 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
                 </dataform:SfDataForm>
                 <Label Text="No Account yet?" TextColor="Blue" TextDecorations="Underline" Grid.Column="1"  Grid.Row="4">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer ></TapGestureRecognizer>
+                        <TapGestureRecognizer Command="{Binding RegisterCommand}" ></TapGestureRecognizer>
                     </Label.GestureRecognizers>
                     <Label.FontFamily>
                         <OnPlatform x:TypeArguments="x:String">
