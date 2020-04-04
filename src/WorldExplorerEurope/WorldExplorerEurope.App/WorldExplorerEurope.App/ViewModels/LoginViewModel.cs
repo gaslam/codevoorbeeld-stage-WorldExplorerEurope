@@ -19,11 +19,15 @@ namespace WorldExplorerEurope.App.ViewModels
 {
     public class LoginViewModel
     {
-        private INavigation Navigation; 
-        public LoginViewModel(INavigation PageNav)
+        private INavigation Navigation;
+
+        private readonly SfDataForm dataForm;
+
+        public LoginViewModel(INavigation PageNav, SfDataForm dataForm)
         {
             Navigation = PageNav;
             this.user = new UserLogin();
+            this.dataForm = dataForm;
         }
 
         private UserLogin user;
@@ -32,7 +36,6 @@ namespace WorldExplorerEurope.App.ViewModels
             get { return user; }
             set { this.user = value; }
         }
-
 
         public ICommand LoginCommand => new Command(
             async () =>
