@@ -31,7 +31,7 @@
                             </OnPlatform>
                         </Label.FontFamily>
                     </Label>
-                    <dataform:SfDataForm x:Name="dataForm" LayoutOptions="TextInputLayout" ContainerType="Outlined" LabelPosition="Top" AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" >
+                    <dataform:SfDataForm x:Name="dataForm" ContainerType="Outlined" ValidationMode="LostFocus" LabelPosition="Top" AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" >
                     </dataform:SfDataForm>
                     <Button x:Name="btnRegister" Text="Register" Grid.Column="1" Grid.Row="3" Padding="5" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93">
                         <Button.FontFamily>
