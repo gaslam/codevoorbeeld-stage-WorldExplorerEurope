@@ -63,7 +63,7 @@ namespace WorldExplorerEurope.App.ViewModels.Syncfusion
             }
         }
 
-        private DateTime birthdate;
+        private DateTime birthdate = DateTime.Now;
         public DateTime BirthDate
         {
             get { return birthdate; }
@@ -86,7 +86,6 @@ namespace WorldExplorerEurope.App.ViewModels.Syncfusion
         }
 
         private string passwordRepeat;
-        [Display(Name ="Repeat password")]
         public string PasswordRepeat
         {
             get { return passwordRepeat; }
@@ -141,8 +140,11 @@ namespace WorldExplorerEurope.App.ViewModels.Syncfusion
                 if (string.IsNullOrEmpty(Password) || string.IsNullOrWhiteSpace(Password))
                     list.Add("Please, enter a password");
 
-                if (!Regex.IsMatch(Password, "^.*(?=.{10,})(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$"))
-                    list.Add("Please, enter a password");
+                if (!Regex.IsMatch(Password, "^.*(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*$"))
+                    list.Add("Password must contain at least 1 Upper/lower case letter and a digit.");
+                if (Password.Length < 10)
+                    list.Add("Password must at least have 10 characters.");
+
                 if (PasswordRepeat != Password && PasswordRepeat != null)
                     list.Add("Passwords do not match.");
             }
@@ -153,10 +155,15 @@ namespace WorldExplorerEurope.App.ViewModels.Syncfusion
                     list.Add("Passwords do not match.");
             }
 
-            if (propertyName.Equals("Birthdate"))
+            if (propertyName.Equals(nameof(BirthDate)))
             {
                 var currentDate = DateTime.Now;
-                if (BirthDate.AddYears(12) > currentDate)
+                if (BirthDate.Date > currentDate.Date)
+                {
+                    list.Add("Obviously, you cannot be born in the future");
+                    return list;
+                }
+                if (BirthDate.Date.AddYears(12) > currentDate.Date)
                     list.Add("You must be 12 years or older");
             }
 
