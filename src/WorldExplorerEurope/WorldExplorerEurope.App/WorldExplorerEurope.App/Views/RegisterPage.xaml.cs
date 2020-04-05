@@ -21,7 +21,7 @@ namespace WorldExplorerEurope.App.Views
         public RegisterPage()
         {
             InitializeComponent();
-            RegisterViewModel registerViewModel = new RegisterViewModel();
+            RegisterViewModel registerViewModel = new RegisterViewModel(dataForm);
             BindingContext = registerViewModel;
             dataForm.DataObject = registerViewModel.newUser;
         }

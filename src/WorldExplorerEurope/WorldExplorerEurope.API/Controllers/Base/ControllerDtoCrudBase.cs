@@ -42,7 +42,6 @@ namespace WorldExplorerEurope.API.Controllers.Base
             {
                 return BadRequest(ModelState);
             }
-
             var addedEntity = _mappingRepository.Add(dto);
 
             if (addedEntity == null)

@@ -40,6 +40,27 @@ namespace WorldExplorerEurope.API.Controllers
             }
             return Ok(user);
         }
+        [HttpPost("register")]
+        public async Task<IActionResult>addUser([FromBody]UserDto user)
+        {
+            var existingUser = _userMappingRepo.GetAll().FirstOrDefault(m => m.Email == user.Email);
+            if(existingUser != null)
+            {
+                return BadRequest("User already exists");
+            }
+
+            try
+            {
+                var hasher = new PasswordHasher<UserDto>();
+                user.Password = hasher.HashPassword(user, user.Password);
+                await _userMappingRepo.Add(user);
+                return Ok(user);
+            }
+            catch
+            {
+                return BadRequest("User cannot be added");
+            }
+        }
 
         [HttpGet("all")]
         public async Task<IActionResult> GetAllBasicUsers()
