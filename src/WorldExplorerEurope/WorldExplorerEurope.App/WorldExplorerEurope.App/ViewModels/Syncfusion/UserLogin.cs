@@ -43,6 +43,18 @@ namespace WorldExplorerEurope.App.ViewModels.Syncfusion
             get { return false; }
         }
 
+        private string errorMessage;
+        [Display(AutoGenerateField = false)]
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set
+            {
+                this.errorMessage = value;
+                RaisePropertyChanged(nameof(ErrorMessage));
+            }
+        }
+
         private void RaisePropertyChanged(string property)
         {
             if (PropertyChanged != null)

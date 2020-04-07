@@ -104,6 +104,18 @@ namespace WorldExplorerEurope.App.ViewModels.Syncfusion
             }
         }
 
+        private string errorMessage;
+        [Display(AutoGenerateField = false)]
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set
+            {
+                this.errorMessage = value;
+                RaisePropertyChanged(nameof(ErrorMessage));
+            }
+        }
+
         [Display(AutoGenerateField = false)]
         public bool HasErrors
         {
