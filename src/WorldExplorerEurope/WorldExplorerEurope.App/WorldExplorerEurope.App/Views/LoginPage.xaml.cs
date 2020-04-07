@@ -47,13 +47,13 @@ namespace WorldExplorerEurope.App.Views
             {
                 case "Email":
                     e.DataFormItem = new DataFormTextItem() { Name = "Email", Editor = "Text", PlaceHolderText = "Enter Email", KeyBoard = Keyboard.Email };
-                    e.DataFormItem.HintLabelStyle =  new LabelStyle() { FontFamily = Device.OnPlatform("Raleway-Light.ttf", "Raleway-Light.ttf#Raleway", "Assets/Fonts/Raleway-Light.ttf#Raleway"), FontSize = 16 };
+                    e.DataFormItem.HintLabelStyle =  new LabelStyle() { FontFamily = Device.OnPlatform("Raleway-Light.ttf", "Raleway-Light.ttf#Raleway", "Assets/Fonts/RALEWAY-LIGHT.TTF#Raleway"), FontSize = 16 };
                     e.DataFormItem.HelperLabelStyle = new LabelStyle() { FontFamily = Device.OnPlatform("RobotoMono-Bold.ttf", "RobotoMono-Bold.ttf#Roboto-Mono", "Assets/Fonts/RobotoMono-Bold.ttf#Roboto-Mono") };
 
                     break;
                 case "Password":
                     e.DataFormItem = new DataFormTextItem() { Name = "Password", Editor = "Password", PlaceHolderText = "Enter Password", KeyBoard = Keyboard.Text };
-                    e.DataFormItem.HintLabelStyle = new LabelStyle() { FontFamily = Device.OnPlatform("Raleway-Light.ttf", "Raleway-Light.ttf#Raleway", "Assets/Fonts/Raleway-Light.ttf#Raleway"), FontSize = 16 };
+                    e.DataFormItem.HintLabelStyle = new LabelStyle() { FontFamily = Device.OnPlatform("Raleway-Light.ttf", "Raleway-Light.ttf#Raleway", "Assets/Fonts/RALEWAY-LIGHT.TTF#Raleway"), FontSize = 16 };
                     e.DataFormItem.HelperLabelStyle = new LabelStyle() { FontFamily = Device.OnPlatform("RobotoMono-Bold.ttf", "RobotoMono-Bold.ttf#Roboto-Mono", "Assets/Fonts/RobotoMono-Bold.ttf#Roboto-Mono") };
                     break;
             }
