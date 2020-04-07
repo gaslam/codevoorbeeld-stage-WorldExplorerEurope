@@ -157,58 +157,58 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-BlackItalic.ttf" />
+    <Content Include="Assets\Fonts\Raleway-BlackItalic.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-Bold.ttf" />
+    <Content Include="Assets\Fonts\Raleway-Bold.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-BoldItalic.ttf" />
+    <Content Include="Assets\Fonts\Raleway-BoldItalic.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-ExtraBold.ttf" />
+    <Content Include="Assets\Fonts\Raleway-ExtraBold.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-ExtraBoldItalic.ttf" />
+    <Content Include="Assets\Fonts\Raleway-ExtraBoldItalic.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-ExtraLight.ttf" />
+    <Content Include="Assets\Fonts\Raleway-ExtraLight.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-ExtraLightItalic.ttf" />
+    <Content Include="Assets\Fonts\Raleway-ExtraLightItalic.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-Italic.ttf" />
+    <Content Include="Assets\Fonts\Raleway-Italic.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-Light.ttf" />
+    <Content Include="Assets\Fonts\Raleway-Light.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-LightItalic.ttf" />
+    <Content Include="Assets\Fonts\Raleway-LightItalic.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-Medium.ttf" />
+    <Content Include="Assets\Fonts\Raleway-Medium.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-MediumItalic.ttf" />
+    <Content Include="Assets\Fonts\Raleway-MediumItalic.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-Regular.ttf" />
+    <Content Include="Assets\Fonts\Raleway-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-SemiBold.ttf" />
+    <Content Include="Assets\Fonts\Raleway-SemiBold.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-SemiBoldItalic.ttf" />
+    <Content Include="Assets\Fonts\Raleway-SemiBoldItalic.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-Thin.ttf" />
+    <Content Include="Assets\Fonts\Raleway-Thin.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-ThinItalic.ttf" />
+    <Content Include="Assets\Fonts\Raleway-ThinItalic.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Fonts\Raleway-Black.ttf" />
+    <Content Include="Assets\Fonts\Raleway-Black.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Fonts\RobotoMono-Bold.ttf" />

@@ -11,13 +11,15 @@
             <ScrollView VerticalScrollBarVisibility="Always">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition>
+                            <RowDefinition.Height>
+                                <OnPlatform x:TypeArguments="GridLength">
+                                    <On Platform="Android">660</On>
+                                    <On Platform="UWP">700</On>
+                                </OnPlatform>
+                            </RowDefinition.Height></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
@@ -27,29 +29,29 @@
                         <ColumnDefinition Width="150"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Label Text="Register" x:Name="txtLogin" FontAttributes="Bold" Grid.Column="1"  Grid.ColumnSpan="2" Grid.Row="2" HorizontalTextAlignment="Center" TextColor="#2e2e2c">
+                    <Label Text="Register" x:Name="txtLogin" FontAttributes="Bold" Grid.Column="1"  Grid.ColumnSpan="2" Grid.Row="1" HorizontalTextAlignment="Center" TextColor="#2e2e2c" FontSize="60">
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
-                                <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
                             </OnPlatform>
                         </Label.FontFamily>
                     </Label>
-                    <dataform:SfDataForm x:Name="dataForm" LayoutOptions="TextInputLayout" ContainerType="Outlined" LabelPosition="Top" AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3">
+                    <dataform:SfDataForm x:Name="dataForm" ContainerType="Outlined" ValidationMode="LostFocus" LayoutOptions="TextInputLayout" LabelPosition="Top" AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" >
                     </dataform:SfDataForm>
-                    <Button x:Name="btnRegister" Text="Register" Grid.Column="1" Grid.Row="4" Padding="5" Margin="0,10,0,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100">
+                    <Button x:Name="btnRegister" Text="Register" Grid.Column="1" Grid.Row="3" Padding="5" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" Command="{Binding RegisterCommand}">
                         <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
-                                <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
                             </OnPlatform>
                         </Button.FontFamily>
                     </Button>
-                    <Button x:Name="btnCancel" Text="Cancel" Grid.Column="2" Grid.Row="4" Padding="5" Margin="0,10,0,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#FE5F55" BorderColor="#FA9A94" TextColor="White" WidthRequest="100">
+                    <Button x:Name="btnCancel" Text="Cancel" Grid.Column="2" Grid.Row="3" Padding="5" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#FE5F55" BorderColor="#FA9A94" TextColor="White">
                         <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
-                                <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
                             </OnPlatform>
                         </Button.FontFamily>
                     </Button>

@@ -19,12 +19,14 @@ namespace WorldExplorerEurope.App.ViewModels
 {
     public class LoginViewModel
     {
-        private INavigation Navigation; 
+        private INavigation Navigation;
+
         public LoginViewModel(INavigation PageNav)
         {
             Navigation = PageNav;
             this.user = new UserLogin();
         }
+        public SfDataForm DataForm;
 
         private UserLogin user;
         public UserLogin newUser
@@ -33,25 +35,29 @@ namespace WorldExplorerEurope.App.ViewModels
             set { this.user = value; }
         }
 
-
         public ICommand LoginCommand => new Command(
             async () =>
             {
-                UserLoginDto userLogin = new UserLoginDto
+                bool isValid = DataForm.Validate();
+                if(isValid == true)
                 {
-                    Email = newUser.Email,
-                    Password = newUser.Password
-                };
-                using (var httpClient = new HttpClient())
-                {
-                    string url = $"{WorldExplorerAPIService.BaseUrl}/users/login";
-                    var rawJSON = JsonConvert.SerializeObject(userLogin);
-                    var content = new StringContent(rawJSON, Encoding.UTF8, "application/json");
-                    HttpResponseMessage responseMessage = await httpClient.PostAsync(url, content);
-                    var user = JsonConvert.DeserializeObject<User>(await responseMessage.Content.ReadAsStringAsync());
-                    Debug.WriteLine($"{user.FirstName} {user.LastName} has logged in successfully");
+                    UserLoginDto userLogin = new UserLoginDto
+                    {
+                        Email = newUser.Email,
+                        Password = newUser.Password
+                    };
+                    using (var httpClient = new HttpClient())
+                    {
+                        string url = $"{WorldExplorerAPIService.BaseUrl}/users/login";
+                        var rawJSON = JsonConvert.SerializeObject(userLogin);
+                        var content = new StringContent(rawJSON, Encoding.UTF8, "application/json");
+                        HttpResponseMessage responseMessage = await httpClient.PostAsync(url, content);
+                        var user = JsonConvert.DeserializeObject<User>(await responseMessage.Content.ReadAsStringAsync());
+                        Debug.WriteLine($"{user.FirstName} {user.LastName} has logged in successfully");
+                    }
                 }
             });
+
         public ICommand RegisterCommand => new Command(
             async () =>
                 {
