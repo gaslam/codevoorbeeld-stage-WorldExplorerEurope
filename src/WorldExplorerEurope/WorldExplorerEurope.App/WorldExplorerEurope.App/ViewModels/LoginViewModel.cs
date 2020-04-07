@@ -46,15 +46,6 @@ namespace WorldExplorerEurope.App.ViewModels
                         Email = newUser.Email,
                         Password = newUser.Password
                     };
-                    using (var httpClient = new HttpClient())
-                    {
-                        string url = $"{WorldExplorerAPIService.BaseUrl}/users/login";
-                        var rawJSON = JsonConvert.SerializeObject(userLogin);
-                        var content = new StringContent(rawJSON, Encoding.UTF8, "application/json");
-                        HttpResponseMessage responseMessage = await httpClient.PostAsync(url, content);
-                        var user = JsonConvert.DeserializeObject<User>(await responseMessage.Content.ReadAsStringAsync());
-                        Debug.WriteLine($"{user.FirstName} {user.LastName} has logged in successfully");
-                    }
                 }
             });
 
