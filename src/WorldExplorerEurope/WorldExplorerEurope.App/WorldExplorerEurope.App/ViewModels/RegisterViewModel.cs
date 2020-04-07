@@ -50,7 +50,9 @@ namespace WorldExplorerEurope.App.ViewModels
                 else if (!request.IsSuccessStatusCode) newUser.ErrorMessage = await request.Content.ReadAsStringAsync();
                 else
                 {
-                    Debug.WriteLine("connection successfull!!");
+                    var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
+                    UserService userService = new UserService();
+                    userService.SetUser(user);
                 }
             }
         });

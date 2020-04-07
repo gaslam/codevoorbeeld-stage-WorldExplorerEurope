@@ -9,12 +9,12 @@ namespace WorldExplorerEurope.App.Domain.Services
     public class UserService
     {
 
-        private void SetUser(User newUser)
+        public void SetUser(User newUser)
         {
             Application.Current.Properties["User"] = newUser;
         }
 
-        private User GetUser()
+        public User GetUser()
         {
             if (Application.Current.Properties.ContainsKey("user"))
             {
