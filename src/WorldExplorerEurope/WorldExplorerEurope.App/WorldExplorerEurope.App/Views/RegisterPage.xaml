@@ -13,7 +13,13 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="630"></RowDefinition>
+                        <RowDefinition>
+                            <RowDefinition.Height>
+                                <OnPlatform x:TypeArguments="GridLength">
+                                    <On Platform="Android">660</On>
+                                    <On Platform="UWP">700</On>
+                                </OnPlatform>
+                            </RowDefinition.Height></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
@@ -27,17 +33,17 @@
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
-                                <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
                             </OnPlatform>
                         </Label.FontFamily>
                     </Label>
-                    <dataform:SfDataForm x:Name="dataForm" ContainerType="Outlined" ValidationMode="LostFocus" LabelPosition="Top" AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" >
+                    <dataform:SfDataForm x:Name="dataForm" ContainerType="Outlined" ValidationMode="LostFocus" LayoutOptions="TextInputLayout" LabelPosition="Top" AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" >
                     </dataform:SfDataForm>
                     <Button x:Name="btnRegister" Text="Register" Grid.Column="1" Grid.Row="3" Padding="5" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" Command="{Binding RegisterCommand}">
                         <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
-                                <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
                             </OnPlatform>
                         </Button.FontFamily>
                     </Button>
@@ -45,7 +51,7 @@
                         <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
-                                <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
                             </OnPlatform>
                         </Button.FontFamily>
                     </Button>
