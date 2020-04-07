@@ -7,13 +7,14 @@ using System.Net.Http;
 using System.Text;
 using System.Windows.Input;
 using WorldExplorerEurope.App.Domain.Models;
+using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Domain.Services.API;
 using WorldExplorerEurope.App.ViewModels.Syncfusion;
 using Xamarin.Forms;
 
 namespace WorldExplorerEurope.App.ViewModels
 {
-    public class RegisterViewModel
+    public class RegisterViewModel : APIservice
     {
         private readonly SfDataForm _dataForm;
         public RegisterViewModel(SfDataForm dataForm)
@@ -39,18 +40,17 @@ namespace WorldExplorerEurope.App.ViewModels
                 Email = newUser.Email,
                 BirthDate = newUser.BirthDate,
                 Nationality = newUser.Nationality,
+                Password = newUser.Password,
                 IsAdmin = false
             };
             if (_dataForm.Validate() == true)
             {
-                using (var httpClient = new HttpClient())
+                var request = await Post($"{WorldExplorerAPIService.BaseUrl}/users/register", JsonConvert.SerializeObject(createdUser));
+                if (request == null) await App.Current.MainPage.DisplayAlert("Service not reachable!!", "Cannot connect to WorldExplorerService.\n\nCheck your wifi settings or try later to connect!!", "OK");
+                else if (!request.IsSuccessStatusCode) newUser.ErrorMessage = await request.Content.ReadAsStringAsync();
+                else
                 {
-                    string url = $"{WorldExplorerAPIService.BaseUrl}/users/register";
-                    var rawJSON = JsonConvert.SerializeObject(newUser);
-                    var content = new StringContent(rawJSON, Encoding.UTF8, "application/json");
-                    HttpResponseMessage responseMessage = await httpClient.PostAsync(url, content);
-                    var user = JsonConvert.DeserializeObject<User>(await responseMessage.Content.ReadAsStringAsync());
-                    Debug.WriteLine($"{user.FirstName} {user.LastName} has logged in successfully");
+                    Debug.WriteLine("connection successfull!!");
                 }
             }
         });

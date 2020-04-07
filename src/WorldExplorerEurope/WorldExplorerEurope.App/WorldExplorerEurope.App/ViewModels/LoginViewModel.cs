@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using WorldExplorerEurope.App.Domain.DTO;
 using WorldExplorerEurope.App.Domain.Models;
+using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Domain.Services.API;
 using WorldExplorerEurope.App.ViewModels.Syncfusion;
 using WorldExplorerEurope.App.Views;
@@ -17,7 +18,7 @@ using Xamarin.Forms;
 
 namespace WorldExplorerEurope.App.ViewModels
 {
-    public class LoginViewModel
+    public class LoginViewModel : APIservice
     {
         private INavigation Navigation;
 
@@ -35,6 +36,7 @@ namespace WorldExplorerEurope.App.ViewModels
             set { this.user = value; }
         }
 
+
         public ICommand LoginCommand => new Command(
             async () =>
             {
@@ -46,6 +48,13 @@ namespace WorldExplorerEurope.App.ViewModels
                         Email = newUser.Email,
                         Password = newUser.Password
                     };
+                    var request = await Post($"{WorldExplorerAPIService.BaseUrl}/users/login", JsonConvert.SerializeObject(userLogin));
+                    if (request == null) await App.Current.MainPage.DisplayAlert("Service not reachable!!", "Cannot connect to WorldExplorerService.\n\nCheck your wifi settings or try later to connect!!", "OK");
+                    else if (!request.IsSuccessStatusCode) newUser.ErrorMessage = await request.Content.ReadAsStringAsync();
+                    else
+                    {
+                        Debug.WriteLine("connection successfull!!");
+                    }
                 }
             });
 
