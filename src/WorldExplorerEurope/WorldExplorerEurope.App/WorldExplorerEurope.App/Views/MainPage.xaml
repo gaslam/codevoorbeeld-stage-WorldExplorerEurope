@@ -9,10 +9,16 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
 
     <StackLayout>
         <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
-        <listview:SfListView x:Name="listView" ItemsSource=""/>
+        <Grid>
+            <listview:SfListView x:Name="listView" ItemsSource="">
+                <listview:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                        </Grid>
+                    </DataTemplate>
+                </listview:SfListView.ItemTemplate>
+            </listview:SfListView>
+        </Grid>
         <Button Padding="5" Text="Go to Login" Clicked="Button_Clicked"></Button>
     </StackLayout>
 
