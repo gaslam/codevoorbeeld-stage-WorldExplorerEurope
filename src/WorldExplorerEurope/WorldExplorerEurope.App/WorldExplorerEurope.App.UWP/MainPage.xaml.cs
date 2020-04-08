@@ -1,3 +1,5 @@
+using FFImageLoading.Forms.Platform;
+using FFImageLoading.Svg.Forms;
 using Syncfusion.ListView.XForms.UWP;
 using System;
 using System.Collections.Generic;
@@ -22,6 +24,8 @@ namespace WorldExplorerEurope.App.UWP
         {
             this.InitializeComponent();
             SfListViewRenderer.Init();
+            CachedImageRenderer.Init();
+            var ignore = typeof(SvgCachedImage);
             LoadApplication(new WorldExplorerEurope.App.App());
         }
     }
