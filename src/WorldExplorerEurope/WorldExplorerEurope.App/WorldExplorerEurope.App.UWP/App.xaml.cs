@@ -1,3 +1,4 @@
+using Syncfusion.ListView.XForms.UWP;
 using Syncfusion.XForms.UWP.DataForm;
 using System.Reflection;
 using System;
@@ -62,6 +63,7 @@ namespace WorldExplorerEurope.App.UWP
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
                 List<Assembly> assembliesToInclude = new List<Assembly>();
+                assembliesToInclude.Add(typeof(SfListViewRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(SfDataFormRenderer).GetTypeInfo().Assembly);
                 Xamarin.Forms.Forms.Init(e, assembliesToInclude);
 
