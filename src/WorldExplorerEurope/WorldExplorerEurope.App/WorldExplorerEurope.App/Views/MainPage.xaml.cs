@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WorldExplorerEurope.App.ViewModels;
 using Xamarin.Forms;
 
 namespace WorldExplorerEurope.App.Views
@@ -15,7 +16,9 @@ namespace WorldExplorerEurope.App.Views
     {
         public MainPage()
         {
+            MainPageViewModel mainPageViewModel = new MainPageViewModel();
             InitializeComponent();
+            SfListViewCountries.ItemsSource = mainPageViewModel.Countries;
         }
 
         private async void Button_Clicked(object sender, EventArgs e)

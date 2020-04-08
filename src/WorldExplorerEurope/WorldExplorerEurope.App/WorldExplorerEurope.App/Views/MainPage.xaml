@@ -12,12 +12,19 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
     <StackLayout>
         <!-- Place new controls here -->
         <Grid>
-            <listview:SfListView x:Name="listView" ItemsSource="">
+            <listview:SfListView x:Name="SfListViewCountries" ItemSize="50">
                 <listview:SfListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <ffSvg:SvgCachedImage Source="" HeightRequest="60" WidthRequest="20"/>
-                            <Label Text="{Binding CountryName}" FontSize="30" FontAttributes="Bold">
+                        <Grid VerticalOptions="End">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" ></ColumnDefinition>
+                                <ColumnDefinition Width="400"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <ffSvg:SvgCachedImage Source="{Binding Flag}" Grid.Row="0" Grid.Column="1" WidthRequest="40" Margin="0,5,0,5" />
+                            <Label Text="{Binding Name}" FontSize="30" FontAttributes="Bold" Grid.Row="0" Grid.Column="2">
                                 <Label.FontFamily>
                                     <OnPlatform x:TypeArguments="x:String">
                                         <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
@@ -25,6 +32,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                                     </OnPlatform>
                                 </Label.FontFamily>
                             </Label>
+                            <BoxView BackgroundColor="Black" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="End"></BoxView>
                         </Grid>
                     </DataTemplate>
                 </listview:SfListView.ItemTemplate>

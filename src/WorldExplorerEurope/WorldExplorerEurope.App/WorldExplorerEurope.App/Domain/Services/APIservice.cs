@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,14 +12,14 @@ namespace WorldExplorerEurope.App.Domain.Services
 {
     public class APIservice : IAPIinterface
     {
-        public async Task<HttpResponseMessage> Get(string url)
+        public async Task<string> Get(string url)
         {
             try
             {
-                using (var httpClient = new HttpClient())
+                using (var webClient = new WebClient())
                 {
-                    HttpResponseMessage responseMessage = await httpClient.GetAsync(url);
-                    return responseMessage;
+                    string download = webClient.DownloadString(url);
+                    return download;
                 }
             }
             catch
