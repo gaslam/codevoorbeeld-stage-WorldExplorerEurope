@@ -5,10 +5,12 @@ using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Domain.Services.API;
 using WorldExplorerEurope.App.ViewModels.Syncfusion;
+using Xamarin.Forms;
 
 namespace WorldExplorerEurope.App.ViewModels
 {

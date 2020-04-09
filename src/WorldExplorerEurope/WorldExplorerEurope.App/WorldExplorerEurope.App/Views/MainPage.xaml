@@ -11,20 +11,53 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
 
     <StackLayout>
         <!-- Place new controls here -->
+        <Grid HorizontalOptions="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="500"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <SearchBar x:Name="srbFilter"
+                       Placeholder="Find Country.."
+                       Grid.Row="0" Grid.Column="0" WidthRequest="100">
+                <SearchBar.FontFamily>
+                    <OnPlatform x:TypeArguments="x:String">
+                        <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                        <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                    </OnPlatform>
+                </SearchBar.FontFamily>
+            </SearchBar>
+        </Grid>
         <Grid>
             <listview:SfListView x:Name="SfListViewCountries" ItemSize="50">
                 <listview:SfListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid VerticalOptions="End">
+                        <Grid VerticalOptions="End" x:Name="lsvGrid">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" ></ColumnDefinition>
-                                <ColumnDefinition Width="400"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition>
+                                    <ColumnDefinition.Width>
+                                        <OnPlatform x:TypeArguments="GridLength">
+                                            <On Platform="Android">330</On>
+                                            <On Platform="UWP">400</On>
+                                        </OnPlatform>
+                                    </ColumnDefinition.Width>
+                                </ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <ffSvg:SvgCachedImage Source="{Binding Flag}" Grid.Row="0" Grid.Column="1" WidthRequest="40" Margin="0,5,0,5" />
-                            <Label Text="{Binding Name}" FontSize="30" FontAttributes="Bold" Grid.Row="0" Grid.Column="2">
+                            <ffSvg:SvgCachedImage Source="{Binding Flag}" Grid.Row="0" Grid.Column="0" Margin="10,5,0,5" HeightRequest="30" WidthRequest="40">
+                                <ffSvg:SvgCachedImage.HorizontalOptions>
+                                    <OnPlatform x:TypeArguments="LayoutOptions">
+                                        <On Platform="Android">Start</On>
+                                        <On Platform="UWP">End</On>
+                                    </OnPlatform>
+                                </ffSvg:SvgCachedImage.HorizontalOptions>
+                            </ffSvg:SvgCachedImage>
+                            <Label Text="{Binding Name}" FontSize="30" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" HorizontalTextAlignment="Start" LineBreakMode="TailTruncation">
                                 <Label.FontFamily>
                                     <OnPlatform x:TypeArguments="x:String">
                                         <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
@@ -32,7 +65,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                                     </OnPlatform>
                                 </Label.FontFamily>
                             </Label>
-                            <BoxView BackgroundColor="Black" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" HeightRequest="1" HorizontalOptions="FillAndExpand" VerticalOptions="End"></BoxView>
+                            <BoxView BackgroundColor="Black" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" HeightRequest="1" VerticalOptions="End" HorizontalOptions="FillAndExpand"></BoxView>
                         </Grid>
                     </DataTemplate>
                 </listview:SfListView.ItemTemplate>

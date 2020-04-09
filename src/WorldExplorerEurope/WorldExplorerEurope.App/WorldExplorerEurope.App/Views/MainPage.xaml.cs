@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorldExplorerEurope.App.ViewModels;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WorldExplorerEurope.App.Views
