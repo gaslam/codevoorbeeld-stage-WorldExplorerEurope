@@ -15,9 +15,10 @@ namespace WorldExplorerEurope.App.Views
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        private readonly MainPageViewModel mainPageViewModel;
         public MainPage()
         {
-            MainPageViewModel mainPageViewModel = new MainPageViewModel();
+            mainPageViewModel = new MainPageViewModel();
             InitializeComponent();
             SfListViewCountries.ItemsSource = mainPageViewModel.Countries;
         }
@@ -25,6 +26,16 @@ namespace WorldExplorerEurope.App.Views
         private async void Button_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new LoginPage());
+        }
+
+        private void OnFilterChanged(object sender, TextChangedEventArgs e)
+        {
+            SearchBar searchBar = sender as SearchBar;
+            if(SfListViewCountries.DataSource != null && searchBar.Text != null)
+                SfListViewCountries.ItemsSource = mainPageViewModel.Countries.Where(m => m.Name.ToLower().Contains(searchBar.Text.ToLower()));
+            else
+                SfListViewCountries.ItemsSource = mainPageViewModel.Countries;
+
         }
     }
 }

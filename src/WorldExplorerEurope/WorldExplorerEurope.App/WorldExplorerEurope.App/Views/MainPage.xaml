@@ -21,7 +21,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
             </Grid.ColumnDefinitions>
             <SearchBar x:Name="srbFilter"
                        Placeholder="Find Country.."
-                       Grid.Row="0" Grid.Column="0" WidthRequest="100">
+                       Grid.Row="0" Grid.Column="0" WidthRequest="100" TextChanged="OnFilterChanged">
                 <SearchBar.FontFamily>
                     <OnPlatform x:TypeArguments="x:String">
                         <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
