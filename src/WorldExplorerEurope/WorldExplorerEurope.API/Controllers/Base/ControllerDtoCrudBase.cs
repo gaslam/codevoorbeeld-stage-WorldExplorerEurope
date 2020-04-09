@@ -20,7 +20,8 @@ namespace WorldExplorerEurope.API.Controllers.Base
         [HttpGet]
         public virtual async Task<IActionResult> ListAll()
         {
-            return Ok(await _mappingRepository.ListAll());
+            var dto = await _mappingRepository.ListAll();
+            return Ok(dto);
         }
 
         [HttpGet("{id}")]

@@ -1,3 +1,4 @@
+using Syncfusion.ListView.XForms.UWP;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,7 +20,8 @@ namespace WorldExplorerEurope.UWP
     {
         public MainPage()
         {
-            this.InitializeComponent();
+this.InitializeComponent();
+SfListViewRenderer.Init();
 
             LoadApplication(new WorldExplorerEurope.App());
         }
