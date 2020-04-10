@@ -348,5 +348,3 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-
-src/WorldExplorerEurope/WorldExplorerEurope.App/WorldExplorerEurope.App/Domain/Services/API/*
