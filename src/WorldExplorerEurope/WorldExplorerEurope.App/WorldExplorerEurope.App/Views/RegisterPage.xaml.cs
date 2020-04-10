@@ -18,10 +18,10 @@ namespace WorldExplorerEurope.App.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RegisterPage : ContentPage
     {
-        public RegisterPage()
+        public RegisterPage(INavigation navigation)
         {
             InitializeComponent();
-            RegisterViewModel registerViewModel = new RegisterViewModel(dataForm);
+            RegisterViewModel registerViewModel = new RegisterViewModel(dataForm, navigation);
             BindingContext = registerViewModel;
             dataForm.DataObject = registerViewModel.newUser;
         }

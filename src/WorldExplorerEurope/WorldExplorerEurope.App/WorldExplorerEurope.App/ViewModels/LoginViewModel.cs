@@ -63,7 +63,7 @@ namespace WorldExplorerEurope.App.ViewModels
         public ICommand RegisterCommand => new Command(
             async () =>
                 {
-                    await Navigation.PushModalAsync(new RegisterPage(), true);
+                    await Navigation.PushModalAsync(new RegisterPage(Navigation), true);
                 }
             );
     }

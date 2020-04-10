@@ -10,6 +10,7 @@ using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Domain.Services.API;
 using WorldExplorerEurope.App.ViewModels.Syncfusion;
+using WorldExplorerEurope.App.Views;
 using Xamarin.Forms;
 
 namespace WorldExplorerEurope.App.ViewModels
@@ -17,10 +18,12 @@ namespace WorldExplorerEurope.App.ViewModels
     public class RegisterViewModel : APIservice
     {
         private readonly SfDataForm _dataForm;
-        public RegisterViewModel(SfDataForm dataForm)
+        private readonly INavigation _navigation;
+        public RegisterViewModel(SfDataForm dataForm,INavigation navigation)
         {
             this.user = new UserRegister();
             this._dataForm = dataForm;
+            this._navigation = navigation;
         }
         private UserRegister user;
         public UserRegister newUser
@@ -56,5 +59,10 @@ namespace WorldExplorerEurope.App.ViewModels
                 }
             }
         });
+
+        public ICommand CancelCommand => new Command(
+            async () =>
+            {
+            });
     }
 }
