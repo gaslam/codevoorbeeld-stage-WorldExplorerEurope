@@ -7,9 +7,9 @@ namespace WorldExplorerEurope.API.Domain.Models
 {
     public class Wishlist : EntityBase
     {
-        public Guid CountryId { get; set; }
+        public Guid UserId { get; set; }
 
         [JsonIgnore]
-        public ICollection<UserWishlists> Wishlists { get; set; }
+        public ICollection<CountryWishlists> Wishlists { get; set; }
     }
 }

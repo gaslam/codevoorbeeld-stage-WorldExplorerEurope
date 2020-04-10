@@ -52,6 +52,8 @@ namespace WorldExplorerEurope.App.Views
                 case "BirthDate":
                     e.DataFormItem.LabelText = "Date of birth";
                     e.DataFormItem.Editor = "Date";
+                    (e.DataFormItem as DataFormDateItem).Format = "dd/MM/yyyy";
+                    (e.DataFormItem as DataFormDateItem).MaximumDate = DateTime.Now;
                     e.DataFormItem.HintLabelStyle = new LabelStyle() { FontFamily = Device.OnPlatform("Raleway-Light.ttf", "Raleway-Light.ttf#Raleway Light", "/Assets/Fonts/Raleway-Light.ttf#Raleway Light"), FontSize = 16 };
                     e.DataFormItem.HelperLabelStyle = new LabelStyle() { FontFamily = Device.OnPlatform("RobotoMono-Bold.ttf", "RobotoMono-Bold.ttf#Roboto Mono", "/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono") };
                     e.DataFormItem.ValidationLabelStyle = new LabelStyle() { FontFamily = Device.OnPlatform("Raleway-ExtraLight.ttf", "Raleway-ExtraLight.ttf#Raleway ExtraLight", "/Assets/Fonts/Raleway-ExtraLight.ttf#Raleway ExtraLight") };

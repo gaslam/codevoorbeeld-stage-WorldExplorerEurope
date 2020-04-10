@@ -14,9 +14,5 @@ namespace WorldExplorerEurope.API.Domain.Models
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
 
-        public ICollection<UserMemories> Memories { get; set; }
-        public ICollection<UserFavourites> Favourites { get; set; }
-        public ICollection<UserWishlists> Wishlists { get; set; }
-
     }
 }

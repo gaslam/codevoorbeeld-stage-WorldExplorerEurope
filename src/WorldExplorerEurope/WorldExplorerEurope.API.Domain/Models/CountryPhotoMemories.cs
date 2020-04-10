@@ -4,11 +4,11 @@ using System.Text;
 
 namespace WorldExplorerEurope.API.Domain.Models
 {
-    public class UserMemories
+    public class CountryPhotoMemories
     {
-        public Guid UserId { get; set; }
+        public Guid CountryId { get; set; }
         public Guid MemoryId { get; set; }
-        public User User { get; set; }
-        public Memory Memory { get; set; }
+        public Country Country { get; set; }
+        public PhotoMemory Memory { get; set; }
     }
 }

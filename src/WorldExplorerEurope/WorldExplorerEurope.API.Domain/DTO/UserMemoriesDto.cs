@@ -9,6 +9,6 @@ namespace WorldExplorerEurope.API.Domain.DTO
     public class UserMemoriesDto : EntityBase
     {
         public Guid UserId { get; set; }
-        public ICollection<MemoryDto> Memories { get; set; }
+        public ICollection<PhotoMemoryDto> Memories { get; set; }
     }
 }

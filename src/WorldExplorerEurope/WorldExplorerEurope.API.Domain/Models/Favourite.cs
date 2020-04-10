@@ -7,9 +7,9 @@ namespace WorldExplorerEurope.API.Domain.Models
 {
     public class Favourite : EntityBase
     {
-        public Guid CountryId { get; set; }
+        public Guid UserId { get; set; }
 
         [JsonIgnore]
-        public ICollection<UserFavourites> Favourites { get; set; }
+        public ICollection<CountryFavourites> Favourites { get; set; }
     }
 }

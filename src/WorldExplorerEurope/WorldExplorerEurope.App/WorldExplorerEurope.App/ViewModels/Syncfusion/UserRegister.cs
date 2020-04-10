@@ -63,12 +63,18 @@ namespace WorldExplorerEurope.App.ViewModels.Syncfusion
             }
         }
 
-        private DateTime birthdate = DateTime.Now;
+        private DateTime birthdate;
+
+        [DataType(DataType.Date)]
         public DateTime BirthDate
         {
-            get { return birthdate; }
+            get
+            {
+                return birthdate;
+            }
             set
             {
+                value = DateTime.Now.Date.AddYears(-12);
                 birthdate = value;
                 RaisePropertyChanged(nameof(BirthDate));
             }
@@ -129,8 +135,6 @@ namespace WorldExplorerEurope.App.ViewModels.Syncfusion
             if (propertyName.Equals(nameof(FirstName)) || propertyName.Equals(nameof(LastName)))
             {
                 if ((string.IsNullOrEmpty(FirstName) || string.IsNullOrWhiteSpace(FirstName)))
-                    list.Add("Please, enter a valid name");
-                if((string.IsNullOrEmpty(LastName) || string.IsNullOrWhiteSpace(LastName)))
                     list.Add("Please, enter a valid name");
             }
 
