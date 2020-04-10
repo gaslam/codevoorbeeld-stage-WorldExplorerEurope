@@ -60,9 +60,11 @@ namespace WorldExplorerEurope.App.ViewModels
             }
         });
 
+        //Could not fix this issue, but once everything is structured for freshnvvm it will be fixed.
         public ICommand CancelCommand => new Command(
             async () =>
             {
+                await _navigation.PushAsync(new NavigationPage(new LoginPage(_navigation)),true);
             });
     }
 }
