@@ -16,7 +16,7 @@ Het is ook de bedoeling dat de database beheert wordt door een administrator via
 
 In in de Services folder van de api voeg je de volgende keys in de spotify klasse toe:
 
-- clientId
+- clientId:
 ```
 e1e36ceac985420e9c65c12f450045da
 ```
@@ -26,6 +26,6 @@ e1e36ceac985420e9c65c12f450045da
 5d151d54fa7a4be9a5d473201f072ea5
 ```
 
-Buiten dat moet je ook het ipconfig commando uitvoeren via het command venster.
+Buiten dat voer je ook het ipconfig commando via het command venster.
 
 Kopieer uw ipv4 adres op het lokale netwerk en vervang alles tussen de haakjes van de variable BaseUrl (WorldExplorerEurope.app => Domain => Services => API => WorldExplorerAPIService)
