@@ -6,8 +6,8 @@ using WorldExplorerEurope.API.Domain.Models;
 
 namespace WorldExplorerEurope.API.Domain.DTO
 {
-    public class MemoryDto : DtoBaseId
+    public class PhotoMemoryDto : DtoBaseId
     {
-        public ICollection<UserMemories> Memories { get; set; }
+        public ICollection<CountryPhotoMemories> Memories { get; set; }
     }
 }

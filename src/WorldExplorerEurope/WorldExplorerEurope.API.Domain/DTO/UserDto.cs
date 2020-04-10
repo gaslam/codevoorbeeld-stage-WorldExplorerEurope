@@ -16,14 +16,5 @@ namespace WorldExplorerEurope.API.Domain.DTO
         public DateTime BirthDate { get; set; }
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
-
-        [JsonIgnore]
-        public ICollection<UserMemories> Memories { get; set; }
-
-        [JsonIgnore]
-        public ICollection<UserFavourites> Favourites { get; set; }
-
-        [JsonIgnore]
-        public ICollection<UserWishlists> Wishlists { get; set; }
     }
 }

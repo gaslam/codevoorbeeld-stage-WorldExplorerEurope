@@ -22,44 +22,44 @@ namespace WorldExplorerEurope.API.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Favourite> Favourites { get; set; }
-        public DbSet<Memory> Memories { get; set; }
+        public DbSet<PhotoMemory> Memories { get; set; }
         public DbSet<SpotifyPlaylist> SpotifyPlaylists { get; set; }
         public DbSet<Wishlist> Wishlists { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserMemories>().ToTable("UserMemories")
-                .HasKey(m => new { m.UserId, m.MemoryId });
+            modelBuilder.Entity<CountryPhotoMemories>().ToTable("CountryMemories")
+                .HasKey(m => new { m.CountryId, m.MemoryId });
 
-            modelBuilder.Entity<UserMemories>()
-                .HasOne(m => m.User)
-                .WithMany(m => m.Memories)
-                .HasForeignKey(m => m.UserId);
+            modelBuilder.Entity<CountryPhotoMemories>()
+                .HasOne(m => m.Country)
+                .WithMany(m => m.PhotoMemories)
+                .HasForeignKey(m => m.CountryId);
 
-            modelBuilder.Entity<UserMemories>()
+            modelBuilder.Entity<CountryPhotoMemories>()
                 .HasOne(m => m.Memory)
                 .WithMany(m => m.Memories)
                 .HasForeignKey(m => m.MemoryId);
 
-            modelBuilder.Entity<UserFavourites>().ToTable("UserFavourites")
-                .HasKey(m => new { m.UserId, m.FavouriteId });
+            modelBuilder.Entity<CountryFavourites>().ToTable("UserFavourites")
+                .HasKey(m => new { m.CountryId, m.FavouriteId });
 
-            modelBuilder.Entity<UserFavourites>()
-                .HasOne(m => m.User)
+            modelBuilder.Entity<CountryFavourites>()
+                .HasOne(m => m.Country)
                 .WithMany(m => m.Favourites)
-                .HasForeignKey(m => m.UserId);
+                .HasForeignKey(m => m.CountryId);
 
-            modelBuilder.Entity<UserFavourites>()
+            modelBuilder.Entity<CountryFavourites>()
                 .HasOne(m => m.Favourite)
                 .WithMany(m => m.Favourites)
                 .HasForeignKey(m => m.FavouriteId);
 
-            modelBuilder.Entity<UserWishlists>()
-                .HasOne(m => m.User)
-                .WithMany(m => m.Wishlists)
-                .HasForeignKey(m => m.UserId);
+            modelBuilder.Entity<CountryWishlists>()
+                .HasOne(m => m.Country)
+                .WithMany(m => m.CountryWishlists)
+                .HasForeignKey(m => m.CountryId);
 
-            modelBuilder.Entity<UserWishlists>()
+            modelBuilder.Entity<CountryWishlists>()
                 .HasOne(m => m.Wishlist)
                 .WithMany(m => m.Wishlists)
                 .HasForeignKey(m => m.WishlistId);

@@ -13,14 +13,11 @@ namespace WorldExplorerEurope.API.Services.AutoMapper.Profiles
         public UserProfile()
         {
             CreateMap<User, UserDto>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Memories, opt => opt.MapFrom(src => src.Memories))
-                .ForMember(dest => dest.Favourites, opt => opt.MapFrom(src => src.Favourites));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
+
 
             CreateMap<UserDto, User>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.Memories, opt => opt.MapFrom(src => src.Memories))
-                .ForMember(dest => dest.Favourites, opt => opt.MapFrom(src => src.Favourites));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
         }
     }
 }

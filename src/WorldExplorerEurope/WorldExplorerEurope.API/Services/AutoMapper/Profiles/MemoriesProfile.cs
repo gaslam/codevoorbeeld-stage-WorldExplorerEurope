@@ -12,10 +12,10 @@ namespace WorldExplorerEurope.API.Services.AutoMapper.Profiles
     {
         public MemoriesProfile()
         {
-            CreateMap<Memory, MemoryDto>()
+            CreateMap<PhotoMemory, PhotoMemoryDto>()
                 .ForMember(dest => dest.Memories, opt => opt.MapFrom(src => src.Memories));
 
-            CreateMap<MemoryDto, Memory>()
+            CreateMap<PhotoMemoryDto, PhotoMemory>()
                 .ForMember(dest => dest.Memories, opt => opt.MapFrom(src => src.Memories));
         }
     }
