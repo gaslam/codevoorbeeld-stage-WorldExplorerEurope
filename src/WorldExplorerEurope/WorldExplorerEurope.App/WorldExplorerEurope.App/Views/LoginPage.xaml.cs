@@ -13,10 +13,10 @@ namespace WorldExplorerEurope.App.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        public LoginPage()
+        public LoginPage(INavigation navigation)
         {
             InitializeComponent();
-            LoginViewModel loginViewModel = new LoginViewModel(Navigation);
+            LoginViewModel loginViewModel = new LoginViewModel(navigation);
             loginViewModel.DataForm = dataForm;
             BindingContext = loginViewModel;
             btnLogin.Command = loginViewModel.LoginCommand;

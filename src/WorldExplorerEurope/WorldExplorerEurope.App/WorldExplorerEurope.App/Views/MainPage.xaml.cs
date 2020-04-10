@@ -25,7 +25,7 @@ namespace WorldExplorerEurope.App.Views
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new LoginPage());
+            await Navigation.PushAsync(new NavigationPage(new LoginPage(Navigation)),true);
         }
 
         private void OnFilterChanged(object sender, TextChangedEventArgs e)

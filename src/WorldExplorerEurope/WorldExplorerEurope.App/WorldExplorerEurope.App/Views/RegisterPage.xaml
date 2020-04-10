@@ -47,7 +47,7 @@
                             </OnPlatform>
                         </Button.FontFamily>
                     </Button>
-                    <Button x:Name="btnCancel" Text="Cancel" Grid.Column="2" Grid.Row="3" Padding="5" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#FE5F55" BorderColor="#FA9A94" TextColor="White">
+                    <Button x:Name="btnCancel" Text="Cancel" Grid.Column="2" Grid.Row="3" Padding="5" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#FE5F55" BorderColor="#FA9A94" TextColor="White" Command="{Binding CancelCommand}">
                         <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
