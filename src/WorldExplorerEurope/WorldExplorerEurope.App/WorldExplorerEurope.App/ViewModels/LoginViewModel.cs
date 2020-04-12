@@ -18,7 +18,7 @@ using Xamarin.Forms;
 
 namespace WorldExplorerEurope.App.ViewModels
 {
-    public class LoginViewModel : APIservice
+    public class LoginViewModel : APIservice, FreshBaseModel
     {
         private INavigation Navigation;
 
