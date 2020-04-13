@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using FreshMvvm;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,16 +7,27 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WorldExplorerEurope.API.Services.Interface;
 using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Domain.Services.API;
-using WorldExplorerEurope.App.ViewModels.Syncfusion;
+using WorldExplorerEurope.Domain.Models;
+using WorldExplorerEurope.ViewModels.Syncfusion;
 using Xamarin.Forms;
 
-namespace WorldExplorerEurope.App.ViewModels
+namespace WorldExplorerEurope.ViewModels
 {
-    public class MainPageViewModel : APIservice
+    public class MainViewModel : FreshBasePageModel
     {
+
+        private IAPIinterface _apiService;
+
+        public MainViewModel()
+        {
+            _apiService = new APIservice();
+            countries = GetCountries().Result;
+        }
+
         private ObservableCollection<CountryVM> countries;
         public ObservableCollection<CountryVM> Countries
         {
@@ -29,14 +41,9 @@ namespace WorldExplorerEurope.App.ViewModels
             }
         }
 
-        public MainPageViewModel()
-        {
-            countries = GetCountries().Result;
-        }
-
         public async Task<ObservableCollection<CountryVM>> GetCountries()
         {
-            string responseMessage = await Get($"{WorldExplorerAPIService.BaseUrl}");
+            string responseMessage = await _apiService.Get($"{WorldExplorerAPIService.BaseUrl}");
             ObservableCollection<CountryVM> countryVMs = new ObservableCollection<CountryVM>();
             var countries = JsonConvert.DeserializeObject<List<Country>>(responseMessage);
             foreach (var country in countries)
@@ -50,5 +57,11 @@ namespace WorldExplorerEurope.App.ViewModels
             return countryVMs;
 
         }
+
+        public ICommand LoginCommand => new Command(
+            async () =>
+            {
+                await CoreMethods.PushPageModel<LoginViewModel>(null,true ,true);
+            });
     }
 }

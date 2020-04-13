@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WorldExplorerEurope.App.ViewModels.Syncfusion
+namespace WorldExplorerEurope.ViewModels.Syncfusion
 {
     public class CountryVM
     {

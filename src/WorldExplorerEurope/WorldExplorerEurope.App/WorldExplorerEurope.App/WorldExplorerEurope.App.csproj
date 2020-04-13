@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FreshMvvm" Version="3.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Syncfusion.Xamarin.SfDataForm" Version="17.4.0.55" />
     <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="18.1.0.43" />
@@ -21,16 +22,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\LoginPage.xaml.cs">
+    <Compile Update="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\LoginPage.xaml">
+    <EmbeddedResource Update="Pages\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\RegisterPage.xaml">
+    <EmbeddedResource Update="Pages\RegisterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

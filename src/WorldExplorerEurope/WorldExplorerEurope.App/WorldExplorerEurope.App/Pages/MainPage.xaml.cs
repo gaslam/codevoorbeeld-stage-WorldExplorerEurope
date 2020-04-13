@@ -4,28 +4,23 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WorldExplorerEurope.App.ViewModels;
+using WorldExplorerEurope.ViewModels;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace WorldExplorerEurope.App.Views
+namespace WorldExplorerEurope.Pages
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
-        private readonly MainPageViewModel mainPageViewModel;
+        private readonly MainViewModel mainPageViewModel;
         public MainPage()
         {
-            mainPageViewModel = new MainPageViewModel();
+            mainPageViewModel = new MainViewModel();
             InitializeComponent();
             SfListViewCountries.ItemsSource = mainPageViewModel.Countries;
-        }
-
-        private async void Button_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new NavigationPage(new LoginPage(Navigation)),true);
         }
 
         private void OnFilterChanged(object sender, TextChangedEventArgs e)

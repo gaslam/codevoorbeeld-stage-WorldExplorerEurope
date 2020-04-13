@@ -5,7 +5,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="WorldExplorerEurope.App.Views.RegisterPage">
+             x:Class="WorldExplorerEurope.Pages.RegisterPage">
     <ContentPage.Content>
         <StackLayout>
             <ScrollView VerticalScrollBarVisibility="Always">
@@ -37,7 +37,7 @@
                             </OnPlatform>
                         </Label.FontFamily>
                     </Label>
-                    <dataform:SfDataForm x:Name="dataForm" ContainerType="Outlined" ValidationMode="LostFocus" LayoutOptions="TextInputLayout" LabelPosition="Top" AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" >
+                    <dataform:SfDataForm x:Name="dataForm" ContainerType="Outlined" ValidationMode="LostFocus" LayoutOptions="TextInputLayout" LabelPosition="Top" AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" DataObject="{Binding newUser}">
                     </dataform:SfDataForm>
                     <Button x:Name="btnRegister" Text="Register" Grid.Column="1" Grid.Row="3" Padding="5" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" Command="{Binding RegisterCommand}">
                         <Button.FontFamily>

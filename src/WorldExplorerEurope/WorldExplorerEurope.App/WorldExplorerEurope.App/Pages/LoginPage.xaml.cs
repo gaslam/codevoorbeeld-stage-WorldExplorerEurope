@@ -1,34 +1,29 @@
-﻿using Syncfusion.XForms.DataForm;
+﻿using FreshMvvm;
+using Syncfusion.XForms.DataForm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WorldExplorerEurope.App.ViewModels;
+using WorldExplorerEurope.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace WorldExplorerEurope.App.Views
+namespace WorldExplorerEurope.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
-        public LoginPage(INavigation navigation)
+        public LoginPage()
         {
             InitializeComponent();
-            LoginViewModel loginViewModel = new LoginViewModel(navigation);
-            loginViewModel.DataForm = dataForm;
-            BindingContext = loginViewModel;
-            btnLogin.Command = loginViewModel.LoginCommand;
-            dataForm.DataObject = loginViewModel.newUser;
-            dataForm.AutoGeneratingDataFormItem += DataForm_AutoGeneratingDataFormItem;
-            SizeChanged += ChangeMainPageSize;
+            this.SizeChanged += ChangeMainPageSize;
         }
 
         private void ChangeMainPageSize(object sender, EventArgs e)
         {
             bool portrait = this.Height > this.Width;
-            if(portrait == true)
+            if (portrait == true)
             {
                 txtLogin.Margin = new Thickness { Top = 40 };
                 txtLogin.FontSize = 80;

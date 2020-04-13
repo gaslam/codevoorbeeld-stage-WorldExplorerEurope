@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace WorldExplorerEurope.App.ViewModels.Syncfusion
+namespace WorldExplorerEurope.ViewModels.Syncfusion
 {
     public class UserLogin : INotifyPropertyChanged, INotifyDataErrorInfo
     {

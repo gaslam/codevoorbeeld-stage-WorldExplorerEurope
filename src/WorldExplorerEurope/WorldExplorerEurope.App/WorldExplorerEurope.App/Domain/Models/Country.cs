@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using WorldExplorerEurope.App.Domain.Models.Base;
 
-namespace WorldExplorerEurope.App.Domain.Models
+namespace WorldExplorerEurope.Domain.Models
 {
     public class Country : BaseId
     {
