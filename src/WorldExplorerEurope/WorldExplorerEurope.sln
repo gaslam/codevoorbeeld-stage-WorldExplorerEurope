@@ -17,7 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldExplorerEurope.App.UWP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldExplorerEurope.App.Android", "WorldExplorerEurope.App\WorldExplorerEurope.App.Android\WorldExplorerEurope.App.Android.csproj", "{152504C2-5AEC-46CC-BE4B-2EB44706B244}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldExplorerEurope.App", "WorldExplorerEurope.App\WorldExplorerEurope.App\WorldExplorerEurope.App.csproj", "{5172DBA5-AB43-4D8C-9A8D-4664DD76F687}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldExplorerEurope.App", "WorldExplorerEurope.App\WorldExplorerEurope.App\WorldExplorerEurope.App.csproj", "{5172DBA5-AB43-4D8C-9A8D-4664DD76F687}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldExplorerEurope.VUE", "WorldExplorerEurope.VUE\WorldExplorerEurope.VUE.csproj", "{9374F7F4-E3FE-48B7-8E05-74A440E85F13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,6 +125,22 @@ Global
 		{5172DBA5-AB43-4D8C-9A8D-4664DD76F687}.Release|x64.Build.0 = Release|Any CPU
 		{5172DBA5-AB43-4D8C-9A8D-4664DD76F687}.Release|x86.ActiveCfg = Release|Any CPU
 		{5172DBA5-AB43-4D8C-9A8D-4664DD76F687}.Release|x86.Build.0 = Release|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Debug|ARM.Build.0 = Debug|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Debug|x64.Build.0 = Debug|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Debug|x86.Build.0 = Debug|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Release|ARM.ActiveCfg = Release|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Release|ARM.Build.0 = Release|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Release|x64.ActiveCfg = Release|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Release|x64.Build.0 = Release|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Release|x86.ActiveCfg = Release|Any CPU
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -132,6 +150,7 @@ Global
 		{09AA567E-F296-4EB9-AEA4-428DFC2AF509} = {DC88C771-8146-474D-99EE-049107DA5BD0}
 		{152504C2-5AEC-46CC-BE4B-2EB44706B244} = {DC88C771-8146-474D-99EE-049107DA5BD0}
 		{5172DBA5-AB43-4D8C-9A8D-4664DD76F687} = {DC88C771-8146-474D-99EE-049107DA5BD0}
+		{9374F7F4-E3FE-48B7-8E05-74A440E85F13} = {951F08BF-F667-402C-874D-8F6631476AD0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0F42C9EF-676B-4B2E-889E-D65F153E8FED}
