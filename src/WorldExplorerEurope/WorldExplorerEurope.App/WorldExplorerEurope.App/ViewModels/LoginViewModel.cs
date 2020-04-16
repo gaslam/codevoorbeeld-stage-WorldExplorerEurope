@@ -17,6 +17,7 @@ using WorldExplorerEurope.App.Domain.Services.API;
 using WorldExplorerEurope.ViewModels.Syncfusion;
 using WorldExplorerEurope.Pages;
 using Xamarin.Forms;
+using WorldExplorerEurope.App.ViewModels;
 
 namespace WorldExplorerEurope.ViewModels
 {
