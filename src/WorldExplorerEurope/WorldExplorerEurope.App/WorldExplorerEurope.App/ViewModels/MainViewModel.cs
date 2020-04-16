@@ -13,6 +13,7 @@ using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Domain.Services.API;
 using WorldExplorerEurope.App.ViewModels;
 using WorldExplorerEurope.Domain.Models;
+using WorldExplorerEurope.ViewModels;
 using WorldExplorerEurope.ViewModels.Syncfusion;
 using Xamarin.Forms;
 
