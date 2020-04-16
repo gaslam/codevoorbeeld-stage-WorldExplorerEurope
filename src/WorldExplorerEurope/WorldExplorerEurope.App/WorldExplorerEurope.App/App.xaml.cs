@@ -1,6 +1,7 @@
 ﻿using FreshMvvm;
 using System;
-using WorldExplorerEurope.Pages;
+using WorldExplorerEurope.App.Pages;
+using WorldExplorerEurope.App.ViewModels;
 using WorldExplorerEurope.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;

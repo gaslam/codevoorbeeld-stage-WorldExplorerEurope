@@ -5,7 +5,7 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="WorldExplorerEurope.Pages.LoginPage">
+             x:Class="WorldExplorerEurope.App.Pages.LoginPage">
     <ContentPage.Content>
         <StackLayout>
             <Grid>
@@ -45,7 +45,7 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
                         </OnPlatform>
                     </Label.FontFamily>
                 </Label>
-                <Button x:Name="btnLogin" Text="Login" Grid.Column="1" Grid.Row="5" Padding="5" Margin="0,10,0,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Command="{Binding LoginCommand}">
+                <Button  Text="Login" Padding="5" Margin="10,0,0,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="5" Grid.Column="1" Command="{Binding LoginCommand}">
                     <Button.FontFamily>
                         <OnPlatform x:TypeArguments="x:String">
                             <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>

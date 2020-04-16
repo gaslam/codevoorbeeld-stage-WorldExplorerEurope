@@ -9,7 +9,7 @@ using WorldExplorerEurope.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace WorldExplorerEurope.Pages
+namespace WorldExplorerEurope.App.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage

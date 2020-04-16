@@ -5,7 +5,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="WorldExplorerEurope.Pages.MainPage"
+             x:Class="WorldExplorerEurope.App.Pages.MainPage"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"  
              xmlns:ffSvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms" >
 
@@ -29,9 +29,17 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                     </OnPlatform>
                 </SearchBar.FontFamily>
             </SearchBar>
+            <Button  Text="Locate" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="1" Command="{Binding LocationCommand}">
+                <Button.FontFamily>
+                    <OnPlatform x:TypeArguments="x:String">
+                        <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                        <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto Mono</On>
+                    </OnPlatform>
+                </Button.FontFamily>
+            </Button>
         </Grid>
         <Grid>
-            <listview:SfListView x:Name="SfListViewCountries" ItemSize="50">
+            <listview:SfListView x:Name="SfListViewCountries" ItemSize="50" ItemTapped="SfListViewCountries_ItemTapped" TapCommand="{Binding ItemTappedCommand}">
                 <listview:SfListView.ItemTemplate>
                     <DataTemplate>
                         <Grid VerticalOptions="End" x:Name="lsvGrid">
@@ -49,7 +57,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <ffSvg:SvgCachedImage Source="{Binding Flag}" Grid.Row="0" Grid.Column="0" Margin="10,5,0,5" HeightRequest="30" WidthRequest="40">
+                            <ffSvg:SvgCachedImage Source="{Binding FlagUrl}" Grid.Row="0" Grid.Column="0" Margin="10,5,0,5" HeightRequest="30" WidthRequest="40">
                                 <ffSvg:SvgCachedImage.HorizontalOptions>
                                     <OnPlatform x:TypeArguments="LayoutOptions">
                                         <On Platform="Android">Start</On>
@@ -58,6 +66,14 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                                 </ffSvg:SvgCachedImage.HorizontalOptions>
                             </ffSvg:SvgCachedImage>
                             <Label Text="{Binding Name}" FontSize="30" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" HorizontalTextAlignment="Start" LineBreakMode="TailTruncation">
+                                <Label.FontFamily>
+                                    <OnPlatform x:TypeArguments="x:String">
+                                        <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                        <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                                    </OnPlatform>
+                                </Label.FontFamily>
+                            </Label>
+                            <Label Text="{Binding PreviewUrl}" FontSize="30" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" HorizontalTextAlignment="Start" LineBreakMode="TailTruncation">
                                 <Label.FontFamily>
                                     <OnPlatform x:TypeArguments="x:String">
                                         <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>

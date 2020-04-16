@@ -11,11 +11,12 @@ using WorldExplorerEurope.API.Services.Interface;
 using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Domain.Services.API;
+using WorldExplorerEurope.App.ViewModels;
 using WorldExplorerEurope.Domain.Models;
 using WorldExplorerEurope.ViewModels.Syncfusion;
 using Xamarin.Forms;
 
-namespace WorldExplorerEurope.ViewModels
+namespace WorldExplorerEurope.App.ViewModels
 {
     public class MainViewModel : FreshBasePageModel
     {
@@ -28,8 +29,8 @@ namespace WorldExplorerEurope.ViewModels
             countries = GetCountries().Result;
         }
 
-        private ObservableCollection<CountryVM> countries;
-        public ObservableCollection<CountryVM> Countries
+        private ObservableCollection<Country> countries;
+        public ObservableCollection<Country> Countries
         {
             get
             {
@@ -41,27 +42,58 @@ namespace WorldExplorerEurope.ViewModels
             }
         }
 
-        public async Task<ObservableCollection<CountryVM>> GetCountries()
+        public async Task<ObservableCollection<Country>> GetCountries()
         {
-            string responseMessage = await _apiService.Get($"{WorldExplorerAPIService.BaseUrl}");
-            ObservableCollection<CountryVM> countryVMs = new ObservableCollection<CountryVM>();
-            var countries = JsonConvert.DeserializeObject<List<Country>>(responseMessage);
-            foreach (var country in countries)
+            try
             {
-                countryVMs.Add(new CountryVM
-                {
-                    Name = country.Name,
-                    Flag = country.FlagUrl
-                });
+                LocalService localService = new LocalService();
+                var countries = await localService.GetCountriesAsync();
+                return countries;
             }
-            return countryVMs;
+            catch
+            {
+                return null;
+            }
 
+        }
+
+        public static Country selectedCountry;
+
+        public void setSelectedCountry(Country country)
+        {
+            selectedCountry = country;
+        }
+
+        public Country GetCountry()
+        {
+            return selectedCountry;
         }
 
         public ICommand LoginCommand => new Command(
             async () =>
             {
-                await CoreMethods.PushPageModel<LoginViewModel>(null,true ,true);
+                await CoreMethods.PushPageModel<LoginViewModel>(null, false, true);
+            });
+        public ICommand ItemTappedCommand => new Command(
+            async () =>
+            {
+                await CoreMethods.PushPageModel<InfoViewModel>(selectedCountry, false, true);
+            });
+        public ICommand LocationCommand => new Command(
+            async () =>
+            {
+                try
+                {
+                    LocationService locationService = new LocationService();
+                    var location = await locationService.GetLocation();
+                    if (location == null) throw new Exception();
+                    setSelectedCountry(location);
+                    await CoreMethods.PushPageModel<InfoViewModel>(selectedCountry, false, true);
+                }
+                catch
+                {
+                    await App.Current.MainPage.DisplayAlert("Error", "Cannot get your location.", "Ok");
+                }
             });
     }
 }

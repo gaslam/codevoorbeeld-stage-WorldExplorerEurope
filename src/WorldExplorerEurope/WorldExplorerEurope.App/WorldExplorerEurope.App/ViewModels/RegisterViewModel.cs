@@ -11,12 +11,12 @@ using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Domain.Services.API;
 using WorldExplorerEurope.ViewModels.Syncfusion;
-using WorldExplorerEurope.Pages;
+using WorldExplorerEurope.App.Pages;
 using Xamarin.Forms;
 using System.ComponentModel;
 using WorldExplorerEurope.API.Services.Interface;
 
-namespace WorldExplorerEurope.ViewModels
+namespace WorldExplorerEurope.App.ViewModels
 {
     public class RegisterViewModel : FreshBasePageModel, INotifyPropertyChanged
     {
@@ -79,7 +79,7 @@ namespace WorldExplorerEurope.ViewModels
                 else
                 {
                     var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
-                    UserService userService = new UserService();
+                    LocalService userService = new LocalService();
                     userService.SetUser(user);
                 }
             }

@@ -9,12 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services.API;
+using WorldExplorerEurope.App.ViewModels;
 using WorldExplorerEurope.Domain.Models;
 using WorldExplorerEurope.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace WorldExplorerEurope.Pages
+namespace WorldExplorerEurope.App.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RegisterPage : ContentPage

@@ -6,6 +6,5 @@
              mc:Ignorable="d"
              x:Class="WorldExplorerEurope.App.App">
     <Application.Resources>
-
     </Application.Resources>
 </Application>
