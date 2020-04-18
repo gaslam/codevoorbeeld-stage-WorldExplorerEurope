@@ -178,6 +178,32 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                         </DataTemplate>
                     </listview:SfListView.ItemTemplate>
                 </listview:SfListView>
+                <Grid WidthRequest="600" HorizontalOptions="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Text="Pictures" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" FontSize="30" Margin="10,0,0,0">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Button  Text="Add Picture" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="1" Command="{Binding PhotoCommand}">
+                        <Button.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto Mono</On>
+                            </OnPlatform>
+                        </Button.FontFamily>
+                    </Button>
+                </Grid>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -5,7 +5,7 @@ using WorldExplorerEurope.App.Domain.Models.Base;
 
 namespace WorldExplorerEurope.App.Domain.Models
 {
-    public class Memory : BaseId
+    public class PhotoMemoryDto : BaseId
     {
         public string PhotoName { get; set; }
     }

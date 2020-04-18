@@ -63,6 +63,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfListView">
       <Version>18.1.0.43</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugin.Media">
+      <Version>4.0.1.5</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.FFImageLoading.Forms">
       <Version>2.4.11.982</Version>
     </PackageReference>
@@ -138,6 +141,9 @@
       <Project>{E176B05C-32C4-48B1-991C-CD25E62288EE}</Project>
       <Name>WorldExplorerEurope.App</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\xml\file_paths.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

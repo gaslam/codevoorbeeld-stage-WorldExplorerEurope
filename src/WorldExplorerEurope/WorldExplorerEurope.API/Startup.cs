@@ -18,6 +18,9 @@ using WorldExplorerEurope.API.Domain.Interfaces;
 using WorldExplorerEurope.API.Domain.Models;
 using WorldExplorerEurope.API.Domain.DTO;
 using Microsoft.OpenApi.Models;
+using WorldExplorerEurope.API.Domain.Services;
+using WorldExplorerEurope.API.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace WorldExplorerEurope.API
 {
@@ -45,6 +48,10 @@ namespace WorldExplorerEurope.API
             services.AddScoped<IMappingRepository<CountryDto>, CountryRepository>();
             services.AddScoped<IRepository<SpotifyPlaylist>, SpotifyRepository>();
             services.AddScoped<IMappingRepository<SpotifyPlaylistDto>, SpotifyRepository>();
+            services.AddScoped<IMemoryPhotoService, MemoryService<Country>>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+
 
             services.AddSwaggerGen(c =>
             {
@@ -73,6 +80,8 @@ namespace WorldExplorerEurope.API
 .AllowAnyMethod());
             app.UseEndpoints(endpoints =>
             endpoints.MapControllers());
+
+            app.UseStaticFiles();
 
             //app.UseHttpsRedirection();
 

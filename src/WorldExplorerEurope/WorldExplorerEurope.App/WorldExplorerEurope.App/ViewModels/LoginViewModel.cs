@@ -18,8 +18,9 @@ using WorldExplorerEurope.ViewModels.Syncfusion;
 using WorldExplorerEurope.Pages;
 using Xamarin.Forms;
 using WorldExplorerEurope.App.ViewModels;
+using WorldExplorerEurope.ViewModels;
 
-namespace WorldExplorerEurope.ViewModels
+namespace WorldExplorerEurope.App.ViewModels
 {
     public class LoginViewModel : FreshBasePageModel, INotifyPropertyChanged
     {

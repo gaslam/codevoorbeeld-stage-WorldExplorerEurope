@@ -17,7 +17,7 @@ namespace WorldExplorerEurope.Domain.Models
         public string Description { get; set; }
 
         public List<Favourite> favourites { get; set; }
-        public List<Memory> countryPhotoMemories { get; set; }
+        public List<PhotoMemoryDto> countryPhotoMemories { get; set; }
         public List<Wishlist> countryWishlists { get; set; }
     }
 }

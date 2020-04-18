@@ -23,7 +23,7 @@ namespace WorldExplorerEurope.App.Domain.Services
 
         public User GetUser()
         {
-            if (Application.Current.Properties.ContainsKey("user"))
+            if (Application.Current.Properties.ContainsKey("User"))
             {
                 return Application.Current.Properties["User"] as User;
             }

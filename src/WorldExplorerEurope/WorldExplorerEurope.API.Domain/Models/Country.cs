@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using WorldExplorerEurope.API.Domain.DTO;
 
 namespace WorldExplorerEurope.API.Domain.Models
 {
@@ -15,7 +16,7 @@ namespace WorldExplorerEurope.API.Domain.Models
         public string Description { get; set; }
 
         public ICollection<CountryFavourites> Favourites { get; set; }
-        public ICollection<CountryPhotoMemories> PhotoMemories { get; set; }
+        public ICollection<CountryPhotoMemories> Memories { get; set; }
         public ICollection<CountryWishlists> CountryWishlists { get; set; }
     }
 }

@@ -139,16 +139,19 @@ namespace WorldExplorerEurope.API.Controllers
                     Url = new Uri($"https://open.spotify.com/playlist/{playlist.PlaylistId}")
                 };
                 spotifyBasicDto.Playlist = new List<SpotifyBasicTracksDto>();
-                foreach (var track in tracks)
+                if(tracks != null)
                 {
-                    spotifyBasicDto.Playlist.Add(
-                        new SpotifyBasicTracksDto
-                        {
-                            Artists = track.Artists,
-                            Number = track.Number,
-                            Name = track.Name,
-                            PreviewUrl = track.PreviewUrl
-                        });
+                    foreach (var track in tracks)
+                    {
+                        spotifyBasicDto.Playlist.Add(
+                            new SpotifyBasicTracksDto
+                            {
+                                Artists = track.Artists,
+                                Number = track.Number,
+                                Name = track.Name,
+                                PreviewUrl = track.PreviewUrl
+                            });
+                    }
                 }
                 return Ok(spotifyBasicDto);
             }

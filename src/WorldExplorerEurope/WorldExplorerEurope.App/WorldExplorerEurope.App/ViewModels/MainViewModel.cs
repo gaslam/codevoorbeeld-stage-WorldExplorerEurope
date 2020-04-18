@@ -48,7 +48,7 @@ namespace WorldExplorerEurope.App.ViewModels
             try
             {
                 LocalService localService = new LocalService();
-                var countries = await localService.GetCountriesAsync();
+                 var countries = await localService.GetCountriesAsync();
                 return countries;
             }
             catch

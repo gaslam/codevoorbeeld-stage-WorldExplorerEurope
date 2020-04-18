@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using WorldExplorerEurope.API.Domain.DTO;
 
 namespace WorldExplorerEurope.API.Domain.Models
 {
@@ -10,7 +11,6 @@ namespace WorldExplorerEurope.API.Domain.Models
         public Guid UserId { get; set; }
         public string FileName { get; set; }
 
-        [JsonIgnore]
         public ICollection<CountryPhotoMemories> Memories { get; set; }
     }
 }

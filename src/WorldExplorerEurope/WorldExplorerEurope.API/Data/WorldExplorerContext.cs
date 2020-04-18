@@ -26,20 +26,22 @@ namespace WorldExplorerEurope.API.Data
         public DbSet<SpotifyPlaylist> SpotifyPlaylists { get; set; }
         public DbSet<Wishlist> Wishlists { get; set; }
 
+        public DbSet<CountryPhotoMemories> CountryPhotoMemories { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CountryPhotoMemories>().ToTable("CountryMemories")
-                .HasKey(m => new { m.CountryId, m.MemoryId });
+            modelBuilder.Entity<CountryPhotoMemories>().ToTable("CountryPhotoMemories")
+                .HasKey(ag => new { ag.CountryId, ag.MemoryId });
 
             modelBuilder.Entity<CountryPhotoMemories>()
-                .HasOne(m => m.Country)
-                .WithMany(m => m.PhotoMemories)
-                .HasForeignKey(m => m.CountryId);
-
-            modelBuilder.Entity<CountryPhotoMemories>()
-                .HasOne(m => m.Memory)
+                .HasOne(ag => ag.Country)
                 .WithMany(m => m.Memories)
-                .HasForeignKey(m => m.MemoryId);
+                .HasForeignKey(ag => ag.CountryId);
+
+            modelBuilder.Entity<CountryPhotoMemories>()
+                .HasOne(ag => ag.Memory)
+                .WithMany(g => g.Memories)
+                .HasForeignKey(ag => ag.MemoryId);
 
             modelBuilder.Entity<CountryFavourites>().ToTable("UserFavourites")
                 .HasKey(m => new { m.CountryId, m.FavouriteId });
