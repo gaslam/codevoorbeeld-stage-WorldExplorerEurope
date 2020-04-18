@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services.API;
 
-namespace WorldExplorerEurope.App.ViewModels.Syncfusion
+namespace WorldExplorerEurope.ViewModels.Syncfusion
 {
     public class UserRegister : INotifyPropertyChanged, INotifyDataErrorInfo
     {

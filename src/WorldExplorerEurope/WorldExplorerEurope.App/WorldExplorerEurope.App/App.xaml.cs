@@ -1,5 +1,8 @@
-﻿using System;
-using WorldExplorerEurope.App.Views;
+﻿using FreshMvvm;
+using System;
+using WorldExplorerEurope.App.Pages;
+using WorldExplorerEurope.App.ViewModels;
+using WorldExplorerEurope.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +14,7 @@ namespace WorldExplorerEurope.App
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>());
         }
 
         protected override void OnStart()

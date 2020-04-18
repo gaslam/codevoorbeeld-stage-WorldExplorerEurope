@@ -66,7 +66,7 @@ namespace WorldExplorerEurope.API.Controllers.Base
                 return BadRequest("Id is niet geldig.");
             }
 
-            if(id == dto.Id.ToString())
+            if(id != dto.Id.ToString())
             {
                 return BadRequest("Id's zijn niet gelijk");
             }

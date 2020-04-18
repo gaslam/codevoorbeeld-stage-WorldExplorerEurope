@@ -24,6 +24,7 @@ using Syncfusion.XForms.UWP.ComboBox;
 using Syncfusion.XForms.UWP.MaskedEdit;
 using Syncfusion.XForms.UWP.TextInputLayout;
 using Syncfusion.SfAutoComplete.XForms.UWP;
+using Plugin.Media;
 
 namespace WorldExplorerEurope.App.UWP
 {
@@ -47,7 +48,7 @@ namespace WorldExplorerEurope.App.UWP
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
 
 
@@ -99,6 +100,8 @@ namespace WorldExplorerEurope.App.UWP
                 rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
             rootFrame.NavigationFailed += OnNavigationFailed;
+
+            await CrossMedia.Current.Initialize();
 
             // Ensure the current window is active
             Window.Current.Activate();

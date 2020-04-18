@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="WorldExplorerEurope.App.Pages.InfoPage"
+             Title="{Binding CountryName}">
+    <ContentPage.Content>
+        
+        <ScrollView>
+            <StackLayout>
+                <Grid Margin="0,40,0,0" HeightRequest="200">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="200"></ColumnDefinition>
+                        <ColumnDefinition Width="200"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Capital" Grid.Column="1" FontAttributes="Bold" Grid.Row="0" HorizontalOptions="Center" FontSize="30">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label x:Name="lblCapital" Grid.Column="1" Grid.Row="1" HorizontalOptions="Center" Text="{Binding Capital}" FontSize="20" >
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">Raleway-Light.ttf#Raleway</On>
+                                <On Platform="UWP">/Assets/Fonts/Raleway-Light.ttf#Raleway</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label Text="EU Member" Grid.Column="2" Grid.Row="0" HorizontalOptions="Center" FontSize="30">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label x:Name="lblEuMember" Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" Text="Yes" FontSize="20">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">Raleway-Light.ttf#Raleway</On>
+                                <On Platform="UWP">/Assets/Fonts/Raleway-Light.ttf#Raleway</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label Text="Population" Grid.Column="1" Grid.Row="2" HorizontalOptions="Center" FontSize="30">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label x:Name="lblPopulation" Grid.Column="1" Grid.Row="3" HorizontalOptions="Center" Text="{Binding Population}" FontSize="20">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">Raleway-Light.ttf#Raleway</On>
+                                <On Platform="UWP">/Assets/Fonts/Raleway-Light.ttf#Raleway</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label Text="Currency" Grid.Column="2" Grid.Row="2" HorizontalOptions="Center" FontSize="30">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label x:Name="lblCurrency" Grid.Column="2" Grid.Row="3" HorizontalOptions="Center" Text="{Binding Currency}" FontSize="20">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">Raleway-Light.ttf#Raleway</On>
+                                <On Platform="UWP">/Assets/Fonts/Raleway-Light.ttf#Raleway</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                </Grid>
+                <Grid WidthRequest="600" HeightRequest="300">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Text="Description" FontAttributes="Bold" Grid.Row="0" FontSize="30" Margin="10,0,10,0">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label x:Name="lblDescription" Grid.Row="1" Text="{Binding Description}" FontSize="15" Margin="10">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">Raleway-Light.ttf#Raleway</On>
+                                <On Platform="UWP">/Assets/Fonts/Raleway-Light.ttf#Raleway</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                </Grid>
+                <Grid WidthRequest="600" HorizontalOptions="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Text="Music" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" FontSize="30" Margin="10,0,0,0">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Button  Text="Open in Spotify" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="1">
+                        <Button.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto Mono</On>
+                            </OnPlatform>
+                        </Button.FontFamily>
+                    </Button>
+                </Grid>
+                <listview:SfListView x:Name="lsvSpotify" HeightRequest="400" ItemsSource="{Binding CountryPlaylist}">
+                    <listview:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid  x:Name="lsvGrid" HorizontalOptions="Start">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                    <ColumnDefinition Width="160"></ColumnDefinition>
+                                    <ColumnDefinition Width="400"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding Number}" FontSize="16" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" LineBreakMode="TailTruncation" Margin="10,0,0,0">
+                                    <Label.FontFamily>
+                                        <OnPlatform x:TypeArguments="x:String">
+                                            <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                            <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                                        </OnPlatform>
+                                    </Label.FontFamily>
+                                </Label>
+                                <Label Text="{Binding Artists}" FontSize="13" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" LineBreakMode="TailTruncation">
+                                    <Label.FontFamily>
+                                        <OnPlatform x:TypeArguments="x:String">
+                                            <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                            <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                                        </OnPlatform>
+                                    </Label.FontFamily>
+                                </Label>
+                                <Label Text="{Binding Name}" FontSize="13" FontAttributes="Bold" Grid.Row="0" Grid.Column="2" LineBreakMode="TailTruncation">
+                                    <Label.FontFamily>
+                                        <OnPlatform x:TypeArguments="x:String">
+                                            <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                            <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                                        </OnPlatform>
+                                    </Label.FontFamily>
+                                </Label>
+                                <BoxView BackgroundColor="Black" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HeightRequest="1" VerticalOptions="End"></BoxView>
+                            </Grid>
+                        </DataTemplate>
+                    </listview:SfListView.ItemTemplate>
+                </listview:SfListView>
+                <Grid WidthRequest="600" HorizontalOptions="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Text="Pictures" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" FontSize="30" Margin="10,0,0,0">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Button  Text="Add Picture" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="1" Command="{Binding PhotoCommand}">
+                        <Button.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto Mono</On>
+                            </OnPlatform>
+                        </Button.FontFamily>
+                    </Button>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

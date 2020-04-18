@@ -8,6 +8,8 @@ namespace WorldExplorerEurope.API.Domain.DTO
 {
     public class PhotoMemoryDto : DtoBaseId
     {
-        public ICollection<CountryPhotoMemories> Memories { get; set; }
+        public Guid UserId { get; set; }
+        public string FileName { get; set; }
+        public ICollection<PhotoMemoryDto> PhotoMemories { get; set; }
     }
 }

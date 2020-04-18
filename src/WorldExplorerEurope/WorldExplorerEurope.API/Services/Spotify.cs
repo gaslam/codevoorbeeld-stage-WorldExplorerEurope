@@ -15,8 +15,8 @@ namespace WorldExplorerEurope.API.Services
     {
         //Contains all the code for getting the spotify API data.
         private static SpotifyWebAPI _spotify;
-        private const string clientId = "";
-        private const string clientSecret = "";
+        private const string clientId = "e1e36ceac985420e9c65c12f450045da";
+        private const string clientSecret = "5d151d54fa7a4be9a5d473201f072ea5";
         // Is used for to create the tokens to access the API.
         private static Token token = new Token();
         //Is Used to get the credentials of the application for the spotify API.
@@ -24,6 +24,7 @@ namespace WorldExplorerEurope.API.Services
         public Spotify()
         {
             CallAPI();
+            _spotify = new SpotifyWebAPI();
         }
 
         private async void CallAPI()
@@ -75,13 +76,15 @@ namespace WorldExplorerEurope.API.Services
 
         public async Task<List<SpotifyBasicTracksDto>> GetFirst5Tracks(FullPlaylist playlist)
         {
-            if (token.IsExpired())
+            if (_spotify == null || token.IsExpired())
             {
+                _spotify = new SpotifyWebAPI();
                 await AccessAPI();
             }
 
             var tracks = await _spotify.GetPlaylistTracksAsync(playlist.Id, "", 5, 1, "BE");
             List<SpotifyBasicTracksDto> spotifyBasicTracks = new List<SpotifyBasicTracksDto>();
+            if (tracks.Items == null) return null;
             for (int i = 0; i < tracks.Items.Count; i++)
             {
                 var track = tracks.Items[i];
@@ -124,6 +127,10 @@ namespace WorldExplorerEurope.API.Services
 
         public async Task<FullPlaylist> GetFullPlaylist(string id)
         {
+            if (token.IsExpired())
+            {
+                await AccessAPI();
+            }
             return await _spotify.GetPlaylistAsync(id, "", "BE");
         }
     }

@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="WorldExplorerEurope.App.Pages.DetailPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView VerticalScrollBarVisibility="Always">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="160"></ColumnDefinition>
+                        <ColumnDefinition Width="160"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Register"  x:Name="txtLogin" FontAttributes="Bold" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center" TextColor="#2e2e2c" FontSize="60">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label Text="Firstname:" FontAttributes="Bold" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalTextAlignment="Start" TextColor="#2e2e2c" FontSize="30">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label Text="{Binding FirstName}" FontAttributes="Bold" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" HorizontalTextAlignment="Start" TextColor="#2e2e2c" FontSize="16">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">Raleway-ExtraLight.ttf#Raleway</On>
+                                <On Platform="UWP">/Assets/Fonts/Raleway-ExtraLight.ttf#Raleway</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label Text="Lastname:" FontAttributes="Bold" Grid.Column="1"  Grid.Row="4" Grid.ColumnSpan="2" HorizontalTextAlignment="Start" TextColor="#2e2e2c" FontSize="30">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label Text="{Binding LastName}" FontAttributes="Bold" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" HorizontalTextAlignment="Start" TextColor="#2e2e2c" FontSize="16">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">Raleway-ExtraLight.ttf#Raleway</On>
+                                <On Platform="UWP">/Assets/Fonts/Raleway-ExtraLight.ttf#Raleway</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label Text="Nationality:" FontAttributes="Bold" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" HorizontalTextAlignment="Start" TextColor="#2e2e2c" FontSize="30">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label Text="{Binding Nationality}" FontAttributes="Bold" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" HorizontalTextAlignment="Start" TextColor="#2e2e2c" FontSize="16">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">Raleway-ExtraLight.ttf#Raleway</On>
+                                <On Platform="UWP">/Assets/Fonts/Raleway-ExtraLight.ttf#Raleway</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label Text="Email:" FontAttributes="Bold" Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="2" HorizontalTextAlignment="Start" TextColor="#2e2e2c" FontSize="30">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label Text="{Binding Email}" FontAttributes="Bold" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="9" HorizontalTextAlignment="Start" TextColor="#2e2e2c" FontSize="16">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">Raleway-ExtraLight.ttf#Raleway</On>
+                                <On Platform="UWP">/Assets/Fonts/Raleway-ExtraLight.ttf#Raleway</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label Text="Date of Birth:" FontAttributes="Bold" Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="2" HorizontalTextAlignment="Start" TextColor="#2e2e2c" FontSize="30">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Label Text="{Binding BirthDate}" FontAttributes="Bold" Grid.Column="1" Grid.Row="11" Grid.ColumnSpan="2" HorizontalTextAlignment="Start" TextColor="#2e2e2c" FontSize="16">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">Raleway-ExtraLight.ttf#Raleway</On>
+                                <On Platform="UWP">/Assets/Fonts/Raleway-ExtraLight.ttf#Raleway</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Button Text="Edit" Grid.Column="1" Grid.Row="12" Padding="5" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" Command="{Binding EditCommand}">
+                        <Button.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Button.FontFamily>
+                    </Button>
+                    <Button x:Name="btnCancel" Text="Cancel" Grid.Column="2" Grid.Row="12" Padding="5" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#FE5F55" BorderColor="#FA9A94" TextColor="White" Command="{Binding CancelCommand}">
+                        <Button.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Button.FontFamily>
+                    </Button>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

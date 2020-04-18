@@ -115,6 +115,49 @@ namespace WorldExplorerEurope.API.Controllers
             return Ok(spotifyBasicDto);
         }
 
+        [HttpGet("playlists/Country/{id}")]
+        public async Task<IActionResult> GetCountryPlaylist([FromRoute]Guid id)
+        {
+            bool check = _spotify.CheckClientCredentials().Result;
+            if(check == true)
+            {
+                var playlist = _mappingRepository.GetAll().FirstOrDefault(m => m.CountryId == id);
+                if (playlist == null)
+                {
+                    return NotFound($"Playlist with id: {id} is not valid.");
+                }
+
+                var fullplaylist = await _spotify.GetFullPlaylist(playlist.PlaylistId);
+                var tracks = await _spotify.GetFirst5Tracks(fullplaylist);
+                var country = getCountry(playlist.CountryId);
+
+                SpotifyBasicDto spotifyBasicDto = new SpotifyBasicDto()
+                {
+                    CountryId = country.Id,
+                    CountryName = country.Name,
+                    PlaylistId = playlist.PlaylistId,
+                    Url = new Uri($"https://open.spotify.com/playlist/{playlist.PlaylistId}")
+                };
+                spotifyBasicDto.Playlist = new List<SpotifyBasicTracksDto>();
+                if(tracks != null)
+                {
+                    foreach (var track in tracks)
+                    {
+                        spotifyBasicDto.Playlist.Add(
+                            new SpotifyBasicTracksDto
+                            {
+                                Artists = track.Artists,
+                                Number = track.Number,
+                                Name = track.Name,
+                                PreviewUrl = track.PreviewUrl
+                            });
+                    }
+                }
+                return Ok(spotifyBasicDto);
+            }
+            return BadRequest("Service not availible");
+        }
+
         private CountryDto getCountry(Guid countryId)
         {
             using (var webClient = new WebClient())
