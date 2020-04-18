@@ -15,7 +15,7 @@ using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Domain.Services.API;
 using WorldExplorerEurope.ViewModels.Syncfusion;
-using WorldExplorerEurope.Pages;
+using WorldExplorerEurope.App.Pages;
 using Xamarin.Forms;
 using WorldExplorerEurope.App.ViewModels;
 using WorldExplorerEurope.ViewModels;
@@ -89,7 +89,7 @@ namespace WorldExplorerEurope.App.ViewModels
                         var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
                         UserService userService = new UserService();
                         userService.SetUser(user);
-                        await CoreMethods.PushPageModel<EditViewModel>(user, true, true);
+                        await CoreMethods.PushPageModel<DetailViewModel>(user, false, true);
                     }
                 }
             });

@@ -13,7 +13,7 @@ using WorldExplorerEurope.App.Domain.Services.API;
 using WorldExplorerEurope.ViewModels.Syncfusion;
 using Xamarin.Forms;
 
-namespace WorldExplorerEurope.ViewModels
+namespace WorldExplorerEurope.App.ViewModels
 {
     public class EditViewModel : FreshBasePageModel, INotifyPropertyChanged
     {
@@ -87,6 +87,7 @@ namespace WorldExplorerEurope.ViewModels
                     var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
                     UserService userService = new UserService();
                     userService.SetUser(user);
+                    await CoreMethods.PushPageModel<DetailViewModel>(user, false, true);
                 }
             }
         });

@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WorldExplorerEurope.App.ViewModels;
 using WorldExplorerEurope.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace WorldExplorerEurope.Pages
+namespace WorldExplorerEurope.App.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EditPage : ContentPage
