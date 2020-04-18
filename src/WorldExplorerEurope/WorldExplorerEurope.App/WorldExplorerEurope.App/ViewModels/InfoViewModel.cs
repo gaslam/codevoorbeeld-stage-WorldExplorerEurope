@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -137,7 +139,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 string response = await _apiService.Get($"{WorldExplorerAPIService.BaseUrl}/spotifyplaylists/playlists/Country/{_country.Id}");
                 var playlist = JsonConvert.DeserializeObject<CountryPlaylist>(response);
                 ObservableCollection<BasicPlaylist> newBasicPlaylist = new ObservableCollection<BasicPlaylist>();
-                foreach(var track in playlist.Playlist)
+                foreach (var track in playlist.Playlist)
                 {
                     BasicPlaylist basicPlaylist = new BasicPlaylist
                     {
@@ -159,10 +161,10 @@ namespace WorldExplorerEurope.App.ViewModels
 
         public ICommand PhotoCommand => new Command(
             async () =>
-            { 
-               string action = await App.Current.MainPage.DisplayActionSheet("What do you want to do?", "Cancel", null, "Take a picture", "Get a picture");
+            {
+                string action = await App.Current.MainPage.DisplayActionSheet("What do you want to do?", "Cancel", null, "Take a picture", "Get a picture");
 
-               if(action == "Take a picture")
+                if (action == "Take a picture")
                 {
                     await TakePicture();
                 }
@@ -172,11 +174,37 @@ namespace WorldExplorerEurope.App.ViewModels
                 }
             });
 
+        //This is code I wanted to implement, but for some reason it does not work
+        private async Task<bool> CheckAndroidCameraPermissions()
+        {
+            PermissionStatus status = await CrossPermissions.Current.CheckPermissionStatusAsync<CalendarPermission>();
+            if (status != PermissionStatus.Granted)
+            {
+                status = await CrossPermissions.Current.RequestPermissionAsync<CameraPermission>();
+                return true;
+            }
+
+            if (status == PermissionStatus.Granted)
+            {
+                return true;
+            }
+            return false;
+        }
+
         private async Task TakePicture()
         {
             await CrossMedia.Current.Initialize();
+            if (Device.RuntimePlatform == "Android")
+            {
+                /*bool checkCameraPermission = await CheckAndroidCameraPermissions();
+                if (!checkCameraPermission)
+                {
+                    await App.Current.MainPage.DisplayAlert("Camera access denied", "Cannot access camera", "OK");
+                    return;
+                }*/
+            }
 
-            if(!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
                 await App.Current.MainPage.DisplayAlert("Camera not found", "It looks like your camera is not available.\n Restart your device to try again.", "Ok");
                 return;
@@ -211,7 +239,7 @@ namespace WorldExplorerEurope.App.ViewModels
             {
                 var file = await CrossMedia.Current.PickPhotoAsync();
 
-                if(file == null)
+                if (file == null)
                 {
                     await App.Current.MainPage.DisplayAlert("Photo not found!!", "", "Ok");
                     return;
@@ -234,7 +262,7 @@ namespace WorldExplorerEurope.App.ViewModels
             }
         }
 
-        private async Task<HttpResponseMessage> UploadPicture (MultipartFormDataContent content)
+        private async Task<HttpResponseMessage> UploadPicture(MultipartFormDataContent content)
         {
             try
             {

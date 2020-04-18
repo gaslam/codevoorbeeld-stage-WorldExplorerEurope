@@ -9,6 +9,7 @@ using Android.OS;
 using FFImageLoading.Forms.Platform;
 using FFImageLoading.Svg.Forms;
 using Plugin.Media;
+using Plugin.CurrentActivity;
 
 namespace WorldExplorerEurope.App.Droid
 {
@@ -29,6 +30,7 @@ namespace WorldExplorerEurope.App.Droid
             var ignore = typeof(SvgCachedImage);
             await CrossMedia.Current.Initialize();
             LoadApplication(new App());
+            CrossCurrentActivity.Current.Activity = this;
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
