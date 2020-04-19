@@ -35,6 +35,7 @@ namespace WorldExplorerEurope.App.ViewModels
             editUser = user;
             DataForm = new SfDataForm();
             DataForm.DataObject = new UserEdit();
+            ActivityIndicator = false;
             base.Init(initData);
         }
 
@@ -73,21 +74,38 @@ namespace WorldExplorerEurope.App.ViewModels
             }
         }
 
+        private bool activityIndicator;
+        public bool ActivityIndicator
+        {
+            get { return activityIndicator; }
+            set
+            {
+                this.activityIndicator = value;
+                ChangeProperty(nameof(ActivityIndicator));
+            }
+        }
+
         public ICommand EditCommand => new Command(async ()
             =>
         {
             EditUser();
             if (DataForm.Validate() == true)
             {
+                ActivityIndicator = true;
                 var request = await _apiService.Put($"{WorldExplorerAPIService.BaseUrl}/users/update/{editUser.Id}", JsonConvert.SerializeObject(editUser));
                 //if (request == null) await App.Current.MainPage.DisplayAlert("Service not reachable!!", "Cannot connect to WorldExplorerService.\n\nCheck your wifi settings or try later to connect!!", "OK");
-                if (!request.IsSuccessStatusCode) EditedUser.ErrorMessage = await request.Content.ReadAsStringAsync();
+                if (!request.IsSuccessStatusCode)
+                {
+                    EditedUser.ErrorMessage = await request.Content.ReadAsStringAsync();
+                    ActivityIndicator = false;
+                }
                 else
                 {
                     var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
                     UserService userService = new UserService();
                     userService.SetUser(user);
                     await CoreMethods.PushPageModel<DetailViewModel>(user, false, true);
+                    ActivityIndicator = false;
                 }
             }
         });
