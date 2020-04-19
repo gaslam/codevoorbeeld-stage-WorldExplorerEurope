@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -17,7 +18,7 @@
     <PackageReference Include="Syncfusion.Xamarin.SfDataForm" Version="18.1.0.44" />
     <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="18.1.0.44" />
     <PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer" Version="18.1.0.44" />
-    <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
+    <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.SVG.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.2" />
