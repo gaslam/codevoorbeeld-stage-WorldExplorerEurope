@@ -221,12 +221,12 @@ namespace WorldExplorerEurope.App.ViewModels
             await CrossMedia.Current.Initialize();
             if (Device.RuntimePlatform == "Android")
             {
-                /*bool checkCameraPermission = await CheckAndroidCameraPermissions();
+                bool checkCameraPermission = await CheckAndroidCameraPermissions();
                 if (!checkCameraPermission)
                 {
                     await App.Current.MainPage.DisplayAlert("Camera access denied", "Cannot access camera", "OK");
                     return;
-                }*/
+                }
             }
 
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
