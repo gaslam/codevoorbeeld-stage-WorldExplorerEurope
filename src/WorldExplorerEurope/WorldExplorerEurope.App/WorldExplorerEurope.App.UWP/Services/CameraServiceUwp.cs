@@ -1,26 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Android;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.V4.App;
-using Android.Views;
-using Android.Widget;
-using Plugin.Media;
-using Plugin.Media.Abstractions;
-using Plugin.Permissions;
-using Plugin.Permissions.Abstractions;
 using WorldExplorerEurope.App.Domain.Services;
 
-[assembly: Xamarin.Forms.Dependency(typeof(WorldExplorerEurope.App.Droid.Services.CameraServiceDroid))]
-namespace WorldExplorerEurope.App.Droid.Services
+[assembly: Xamarin.Forms.Dependency(typeof(WorldExplorerEurope.App.UWP.Services.CameraServiceUwp))]
+namespace WorldExplorerEurope.App.UWP.Services
 {
-    public class CameraServiceDroid : ICameraService
+    public class CameraServiceUwp : ICameraService
     {
         public async Task<bool> CheckAndroidCameraPermissions()
         {

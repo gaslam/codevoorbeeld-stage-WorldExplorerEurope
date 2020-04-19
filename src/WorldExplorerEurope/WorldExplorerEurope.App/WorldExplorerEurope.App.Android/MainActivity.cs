@@ -10,6 +10,8 @@ using FFImageLoading.Forms.Platform;
 using FFImageLoading.Svg.Forms;
 using Plugin.Media;
 using Plugin.CurrentActivity;
+using Android.Support.V4.App;
+using Android;
 
 namespace WorldExplorerEurope.App.Droid
 {
@@ -28,9 +30,8 @@ namespace WorldExplorerEurope.App.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             CachedImageRenderer.Init(true);
             var ignore = typeof(SvgCachedImage);
-            await CrossMedia.Current.Initialize();
             LoadApplication(new App());
-            CrossCurrentActivity.Current.Activity = this;
+            CrossCurrentActivity.Current.Init(this, savedInstanceState);
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

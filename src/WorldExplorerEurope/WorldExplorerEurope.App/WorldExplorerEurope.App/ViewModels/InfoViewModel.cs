@@ -188,91 +188,77 @@ namespace WorldExplorerEurope.App.ViewModels
             {
                 string action = await App.Current.MainPage.DisplayActionSheet("What do you want to do?", "Cancel", null, "Take a picture", "Get a picture");
                 ActivityIndicator = true;
+                var cameraService = DependencyService.Get<ICameraService>();
+                await CrossMedia.Current.Initialize();
 
                 if (action == "Take a picture")
                 {
-                    await TakePicture();
+                    await TakePicture(cameraService);
                 }
                 if (action == "Get a picture")
                 {
-                    await PickPicture();
+                    await PickPicture(cameraService);
                 }
             });
 
         //This is code I wanted to implement, but for some reason it does not work
-        private async Task<bool> CheckAndroidCameraPermissions()
+        private async Task<bool> CheckAndroidCameraPermissions(ICameraService permission)
         {
-            PermissionStatus status = await CrossPermissions.Current.CheckPermissionStatusAsync<CalendarPermission>();
-            if (status != PermissionStatus.Granted)
-            {
-                status = await CrossPermissions.Current.RequestPermissionAsync<CameraPermission>();
-                return true;
-            }
-
-            if (status == PermissionStatus.Granted)
-            {
-                return true;
-            }
-            return false;
+            bool hasPermission = await permission.CheckAndroidCameraPermissions();
+            return hasPermission;
         }
 
-        private async Task TakePicture()
+        private async Task TakePicture(ICameraService camera)
         {
-            await CrossMedia.Current.Initialize();
-            if (Device.RuntimePlatform == "Android")
+            try
             {
-                /*bool checkCameraPermission = await CheckAndroidCameraPermissions();
-                if (!checkCameraPermission)
+                await CrossMedia.Current.Initialize();
+                var media = CrossMedia.Current;
+                bool hasPermission = await CheckAndroidCameraPermissions(camera);
+                if (hasPermission)
                 {
-                    await App.Current.MainPage.DisplayAlert("Camera access denied", "Cannot access camera", "OK");
-                    return;
-                }*/
-            }
+                    activityIndicator = true;
+                    var file = await media.TakePhotoAsync(new StoreCameraMediaOptions
+                    {
+                        SaveToAlbum = true
+                    });
+                    if (file == null)
+                    {
+                        activityIndicator = false;
+                        return;
+                    }
 
-            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-            {
-                await App.Current.MainPage.DisplayAlert("Camera not found", "It looks like your camera is not available.\n Restart your device to try again.", "Ok");
-                ActivityIndicator = false;
-                return;
-            }
-            else
-            {
-                var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
-                {
-                    Directory = "Test",
-                    SaveToAlbum = true,
-                    CompressionQuality = 75,
-                    CustomPhotoSize = 50,
-                    PhotoSize = PhotoSize.MaxWidthHeight,
-                    MaxWidthHeight = 2000,
-                    DefaultCamera = CameraDevice.Front
-                });
-
-                await CreateFormData(file);
-            }
-        }
-
-        private async Task PickPicture()
-        {
-            await CrossMedia.Current.Initialize();
-
-            if (!CrossMedia.Current.IsPickPhotoSupported)
-            {
-                await App.Current.MainPage.DisplayAlert("Cannot open photo's", "It looks like your photo library is not available.\n Restart your device to try again.", "Ok");
-                ActivityIndicator = false;
-                return;
-            }
-            else
-            {
-                var file = await CrossMedia.Current.PickPhotoAsync();
-
-                if (file == null)
-                {
-                    await App.Current.MainPage.DisplayAlert("Photo not found!!", "", "Ok");
-                    ActivityIndicator = false;
-                    return;
                 }
-                await CreateFormData(file);
+                activityIndicator = false;
+            } catch
+            {
+                activityIndicator = false;
+                return;
+            }
+        }
+
+        private async Task PickPicture(ICameraService camera)
+        {
+            try
+            {
+                bool hasPermission = await CheckAndroidCameraPermissions(camera);
+                if (hasPermission)
+                {
+                    activityIndicator = true;
+                    var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
+                    if (file == null)
+                    {
+                        activityIndicator = false;
+                        return;
+                    }
+
+                }
+                activityIndicator = false;
+            }
+            catch
+            {
+                activityIndicator = false;
+                return;
             }
         }
 
