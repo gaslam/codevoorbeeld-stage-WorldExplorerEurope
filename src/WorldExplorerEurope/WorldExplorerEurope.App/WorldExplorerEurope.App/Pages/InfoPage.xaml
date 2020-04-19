@@ -9,14 +9,14 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
              x:Class="WorldExplorerEurope.App.Pages.InfoPage"
              Title="{Binding CountryName}">
     <ContentPage.Content>
-        <ScrollView HorizontalScrollBarVisibility="Always"
-                    AbsoluteLayout.LayoutFlags="All"
-                        AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <AbsoluteLayout AbsoluteLayout.LayoutFlags="All"
+        <AbsoluteLayout AbsoluteLayout.LayoutFlags="All"
                         AbsoluteLayout.LayoutBounds="0,0,1,1"
                         Margin="0,0,0,0">
+            <ScrollView HorizontalScrollBarVisibility="Always"
+                    AbsoluteLayout.LayoutFlags="All"
+                        AbsoluteLayout.LayoutBounds="0,0,1,1" Margin="0,0,0,75">
                 <!-- This makes the view scrollable. I know it's bad but unforntunately I cannot waste my time doing a-->
-                <StackLayout HeightRequest="750">
+                <StackLayout>
                     <Grid HeightRequest="200">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
@@ -95,7 +95,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                             </Label.FontFamily>
                         </Label>
                     </Grid>
-                    <Grid WidthRequest="600" HeightRequest="600">
+                    <Grid WidthRequest="600" HeightRequest="300">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
@@ -143,10 +143,10 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                             </Button.FontFamily>
                         </Button>
                     </Grid>
-                    <listview:SfListView x:Name="lsvSpotify" ItemsSource="{Binding CountryPlaylist}">
+                    <listview:SfListView x:Name="lsvSpotify" ItemsSource="{Binding CountryPlaylist}" IsScrollingEnabled="False">
                         <listview:SfListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid  x:Name="lsvGrid" HorizontalOptions="Start" HeightRequest="200">
+                                <Grid  x:Name="lsvGrid" HorizontalOptions="CenterAndExpand" HeightRequest="350">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="40"></ColumnDefinition>
                                         <ColumnDefinition Width="160"></ColumnDefinition>
@@ -179,7 +179,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                                             </OnPlatform>
                                         </Label.FontFamily>
                                     </Label>
-                                    <BoxView BackgroundColor="Black" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HeightRequest="1" VerticalOptions="End"></BoxView>
+                                    <BoxView BackgroundColor="Black" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" HeightRequest="1" VerticalOptions="EndAndExpand"></BoxView>
                                 </Grid>
                             </DataTemplate>
                         </listview:SfListView.ItemTemplate>
@@ -211,19 +211,13 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                         </Button>
                     </Grid>
                 </StackLayout>
-                <StackLayout AbsoluteLayout.LayoutFlags="All"
-                        AbsoluteLayout.LayoutBounds="0,0,1,1"
-                         IsVisible="{Binding ActivityIndicator}"
-                         VerticalOptions="CenterAndExpand"
-                         BackgroundColor="#CCFFFFFF">
-            </StackLayout>
-            <StackLayout AbsoluteLayout.LayoutFlags="All"
+            </ScrollView>
+        <StackLayout AbsoluteLayout.LayoutFlags="All"
                         AbsoluteLayout.LayoutBounds="0,0,1,1"
                          Margin="0,0,0,0"
                          VerticalOptions="EndAndExpand">
-                <views:FooterView />
-            </StackLayout>
+            <views:FooterView IsClippedToBounds="True" />
+        </StackLayout>
         </AbsoluteLayout>
-        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
