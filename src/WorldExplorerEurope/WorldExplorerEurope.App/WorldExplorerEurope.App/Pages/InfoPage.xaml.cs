@@ -19,6 +19,7 @@ namespace WorldExplorerEurope.App.Pages
         public InfoPage(Country country)
         {
             InitializeComponent();
+            this.HeightRequest = 600;
         }
     }
 }
