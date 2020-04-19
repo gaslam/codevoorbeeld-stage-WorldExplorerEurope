@@ -4,56 +4,66 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:WorldExplorerEurope.App.Views"
              mc:Ignorable="d"
              x:Class="WorldExplorerEurope.App.Pages.LoginPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="300"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Label Text="Login" x:Name="txtLogin" FontAttributes="Bold" Grid.Column="1"  Grid.Row="2" HorizontalTextAlignment="Center" TextColor="#2e2e2c">
-                    <Label.FontFamily>
-                        <OnPlatform x:TypeArguments="x:String">
-                            <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
-                            <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
-                        </OnPlatform>
-                    </Label.FontFamily>
-                </Label>
-                <dataform:SfDataForm x:Name="dataForm" ValidationMode="LostFocus" LayoutOptions="TextInputLayout" ContainerType="Outlined" LabelPosition="Top" AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem" DataObject="{Binding newUser}" Grid.Column="1" Grid.Row="3">
-                </dataform:SfDataForm>
-                <Label Text="No Account yet?" TextColor="Blue" TextDecorations="Underline" Grid.Column="1"  Grid.Row="4">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding RegisterCommand}" ></TapGestureRecognizer>
-                    </Label.GestureRecognizers>
-                    <Label.FontFamily>
-                        <OnPlatform x:TypeArguments="x:String">
-                            <On Platform="Android">Raleway-Regular.ttf#Raleway</On>
-                            <On Platform="UWP">/Assets/Fonts/Raleway-Regular.ttf#Raleway</On>
-                        </OnPlatform>
-                    </Label.FontFamily>
-                </Label>
-                <Button  Text="Login" Padding="5" Margin="10,0,0,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="5" Grid.Column="1" Command="{Binding LoginCommand}">
-                    <Button.FontFamily>
-                        <OnPlatform x:TypeArguments="x:String">
-                            <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
-                            <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto Mono</On>
-                        </OnPlatform>
-                    </Button.FontFamily>
-                </Button>
-            </Grid>
-        </StackLayout>
+        <AbsoluteLayout>
+            <StackLayout>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="300"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Login" x:Name="txtLogin" FontAttributes="Bold" Grid.Column="1"  Grid.Row="2" HorizontalTextAlignment="Center" TextColor="#2e2e2c">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <dataform:SfDataForm x:Name="dataForm" ValidationMode="LostFocus" LayoutOptions="TextInputLayout" ContainerType="Outlined" LabelPosition="Top" AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem" DataObject="{Binding newUser}" Grid.Column="1" Grid.Row="3">
+                    </dataform:SfDataForm>
+                    <Label Text="No Account yet?" TextColor="Blue" TextDecorations="Underline" Grid.Column="1"  Grid.Row="4">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RegisterCommand}" ></TapGestureRecognizer>
+                        </Label.GestureRecognizers>
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">Raleway-Regular.ttf#Raleway</On>
+                                <On Platform="UWP">/Assets/Fonts/Raleway-Regular.ttf#Raleway</On>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                    <Button  Text="Login" Padding="5" Margin="10,0,0,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="5" Grid.Column="1" Command="{Binding LoginCommand}">
+                        <Button.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto Mono</On>
+                            </OnPlatform>
+                        </Button.FontFamily>
+                    </Button>
+                </Grid>
+            </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutFlags="All"
+                        AbsoluteLayout.LayoutBounds="0,0,1,1"
+                         IsVisible="{Binding ActivityIndicator}"
+                         VerticalOptions="CenterAndExpand"
+                         BackgroundColor="#CCFFFFFF">
+                <views:BusyView x:Name="busyIndicator" />
+            </StackLayout>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

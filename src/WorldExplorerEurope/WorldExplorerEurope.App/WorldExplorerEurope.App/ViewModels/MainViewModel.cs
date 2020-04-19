@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Domain.Services.API;
 using WorldExplorerEurope.App.ViewModels;
+using WorldExplorerEurope.App.Views;
 using WorldExplorerEurope.Domain.Models;
 using WorldExplorerEurope.ViewModels;
 using WorldExplorerEurope.ViewModels.Syncfusion;
@@ -19,15 +21,18 @@ using Xamarin.Forms;
 
 namespace WorldExplorerEurope.App.ViewModels
 {
-    public class MainViewModel : FreshBasePageModel
+    public class MainViewModel : FreshBasePageModel, INotifyPropertyChanged
     {
 
         private IAPIinterface _apiService;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public MainViewModel()
         {
             _apiService = new APIservice();
             countries = GetCountries().Result;
+            ActivityIndicator = new bool();
+            ActivityIndicator = false;
         }
 
         private ObservableCollection<Country> countries;
@@ -70,6 +75,25 @@ namespace WorldExplorerEurope.App.ViewModels
             return selectedCountry;
         }
 
+        private bool activityIndicator;
+        public bool ActivityIndicator
+        {
+            get { return activityIndicator; }
+            set
+            {
+                this.activityIndicator = value;
+                ChangeProperty(nameof(ActivityIndicator));
+            }
+        }
+
+        private void ChangeProperty(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+
         public ICommand LoginCommand => new Command(
             async () =>
             {
@@ -78,13 +102,16 @@ namespace WorldExplorerEurope.App.ViewModels
         public ICommand ItemTappedCommand => new Command(
             async () =>
             {
+                ActivityIndicator = true;
                 await CoreMethods.PushPageModel<InfoViewModel>(selectedCountry, false, true);
+                ActivityIndicator = false;
             });
         public ICommand LocationCommand => new Command(
             async () =>
             {
                 try
                 {
+                    ActivityIndicator = true;
                     LocationService locationService = new LocationService();
                     var location = await locationService.GetLocation();
                     if (location == null) throw new Exception();
