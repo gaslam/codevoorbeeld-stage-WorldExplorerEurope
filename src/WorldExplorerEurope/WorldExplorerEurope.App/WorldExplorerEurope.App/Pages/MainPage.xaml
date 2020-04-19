@@ -12,7 +12,8 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
     <ContentPage.Content>
         <AbsoluteLayout>
             <StackLayout AbsoluteLayout.LayoutFlags="All"
-                        AbsoluteLayout.LayoutBounds="0,0,1,1" >
+                        AbsoluteLayout.LayoutBounds="0,0,1,1"
+                         VerticalOptions="Start">
                 <!-- Place new controls here -->
                 <Grid HorizontalOptions="Center">
                     <Grid.RowDefinitions>
@@ -42,7 +43,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                     </Button>
                 </Grid>
                 <Grid>
-                    <listview:SfListView x:Name="SfListViewCountries" ItemSize="50" ItemTapped="SfListViewCountries_ItemTapped" TapCommand="{Binding ItemTappedCommand}">
+                    <listview:SfListView x:Name="SfListViewCountries" ItemSize="50" ItemTapped="SfListViewCountries_ItemTapped" TapCommand="{Binding ItemTappedCommand}" Margin="0,0,0,75">
                         <listview:SfListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid VerticalOptions="End" x:Name="lsvGrid">
@@ -90,7 +91,6 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                         </listview:SfListView.ItemTemplate>
                     </listview:SfListView>
                 </Grid>
-                <Button Padding="5" Text="Go to Login" Command="{Binding LoginCommand}" Grid.Row="1" VerticalOptions="End"></Button>
             </StackLayout>
             <StackLayout AbsoluteLayout.LayoutFlags="All"
                         AbsoluteLayout.LayoutBounds="0,0,1,1"
@@ -98,6 +98,11 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                          VerticalOptions="CenterAndExpand"
                          BackgroundColor="#CCFFFFFF">
                 <views:BusyView x:Name="busyIndicator" />
+            </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutFlags="All"
+                        AbsoluteLayout.LayoutBounds="0,0,1,1"
+                         VerticalOptions="EndAndExpand">
+                <views:FooterView />
             </StackLayout>
         </AbsoluteLayout>
     </ContentPage.Content>
