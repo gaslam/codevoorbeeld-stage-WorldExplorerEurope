@@ -95,6 +95,34 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                             </Label.FontFamily>
                         </Label>
                     </Grid>
+                    <Grid WidthRequest="600" HorizontalOptions="Center" HeightRequest="100">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Button x:Name="lblFavourites" Text="{Binding LblFavouritesText}" FontAttributes="Bold" Padding="5" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="200"  Grid.Row="0" Grid.Column="0" Margin="10,0,0,0" Command="{Binding FavouriteCommand}">
+                            <Button.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                                    <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                                </OnPlatform>
+                            </Button.FontFamily>
+                        </Button>
+                        <Button x:Name="lblWishlists"  Text="{Binding LblWishlistsText}" FontAttributes="Bold" Padding="5" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="200"  Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" Command="{Binding WishlistCommand}">
+                            <Button.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                                    <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto Mono</On>
+                                </OnPlatform>
+                            </Button.FontFamily>
+                        </Button>
+                        <Label Text="{Binding AddedInFavourites}" Grid.Column="0" Grid.Row="1"></Label>
+                        <Label Text="{Binding AddedInWishlist}" Grid.Column="1" Grid.Row="1"></Label>
+                    </Grid>
                     <Grid WidthRequest="600" HeightRequest="300">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
@@ -143,7 +171,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                             </Button.FontFamily>
                         </Button>
                     </Grid>
-                    <listview:SfListView x:Name="lsvSpotify" ItemsSource="{Binding CountryPlaylist}" IsScrollingEnabled="False">
+                    <listview:SfListView x:Name="lsvSpotify" ItemsSource="{Binding CountryPlaylist}" IsScrollingEnabled="True" HeightRequest="350">
                         <listview:SfListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid  x:Name="lsvGrid" HorizontalOptions="CenterAndExpand" HeightRequest="350">
@@ -184,14 +212,13 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                             </DataTemplate>
                         </listview:SfListView.ItemTemplate>
                     </listview:SfListView>
-                    <Grid WidthRequest="600" HorizontalOptions="Center">
+                    <Grid WidthRequest="600" HorizontalOptions="Center" HeightRequest="40">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Label Text="Pictures" FontAttributes="Bold" Grid.Row="0" Grid.Column="0" FontSize="30" Margin="10,0,0,0">
                             <Label.FontFamily>
@@ -201,7 +228,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                                 </OnPlatform>
                             </Label.FontFamily>
                         </Label>
-                        <Button  Text="Add Picture" Padding="5" Margin="0,0,10,200" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="1" Command="{Binding PhotoCommand}">
+                        <Button  Text="Add Picture" Padding="5" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="1" Command="{Binding PhotoCommand}">
                             <Button.FontFamily>
                                 <OnPlatform x:TypeArguments="x:String">
                                     <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
@@ -210,6 +237,15 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                             </Button.FontFamily>
                         </Button>
                     </Grid>
+                    <listview:SfListView ItemsSource="{Binding UserMemories}" Orientation="Horizontal" ItemSize="450" Grid.ColumnSpan="2" Grid.Row="1" HeightRequest="450" HorizontalOptions="CenterAndExpand">
+                        <listview:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HeightRequest="500">
+                                    <Image Source="{Binding PhotoName}" HeightRequest="450" Margin="10,0,0,0"></Image>
+                                </Grid>
+                            </DataTemplate>
+                        </listview:SfListView.ItemTemplate>
+                    </listview:SfListView>
                 </StackLayout>
             </ScrollView>
         <StackLayout AbsoluteLayout.LayoutFlags="All"

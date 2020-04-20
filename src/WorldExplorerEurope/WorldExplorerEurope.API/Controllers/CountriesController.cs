@@ -78,5 +78,68 @@ namespace WorldExplorerEurope.API.Controllers
                 return BadRequest("Cannot save image!!");
             }
         }
+
+        [HttpPost("{countryId}/{userId}/favourites")]
+        public async Task<IActionResult> PostFavourite([FromRoute]Guid countryId, [FromRoute] Guid userId)
+        {
+            var entity = await _mappingRepository.GetById(countryId);
+            if (entity == null)
+            {
+                return NotFound($"Cannot find country with id: {countryId}!!");
+            };
+            try
+            {
+                var favourite = new Favourite()
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = userId
+                };
+                _worldExplorerContext.Favourites.Add(favourite);
+                await _worldExplorerContext.SaveChangesAsync();
+                var favouriteDto = new FavouritesDto()
+                {
+                    Id = favourite.Id,
+                    UserId = userId,
+                };
+                entity.Favourites.Add(favouriteDto);
+                return Ok(await _countryMapperRepo.Update(countryId.ToString(), entity));
+            }
+            catch
+            {
+                return BadRequest("Cannot save image!!");
+            }
+        }
+
+        [HttpPost("{countryId}/{userId}/wishlist")]
+        public async Task<IActionResult> PostWishlist([FromRoute]Guid countryId, [FromRoute] Guid userId)
+        {
+            var entity = await _mappingRepository.GetById(countryId);
+            if (entity == null)
+            {
+                return NotFound($"Cannot find country with id: {countryId}!!");
+            };
+            try
+            {
+                var wishlist = new Wishlist()
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = userId
+                };
+                _worldExplorerContext.Wishlists.Add(wishlist);
+                await _worldExplorerContext.SaveChangesAsync();
+                var wishlistDto = new WishlistDto()
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = userId,
+                    CountryId = countryId
+                };
+                entity.CountryWishlists.Add(wishlistDto);
+                return Ok(await _countryMapperRepo.Update(countryId.ToString(), entity));
+            }
+            catch
+            {
+                return BadRequest("Cannot save image!!");
+            }
+        }
     }
 }

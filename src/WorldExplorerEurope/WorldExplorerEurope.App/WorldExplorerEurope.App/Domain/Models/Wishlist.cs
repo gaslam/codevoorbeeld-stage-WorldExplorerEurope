@@ -7,6 +7,6 @@ namespace WorldExplorerEurope.App.Domain.Models
 {
     public class Wishlist : BaseId
     {
-        public Guid CountryId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

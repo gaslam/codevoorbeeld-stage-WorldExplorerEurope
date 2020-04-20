@@ -32,12 +32,9 @@ namespace WorldExplorerEurope.App.Domain.Services
 
         public async Task<ObservableCollection<Country>> GetCountriesAsync()
         {
-            if (Countries == null || Countries.Count == 0)
-            {
                 Countries = new ObservableCollection<Country>();
                 string responseMessage = await Get($"{WorldExplorerAPIService.BaseUrl}");
                 Countries = JsonConvert.DeserializeObject<ObservableCollection<Country>>(responseMessage);
-            }
             return Countries;  
 
         }
