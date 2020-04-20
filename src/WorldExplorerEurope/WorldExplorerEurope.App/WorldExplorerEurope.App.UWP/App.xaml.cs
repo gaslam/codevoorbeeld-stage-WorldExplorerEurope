@@ -26,6 +26,7 @@ using Syncfusion.XForms.UWP.MaskedEdit;
 using Syncfusion.XForms.UWP.TextInputLayout;
 using Syncfusion.SfAutoComplete.XForms.UWP;
 using Plugin.Media;
+using MediaManager;
 
 namespace WorldExplorerEurope.App.UWP
 {
