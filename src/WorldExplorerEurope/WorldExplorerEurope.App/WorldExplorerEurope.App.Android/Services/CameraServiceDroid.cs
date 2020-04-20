@@ -24,45 +24,50 @@ namespace WorldExplorerEurope.App.Droid.Services
     {
         public async Task<bool> CheckAndroidCameraPermissions()
         {
-            /*
-             * I want to use this code, but it just does not work.
-            PermissionStatus status = await CrossPermissions.Current.CheckPermissionStatusAsync<CameraPermission>();
-            if (status != PermissionStatus.Granted)
+            PermissionStatus camera = await CrossPermissions.Current.CheckPermissionStatusAsync<CameraPermission>();
+            PermissionStatus Storage = await CrossPermissions.Current.CheckPermissionStatusAsync<StoragePermission>();
+            if (camera != PermissionStatus.Granted)
             {
-                status = await CrossPermissions.Current.RequestPermissionAsync<CameraPermission>();
+                camera = await CrossPermissions.Current.RequestPermissionAsync<CameraPermission>();
+                return true;
+            }
+            if (Storage != PermissionStatus.Granted)
+            {
+                Storage = await CrossPermissions.Current.RequestPermissionAsync<StoragePermission>();
                 return true;
             }
 
-            if (status == PermissionStatus.Granted)
+            if (camera == PermissionStatus.Granted && Storage == PermissionStatus.Granted)
             {
                 return true;
             }
-            return false;
-            */
-            return true;
+            else
+            {
+                await App.Current.MainPage.DisplayAlert("Permissions not granted", "In order to use this feature, enable storage and camera permissions for this app.", "Ok");
+                return false;
+            }
         }
-        /*
+
         public async Task<MediaFile> TakePicture()
         {
             try
             {
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 {
-                    await App.Current.MainPage.DisplayAlert("Camera not found", "It looks like your camera is not available.\n Restart your device to try again.", "Ok");
                     return null;
                 }
                 else
                 {
                     var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
                     {
-                        Directory="test",
+                        Directory = "test",
                         SaveToAlbum = true,
                     });
 
                     return file;
                 }
             }
-                catch
+            catch
             {
                 return null;
             }
@@ -94,6 +99,6 @@ namespace WorldExplorerEurope.App.Droid.Services
             {
                 return null;
             }
-    }*/
+        }
     }
 }

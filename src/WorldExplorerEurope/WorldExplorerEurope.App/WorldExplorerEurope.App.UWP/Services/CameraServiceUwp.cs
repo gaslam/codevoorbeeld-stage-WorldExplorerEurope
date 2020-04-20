@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Plugin.Media;
+using Plugin.Media.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,31 +14,16 @@ namespace WorldExplorerEurope.App.UWP.Services
     {
         public async Task<bool> CheckAndroidCameraPermissions()
         {
-            /*
-             * I want to use this code, but it just does not work.
-            PermissionStatus status = await CrossPermissions.Current.CheckPermissionStatusAsync<CameraPermission>();
-            if (status != PermissionStatus.Granted)
-            {
-                status = await CrossPermissions.Current.RequestPermissionAsync<CameraPermission>();
-                return true;
-            }
-
-            if (status == PermissionStatus.Granted)
-            {
-                return true;
-            }
-            return false;
-            */
+            //Windows already asks for permission so there is no need for this.
             return true;
         }
-        /*
+
         public async Task<MediaFile> TakePicture()
         {
             try
             {
                 if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 {
-                    await App.Current.MainPage.DisplayAlert("Camera not found", "It looks like your camera is not available.\n Restart your device to try again.", "Ok");
                     return null;
                 }
                 else
@@ -63,7 +50,6 @@ namespace WorldExplorerEurope.App.UWP.Services
 
                 if (!CrossMedia.Current.IsPickPhotoSupported)
                 {
-                    await App.Current.MainPage.DisplayAlert("Cannot open photo's", "It looks like your photo library is not available.\n Restart your device to try again.", "Ok");
                     return null;
                 }
                 else
@@ -72,7 +58,6 @@ namespace WorldExplorerEurope.App.UWP.Services
 
                     if (file == null)
                     {
-                        await App.Current.MainPage.DisplayAlert("Photo not found!!", "", "Ok");
                         return null;
                     }
                     return file;
@@ -82,6 +67,6 @@ namespace WorldExplorerEurope.App.UWP.Services
             {
                 return null;
             }
-    }*/
+    }
     }
 }

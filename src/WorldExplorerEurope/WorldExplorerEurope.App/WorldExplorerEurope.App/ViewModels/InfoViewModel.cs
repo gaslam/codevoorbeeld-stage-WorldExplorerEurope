@@ -188,6 +188,13 @@ namespace WorldExplorerEurope.App.ViewModels
             {
                 string action = await App.Current.MainPage.DisplayActionSheet("What do you want to do?", "Cancel", null, "Take a picture", "Get a picture");
                 ActivityIndicator = true;
+                LocalService localService = new LocalService();
+                if(localService.GetUser() == null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before you upload.", "Ok");
+                    await CoreMethods.PushPageModel<LoginViewModel>(true);
+                    return;
+                }
 
                 if (action == "Take a picture")
                 {
@@ -219,61 +226,36 @@ namespace WorldExplorerEurope.App.ViewModels
         private async Task TakePicture()
         {
             await CrossMedia.Current.Initialize();
-            if (Device.RuntimePlatform == "Android")
+            var camera = DependencyService.Get<ICameraService>();
+            var hasPermission = await camera.CheckAndroidCameraPermissions();
+            if (!hasPermission)
             {
-                bool checkCameraPermission = await CheckAndroidCameraPermissions();
-                if (!checkCameraPermission)
-                {
-                    await App.Current.MainPage.DisplayAlert("Camera access denied", "Cannot access camera", "OK");
-                    return;
-                }
+                await App.Current.MainPage.DisplayAlert("Permission denied", "Please, enable camera and storage access for this app in your settings.", "OK");
             }
+            var file = await camera.TakePicture();
 
-            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+
+            if(file == null)
             {
-                await App.Current.MainPage.DisplayAlert("Camera not found", "It looks like your camera is not available.\n Restart your device to try again.", "Ok");
-                ActivityIndicator = false;
                 return;
             }
-            else
-            {
-                var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
-                {
-                    Directory = "Test",
-                    SaveToAlbum = true,
-                    CompressionQuality = 75,
-                    CustomPhotoSize = 50,
-                    PhotoSize = PhotoSize.MaxWidthHeight,
-                    MaxWidthHeight = 2000,
-                    DefaultCamera = CameraDevice.Front
-                });
-
                 await CreateFormData(file);
-            }
         }
 
         private async Task PickPicture()
         {
             await CrossMedia.Current.Initialize();
+            var camera = DependencyService.Get<ICameraService>();
+            var hasPermission = camera.CheckAndroidCameraPermissions();
+            var file = await camera.PickPicture();
 
-            if (!CrossMedia.Current.IsPickPhotoSupported)
+
+            if(file == null)
             {
-                await App.Current.MainPage.DisplayAlert("Cannot open photo's", "It looks like your photo library is not available.\n Restart your device to try again.", "Ok");
-                ActivityIndicator = false;
+                await App.Current.MainPage.DisplayAlert("Cannot", "Cannot take picture.", "Ok");
                 return;
             }
-            else
-            {
-                var file = await CrossMedia.Current.PickPhotoAsync();
-
-                if (file == null)
-                {
-                    await App.Current.MainPage.DisplayAlert("Photo not found!!", "", "Ok");
-                    ActivityIndicator = false;
-                    return;
-                }
                 await CreateFormData(file);
-            }
         }
 
         private async Task CreateFormData(MediaFile media)

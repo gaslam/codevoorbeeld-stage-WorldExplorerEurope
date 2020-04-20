@@ -9,7 +9,7 @@ namespace WorldExplorerEurope.App.Domain.Services
     public interface ICameraService
     {
         Task<bool> CheckAndroidCameraPermissions();
-        //Task<MediaFile> TakePicture();
-        //Task<MediaFile> PickPicture();
+        Task<MediaFile> TakePicture();
+        Task<MediaFile> PickPicture();
     }
 }
