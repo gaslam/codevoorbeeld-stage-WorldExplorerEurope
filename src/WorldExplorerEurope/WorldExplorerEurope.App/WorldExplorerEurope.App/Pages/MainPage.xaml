@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:WorldExplorerEurope.App.Views"
+             mc:Ignorable="d"
+             x:Class="WorldExplorerEurope.App.Pages.MainPage"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"  
+             xmlns:ffSvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms" >
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <StackLayout AbsoluteLayout.LayoutFlags="All"
+                        AbsoluteLayout.LayoutBounds="0,0,1,1"
+                         VerticalOptions="Start">
+                <!-- Place new controls here -->
+                <Grid HorizontalOptions="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="500"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <SearchBar x:Name="srbFilter"
+                       Placeholder="Find Country.."
+                       Grid.Row="0" Grid.Column="0" WidthRequest="100" TextChanged="OnFilterChanged">
+                        <SearchBar.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                            </OnPlatform>
+                        </SearchBar.FontFamily>
+                    </SearchBar>
+                    <Button  Text="Locate" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="1" Command="{Binding LocationCommand}">
+                        <Button.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto Mono</On>
+                            </OnPlatform>
+                        </Button.FontFamily>
+                    </Button>
+                </Grid>
+                <Grid>
+                    <listview:SfListView x:Name="SfListViewCountries" ItemSize="50" ItemTapped="SfListViewCountries_ItemTapped" TapCommand="{Binding ItemTappedCommand}" Margin="0,0,0,75">
+                        <listview:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid VerticalOptions="End" x:Name="lsvGrid">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition>
+                                            <ColumnDefinition.Width>
+                                                <OnPlatform x:TypeArguments="GridLength">
+                                                    <On Platform="Android">330</On>
+                                                    <On Platform="UWP">400</On>
+                                                </OnPlatform>
+                                            </ColumnDefinition.Width>
+                                        </ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <ffSvg:SvgCachedImage Source="{Binding FlagUrl}" Grid.Row="0" Grid.Column="0" Margin="10,5,0,5" HeightRequest="30" WidthRequest="40">
+                                        <ffSvg:SvgCachedImage.HorizontalOptions>
+                                            <OnPlatform x:TypeArguments="LayoutOptions">
+                                                <On Platform="Android">Start</On>
+                                                <On Platform="UWP">End</On>
+                                            </OnPlatform>
+                                        </ffSvg:SvgCachedImage.HorizontalOptions>
+                                    </ffSvg:SvgCachedImage>
+                                    <Label Text="{Binding Name}" FontSize="30" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" HorizontalTextAlignment="Start" LineBreakMode="TailTruncation">
+                                        <Label.FontFamily>
+                                            <OnPlatform x:TypeArguments="x:String">
+                                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                                            </OnPlatform>
+                                        </Label.FontFamily>
+                                    </Label>
+                                    <Label Text="{Binding PreviewUrl}" FontSize="30" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" HorizontalTextAlignment="Start" LineBreakMode="TailTruncation">
+                                        <Label.FontFamily>
+                                            <OnPlatform x:TypeArguments="x:String">
+                                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
+                                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                                            </OnPlatform>
+                                        </Label.FontFamily>
+                                    </Label>
+                                    <BoxView BackgroundColor="Black" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" HeightRequest="1" VerticalOptions="End" HorizontalOptions="FillAndExpand"></BoxView>
+                                </Grid>
+                            </DataTemplate>
+                        </listview:SfListView.ItemTemplate>
+                    </listview:SfListView>
+                </Grid>
+            </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutFlags="All"
+                        AbsoluteLayout.LayoutBounds="0,0,1,1"
+                         IsVisible="{Binding ActivityIndicator}"
+                         VerticalOptions="CenterAndExpand"
+                         BackgroundColor="#CCFFFFFF">
+                <views:BusyView x:Name="busyIndicator" />
+            </StackLayout>
+            <StackLayout AbsoluteLayout.LayoutFlags="All"
+                        AbsoluteLayout.LayoutBounds="0,0,1,1"
+                         VerticalOptions="EndAndExpand">
+                <views:FooterView />
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -64,7 +64,7 @@ namespace WorldExplorerEurope.API.Repositories.Base
         /* <summary>
          Updates the targeted entity. When it fails, it returns null.
          </summary> */
-        public async Task<Dto> Update(Dto dto)
+        public virtual async Task<Dto> Update(Dto dto)
         {
             var entity = _mapper.Map<T>(dto);
             _worldExplorerContext.Entry(entity).State = EntityState.Modified;
@@ -73,6 +73,27 @@ namespace WorldExplorerEurope.API.Repositories.Base
                 await _worldExplorerContext.SaveChangesAsync();
             }
             catch
+            {
+                return null;
+            }
+            return dto;
+        }
+
+        public virtual async Task<Dto> Update(string id, Dto dto)
+        {
+
+            if (Guid.Parse(id) == null)
+            {
+                return null;
+            }
+
+            if (id != dto.Id.ToString())
+            {
+                return null;
+            }
+
+            var UpdatedEntity = await Update(dto);
+            if (UpdatedEntity == null)
             {
                 return null;
             }

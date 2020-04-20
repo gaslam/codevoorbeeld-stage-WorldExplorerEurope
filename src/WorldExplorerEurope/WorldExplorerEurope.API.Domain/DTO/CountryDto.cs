@@ -15,5 +15,9 @@ namespace WorldExplorerEurope.API.Domain.DTO
         public string Currency { get; set; }
         public bool IsEUMember { get; set; }
         public string Description { get; set; }
+
+        public List<CountryFavourites> Favourites { get; set; }
+        public ICollection<PhotoMemoryDto> CountryPhotoMemories { get; set; }
+        public List<CountryWishlists> CountryWishlists { get; set; }
     }
 }

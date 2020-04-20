@@ -20,11 +20,12 @@ namespace WorldExplorerEurope.API.Controllers.Base
         [HttpGet]
         public virtual async Task<IActionResult> ListAll()
         {
-            return Ok(await _mappingRepository.ListAll());
+            var dto = await _mappingRepository.ListAll();
+            return Ok(dto);
         }
 
         [HttpGet("{id}")]
-        public virtual async Task<IActionResult> GetById(Guid id)
+        public virtual async Task<IActionResult> GetById([FromRoute]Guid id)
         {
             var dto = await _mappingRepository.GetById(id);
             if (dto == null)
@@ -42,7 +43,6 @@ namespace WorldExplorerEurope.API.Controllers.Base
             {
                 return BadRequest(ModelState);
             }
-
             var addedEntity = _mappingRepository.Add(dto);
 
             if (addedEntity == null)
@@ -66,7 +66,7 @@ namespace WorldExplorerEurope.API.Controllers.Base
                 return BadRequest("Id is niet geldig.");
             }
 
-            if(id == dto.Id.ToString())
+            if(id != dto.Id.ToString())
             {
                 return BadRequest("Id's zijn niet gelijk");
             }

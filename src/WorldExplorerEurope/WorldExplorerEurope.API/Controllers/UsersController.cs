@@ -32,12 +32,34 @@ namespace WorldExplorerEurope.API.Controllers
             {
                 return NotFound("User not found, enter valid credentials!!!");
             }
-            var passwordHasher = new PasswordHasher<UserLoginDto>();
-            if (passwordHasher.VerifyHashedPassword(userLoginDto, user.Password, userLoginDto.Password) == PasswordVerificationResult.Failed)
+            var passwordHasher = new PasswordHasher<UserDto>();
+            var verify = passwordHasher.VerifyHashedPassword(user, user.Password, userLoginDto.Password);
+            if (verify.Equals(PasswordVerificationResult.Failed))
             {
                 return BadRequest("Password Incorrect!!");
             }
             return Ok(user);
+        }
+        [HttpPost("register")]
+        public async Task<IActionResult>addUser([FromBody]UserDto user)
+        {
+            var existingUser = _userMappingRepo.GetAll().FirstOrDefault(m => m.Email == user.Email);
+            if(existingUser != null)
+            {
+                return BadRequest("User already exists");
+            }
+
+            try
+            {
+                var hasher = new PasswordHasher<UserDto>();
+                user.Password = hasher.HashPassword(user, user.Password);
+                await _userMappingRepo.Add(user);
+                return Ok(user);
+            }
+            catch
+            {
+                return BadRequest("User cannot be added");
+            }
         }
 
         [HttpGet("all")]

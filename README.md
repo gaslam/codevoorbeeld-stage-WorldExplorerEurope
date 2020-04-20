@@ -13,4 +13,19 @@ World Explorer: Europe is een applicatie die info geeft over alle landen van Eur
 Het is ook de bedoeling dat de database beheert wordt door een administrator via een externe website. De bewerkingen gaan dan via internet langs een web api(application programming interface) naar de database. 
 
 ## Extra info
-Extra instructies zoals de client id en client secret voor Spotify worden hier binnenkort ingeplaatst.
+
+In in de Services folder van de api voeg je de volgende keys in de spotify klasse toe:
+
+- clientId:
+```
+e1e36ceac985420e9c65c12f450045da
+```
+
+- secretId:
+```
+5d151d54fa7a4be9a5d473201f072ea5
+```
+
+Buiten dat voer je ook het ipconfig commando via het command venster.
+
+Kopieer uw ipv4 adres op het lokale netwerk en vervang alles tussen de haakjes van de variable BaseUrl (WorldExplorerEurope.app => Domain => Services => API => WorldExplorerAPIService)

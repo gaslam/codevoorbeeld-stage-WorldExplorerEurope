@@ -9,6 +9,6 @@ namespace WorldExplorerEurope.API.Domain.DTO
     public class FavouritesDto : EntityBase
     {
         public Guid CountryId { get; set; }
-        public ICollection<UserFavourites> Favourites { get; set; }
+        public ICollection<CountryFavourites> Favourites { get; set; }
     }
 }
