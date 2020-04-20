@@ -26,6 +26,7 @@ using Syncfusion.XForms.UWP.MaskedEdit;
 using Syncfusion.XForms.UWP.TextInputLayout;
 using Syncfusion.SfAutoComplete.XForms.UWP;
 using Plugin.Media;
+using MediaManager;
 
 namespace WorldExplorerEurope.App.UWP
 {
@@ -104,6 +105,7 @@ assembliesToInclude.Add(typeof(SfNavigationDrawerRenderer).GetTypeInfo().Assembl
             rootFrame.NavigationFailed += OnNavigationFailed;
 
             await CrossMedia.Current.Initialize();
+            CrossMediaManager.Current.Init();
 
             // Ensure the current window is active
             Window.Current.Activate();
