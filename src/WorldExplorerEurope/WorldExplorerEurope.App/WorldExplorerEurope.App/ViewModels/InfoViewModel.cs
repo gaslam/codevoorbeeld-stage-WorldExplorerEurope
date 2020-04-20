@@ -7,7 +7,9 @@ using Plugin.Permissions.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,22 +19,27 @@ using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Domain.Services.API;
 using WorldExplorerEurope.App.ViewModels.Syncfusion;
+using WorldExplorerEurope.App.Views;
 using WorldExplorerEurope.Domain.Models;
 using WorldExplorerEurope.ViewModels;
 using Xamarin.Forms;
 
 namespace WorldExplorerEurope.App.ViewModels
 {
-    public class InfoViewModel : FreshBasePageModel
+    public class InfoViewModel : FreshBasePageModel, INotifyPropertyChanged
     {
+
+        public event PropertyChangedEventHandler PropertyChanged;
         private Country _country;
 
         private IAPIinterface _apiService;
         private MainViewModel mainViewModel = new MainViewModel();
+        private LocalService _localService;
 
         public InfoViewModel()
         {
             this._apiService = new APIservice();
+            _localService = new LocalService();
         }
 
         public async override void Init(object initData)
@@ -40,8 +47,39 @@ namespace WorldExplorerEurope.App.ViewModels
             var country = initData as Country;
             this._country = mainViewModel.GetCountry();
             this.countryPlaylist = GetCountryPlaylist().Result;
-            base.Init(country);
+            UserMemories = await GetUserMemories();
+            ActivityIndicator = false;
+            ChangePageContentBasedOnUser();
+            base.Init(initData);
 
+        }
+
+        private void ChangePageContentBasedOnUser()
+        {
+            var user = _localService.GetUser();
+            int count = 0;
+            if (user != null) count = _country.favourites.Where(m => m.UserId == user.Id).Count();
+            if (count > 0)
+            {
+                LblFavouritesText = "Remove from Favourites";
+                FavouriteCommand = RemoveFavouriteCommand;
+            }
+            else
+            {
+                LblFavouritesText = "Add to Favourites";
+                FavouriteCommand = AddFavouriteCommand;
+            }
+            var count2 = _country.countryWishlists.Where(m => m.UserId == user.Id).Count();
+            if (count2 > 0)
+            {
+                lblWishlistsText = "Remove from Wishlist";
+                WishlistCommand = RemoveWishlistCommand;
+            }
+            else
+            {
+                LblWishlistsText = "Add to Wishlist";
+                WishlistCommand = AddWishlistCommand;
+            }
         }
         #region properties
 
@@ -132,6 +170,95 @@ namespace WorldExplorerEurope.App.ViewModels
         }
         #endregion
 
+        private void ChangeProperty(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+
+        private bool activityIndicator;
+        public bool ActivityIndicator
+        {
+            get { return activityIndicator; }
+            set
+            {
+                this.activityIndicator = value;
+                ChangeProperty(nameof(ActivityIndicator));
+            }
+        }
+
+        private ObservableCollection<PhotoMemoryDto> userMemories;
+        public ObservableCollection<PhotoMemoryDto> UserMemories
+        {
+            get
+            {
+                return userMemories;
+            }
+
+            set
+            {
+                userMemories = value;
+                ChangeProperty(nameof(UserMemories));
+            }
+        }
+
+        private string lblFavouritesText;
+        public string LblFavouritesText
+        {
+            get
+            {
+                return lblFavouritesText;
+            }
+            set
+            {
+                lblFavouritesText = value;
+                ChangeProperty(nameof(LblFavouritesText));
+            }
+        }
+
+        private string lblWishlistsText;
+        public string LblWishlistsText
+        {
+            get
+            {
+                return lblWishlistsText;
+            }
+            set
+            {
+                lblWishlistsText = value;
+                ChangeProperty(nameof(LblFavouritesText));
+            }
+        }
+
+
+        private async Task<ObservableCollection<PhotoMemoryDto>> GetUserMemories()
+        {
+            var user = _localService.GetUser();
+            if (user == null)
+            {
+                return new ObservableCollection<PhotoMemoryDto>();
+            }
+            return new ObservableCollection<PhotoMemoryDto>(new ObservableCollection<PhotoMemoryDto>(_country.countryPhotoMemories.Where(m => m.UserId == user.Id).ToList()));
+        }
+
+        public string AddedInFavourites
+        {
+            get
+            {
+                return $"Times added: {_country.favourites.Count}";
+            }
+        }
+
+        public string AddedInWishlist
+        {
+            get
+            {
+                return $"Times added: {_country.countryWishlists.Count}";
+            }
+        }
+
         private async Task<ObservableCollection<BasicPlaylist>> GetCountryPlaylist()
         {
             try
@@ -163,6 +290,14 @@ namespace WorldExplorerEurope.App.ViewModels
             async () =>
             {
                 string action = await App.Current.MainPage.DisplayActionSheet("What do you want to do?", "Cancel", null, "Take a picture", "Get a picture");
+                ActivityIndicator = true;
+                LocalService localService = new LocalService();
+                if (localService.GetUser() == null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before you upload.", "Ok");
+                    await CoreMethods.PushPageModel<LoginViewModel>(true);
+                    return;
+                }
 
                 if (action == "Take a picture")
                 {
@@ -194,71 +329,56 @@ namespace WorldExplorerEurope.App.ViewModels
         private async Task TakePicture()
         {
             await CrossMedia.Current.Initialize();
-            if (Device.RuntimePlatform == "Android")
+            var camera = DependencyService.Get<ICameraService>();
+            var hasPermission = await camera.CheckAndroidCameraPermissions();
+            if (!hasPermission)
             {
-                /*bool checkCameraPermission = await CheckAndroidCameraPermissions();
-                if (!checkCameraPermission)
-                {
-                    await App.Current.MainPage.DisplayAlert("Camera access denied", "Cannot access camera", "OK");
-                    return;
-                }*/
+                await App.Current.MainPage.DisplayAlert("Permission denied", "Please, enable camera and storage access for this app in your settings.", "OK");
             }
+            var file = await camera.TakePicture();
 
-            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+
+            if (file == null)
             {
-                await App.Current.MainPage.DisplayAlert("Camera not found", "It looks like your camera is not available.\n Restart your device to try again.", "Ok");
                 return;
             }
-            else
-            {
-                var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
-                {
-                    Directory = "Test",
-                    SaveToAlbum = true,
-                    CompressionQuality = 75,
-                    CustomPhotoSize = 50,
-                    PhotoSize = PhotoSize.MaxWidthHeight,
-                    MaxWidthHeight = 2000,
-                    DefaultCamera = CameraDevice.Front
-                });
-
-                await CreateFormData(file);
-            }
+            await CreateFormData(file);
         }
 
         private async Task PickPicture()
         {
             await CrossMedia.Current.Initialize();
+            var camera = DependencyService.Get<ICameraService>();
+            var hasPermission = camera.CheckAndroidCameraPermissions();
+            var file = await camera.PickPicture();
 
-            if (!CrossMedia.Current.IsPickPhotoSupported)
+
+            if (file == null)
             {
-                await App.Current.MainPage.DisplayAlert("Cannot open photo's", "It looks like your photo library is not available.\n Restart your device to try again.", "Ok");
+                await App.Current.MainPage.DisplayAlert("Cannot", "Cannot take picture.", "Ok");
                 return;
             }
-            else
-            {
-                var file = await CrossMedia.Current.PickPhotoAsync();
-
-                if (file == null)
-                {
-                    await App.Current.MainPage.DisplayAlert("Photo not found!!", "", "Ok");
-                    return;
-                }
-                await CreateFormData(file);
-            }
+            await CreateFormData(file);
         }
 
         private async Task CreateFormData(MediaFile media)
         {
             var content = new MultipartFormDataContent();
             content.Add(new StreamContent(media.GetStream()), "\"file\"", $"\"{media.Path}\"");
-            var upload = await UploadPicture(content);
-            if (!upload.IsSuccessStatusCode) await App.Current.MainPage.DisplayAlert("Cannot upload picture", "The service is currently unavailable.\n Just wait 1 hour and try again.", "Ok");
+            var upload = UploadPicture(content).Result;
+            if (!upload.IsSuccessStatusCode)
+            {
+                await App.Current.MainPage.DisplayAlert("Cannot upload picture", "The service is currently unavailable.\n Just wait 1 hour and try again.", "Ok");
+                ActivityIndicator = false;
+            }
             else
             {
                 var pagetorefresh = new LoginViewModel();
                 CoreMethods.RemoveFromNavigation<InfoViewModel>(false);
+                var countries = await _localService.GetCountriesAsync();
+                _country = countries.SingleOrDefault(m => m.Name == _country.Name);
                 await CoreMethods.PushPageModel<InfoViewModel>(_country, false, true);
+                ActivityIndicator = false;
             }
         }
 
@@ -268,16 +388,137 @@ namespace WorldExplorerEurope.App.ViewModels
             {
                 using (var client = new HttpClient())
                 {
-                    LocalService localService = new LocalService();
-                    var user = localService.GetUser();
+                    var user = _localService.GetUser();
+                    ActivityIndicator = false;
                     return await client.PostAsync($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/memory", content);
                 }
             }
             catch
             {
+                ActivityIndicator = false;
                 return null;
             }
             return null;
         }
+
+        private ICommand favouriteCommand;
+        public ICommand FavouriteCommand
+        {
+            get
+            {
+                return favouriteCommand;
+            }
+            set
+            {
+                favouriteCommand = value;
+                ChangeProperty(nameof(FavouriteCommand));
+            }
+        }
+
+        private ICommand wishlistCommand;
+        public ICommand WishlistCommand
+        {
+            get
+            {
+                return wishlistCommand;
+            }
+            set
+            {
+                wishlistCommand = value;
+                ChangeProperty(nameof(FavouriteCommand));
+            }
+        }
+
+        ICommand AddFavouriteCommand => new Command(
+            async () =>
+            {
+                var user = _localService.GetUser();
+                if (user != null)
+                {
+                    await Add($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/favourites");
+                    return;
+                }
+                await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
+                await CoreMethods.PushPageModel<LoginViewModel>(true);
+            });
+
+        ICommand RemoveFavouriteCommand => new Command(
+            async () =>
+            {
+                var user = _localService.GetUser();
+                var favourite = _country.favourites.FirstOrDefault(m => m.UserId == user.Id);
+                await Remove($"{WorldExplorerAPIService.BaseUrl}/favourites/remove/{_country.Id}/{favourite.Id}");
+            });
+
+        ICommand AddWishlistCommand => new Command(
+            async () =>
+            {
+                var user = _localService.GetUser();
+                if (user != null)
+                {
+                    await Add($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/wishlist");
+                    return;
+                }
+                await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
+                await CoreMethods.PushPageModel<LoginViewModel>(true);
+            });
+
+        ICommand RemoveWishlistCommand => new Command(
+            async () =>
+            {
+                var user = _localService.GetUser();
+                await Remove($"{WorldExplorerAPIService.BaseUrl}/wishlists/remove/{_country.Id}/{user.Id}");
+            });
+
+        private async Task Add(string url)
+        {
+            using (var client = new HttpClient())
+            {
+                var user = _localService.GetUser();
+                string rawJSON = JsonConvert.SerializeObject(_country);
+                var response = await client.PostAsync(url, new StringContent(rawJSON, Encoding.UTF8, "application/json"));
+                if (!response.IsSuccessStatusCode) await App.Current.MainPage.DisplayAlert("Error", "Cannot perform action.", "OK");
+                else
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    var country = JsonConvert.DeserializeObject<Country>(responseContent);
+                    CoreMethods.RemoveFromNavigation<InfoViewModel>(false);
+
+                    await CoreMethods.PushPageModel<InfoViewModel>(country, false, true);
+                }
+            }
+        }
+
+        private async Task Remove(string url)
+        {
+            using (var client = new HttpClient())
+            {
+                var user = _localService.GetUser();
+                string rawJSON = JsonConvert.SerializeObject(_country);
+                HttpRequestMessage httpRequestMessage = new HttpRequestMessage()
+                {
+                    Content = new StringContent(rawJSON, Encoding.UTF8, "application/json"),
+                    Method = HttpMethod.Delete,
+                    RequestUri = new Uri(url)
+                };
+                var response = await client.SendAsync(httpRequestMessage);
+                if (!response.IsSuccessStatusCode) await App.Current.MainPage.DisplayAlert("Error", "Cannot perform action.", "OK");
+                else
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    var country = JsonConvert.DeserializeObject<Country>(responseContent);
+                    CoreMethods.RemoveFromNavigation<InfoViewModel>(false);
+
+                    await CoreMethods.PushPageModel<InfoViewModel>(country, false, true);
+                }
+            }
+        }
+
+        public ICommand PlayTrackPreview() => new Command(
+            async () =>
+            {
+
+            });
+
     }
 }

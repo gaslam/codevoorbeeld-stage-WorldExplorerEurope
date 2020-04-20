@@ -1,3 +1,4 @@
+using Syncfusion.SfNavigationDrawer.XForms.UWP;
 using Syncfusion.ListView.XForms.UWP;
 using Syncfusion.XForms.UWP.DataForm;
 using System.Reflection;
@@ -25,6 +26,7 @@ using Syncfusion.XForms.UWP.MaskedEdit;
 using Syncfusion.XForms.UWP.TextInputLayout;
 using Syncfusion.SfAutoComplete.XForms.UWP;
 using Plugin.Media;
+using MediaManager;
 
 namespace WorldExplorerEurope.App.UWP
 {
@@ -63,7 +65,8 @@ namespace WorldExplorerEurope.App.UWP
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                List<Assembly> assembliesToInclude = new List<Assembly>();
+List<Assembly> assembliesToInclude = new List<Assembly>();
+assembliesToInclude.Add(typeof(SfNavigationDrawerRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(SfListViewRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(SfDataFormRenderer).GetTypeInfo().Assembly);
                 Xamarin.Forms.Forms.Init(e, assembliesToInclude);
