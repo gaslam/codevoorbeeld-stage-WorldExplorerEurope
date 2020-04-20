@@ -54,7 +54,8 @@ namespace WorldExplorerEurope.API.Controllers
             try
             {
                 var filename = await _memoryPhotoService.CreateImage(file, Guid.NewGuid());
-                var memory = new PhotoMemory (){
+                var memory = new PhotoMemory()
+                {
                     Id = Guid.NewGuid(),
                     UserId = userId,
                     FileName = filename.ToString()
@@ -71,7 +72,7 @@ namespace WorldExplorerEurope.API.Controllers
                         UserId = userId
                     });
 
-               return Ok(await _countryMapperRepo.Update(countryId.ToString(), entity));
+                return Ok(await _countryMapperRepo.Update(countryId.ToString(), entity));
             }
             catch
             {
@@ -139,6 +140,51 @@ namespace WorldExplorerEurope.API.Controllers
             catch
             {
                 return BadRequest("Cannot save image!!");
+            }
+        }
+
+        [HttpDelete("favourites/remove/{countryId}/{favouriteId}")]
+        public async Task<IActionResult> DeleteFavourite([FromRoute] Guid countryId, Guid favouriteId)
+        {
+            try
+            {
+                var entity = _worldExplorerContext.Favourites.SingleOrDefault(m => m.Id == favouriteId);
+                if (entity == null)
+                {
+                    return NotFound($"Cannot find favourite with id: {favouriteId}!!");
+                };
+                _worldExplorerContext.Favourites.Remove(entity);
+                await _worldExplorerContext.SaveChangesAsync();
+                var country = await _mappingRepository.GetById(countryId);
+                country.Favourites.Remove(country.Favourites.FirstOrDefault(m => m.Id == favouriteId));
+                return Ok(await _countryMapperRepo.Update(countryId.ToString(), country));
+            }
+            catch
+            {
+                return BadRequest("Cannot delete favourite!!");
+            }
+        }
+
+
+        [HttpDelete("wishlists/remove/{countryId}/{wishlistId}")]
+        public async Task<IActionResult> DeleteWishlist([FromRoute] Guid countryId, Guid wishlistId)
+        {
+            try
+            {
+                var entity = _worldExplorerContext.Wishlists.SingleOrDefault(m => m.Id == wishlistId);
+                if (entity == null)
+                {
+                    return NotFound($"Cannot find wishlist with id: {wishlistId}!!");
+                };
+                _worldExplorerContext.Wishlists.Remove(entity);
+                await _worldExplorerContext.SaveChangesAsync();
+                var country = await _mappingRepository.GetById(countryId);
+                country.CountryWishlists.Remove(country.CountryWishlists.FirstOrDefault(m => m.Id == wishlistId));
+                return Ok(await _countryMapperRepo.Update(countryId.ToString(), country));
+            }
+            catch
+            {
+                return BadRequest("Cannot delete favourite!!");
             }
         }
     }

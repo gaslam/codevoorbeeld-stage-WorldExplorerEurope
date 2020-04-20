@@ -57,7 +57,8 @@ namespace WorldExplorerEurope.App.ViewModels
         private void ChangePageContentBasedOnUser()
         {
             var user = _localService.GetUser();
-            var count =  _country.favourites.Where(m => m.UserId == user.Id).Count();
+            int count = 0;
+            if(user != null) count = _country.favourites.Where(m => m.UserId == user.Id).Count();
             if (count > 0)
             {
                 LblFavouritesText = "Remove from Favourites";
@@ -434,7 +435,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 var user = _localService.GetUser();
                 if (user != null)
                 {
-                    await RemoveOrAdd($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/favourites", true);
+                    await Add($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/favourites");
                     return;
                 }
                 await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
@@ -444,7 +445,9 @@ namespace WorldExplorerEurope.App.ViewModels
         ICommand RemoveFavouriteCommand => new Command(
             async () =>
             {
-                await RemoveOrAdd($"{WorldExplorerAPIService.BaseUrl}/favourites/remove", true);
+                var user = _localService.GetUser();
+                var favourite = _country.favourites.FirstOrDefault(m => m.UserId == user.Id);
+                await Remove($"{WorldExplorerAPIService.BaseUrl}/favourites/remove/{_country.Id}/{favourite.Id}");
             });
 
         ICommand AddWishlistCommand => new Command(
@@ -453,7 +456,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 var user = _localService.GetUser();
                 if (user != null)
                 {
-                    await RemoveOrAdd($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/wishlist", true);
+                    await Add($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/wishlist");
                     return;
                 }
                 await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
@@ -463,10 +466,11 @@ namespace WorldExplorerEurope.App.ViewModels
         ICommand RemoveWishlistCommand => new Command(
             async () =>
             {
-                await RemoveOrAdd($"{WorldExplorerAPIService.BaseUrl}/wishlists/remove", true);
+                var user = _localService.GetUser();
+                await Remove($"{WorldExplorerAPIService.BaseUrl}/wishlists/remove/{_country.Id}/{user.Id}");
             });
 
-        private async Task RemoveOrAdd(string url, bool add)
+        private async Task Add(string url)
         {
             using (var client = new HttpClient())
             {
@@ -478,9 +482,34 @@ namespace WorldExplorerEurope.App.ViewModels
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
                     var country = JsonConvert.DeserializeObject<Country>(responseContent);
-                    CoreMethods.RemoveFromNavigation<LoginViewModel>(false);
+                    CoreMethods.RemoveFromNavigation<InfoViewModel>(false);
 
-                    await CoreMethods.PushPageModel<LoginViewModel>(country, false, true);
+                    await CoreMethods.PushPageModel<InfoViewModel>(country, false, true);
+                }
+            }
+        }
+
+        private async Task Remove(string url)
+        {
+            using (var client = new HttpClient())
+            {
+                var user = _localService.GetUser();
+                string rawJSON = JsonConvert.SerializeObject(_country);
+                HttpRequestMessage httpRequestMessage = new HttpRequestMessage()
+                {
+                    Content = new StringContent(rawJSON, Encoding.UTF8, "application/json"),
+                    Method = HttpMethod.Delete,
+                    RequestUri = new Uri(url)
+                };
+                var response = await client.SendAsync(httpRequestMessage);
+                if (!response.IsSuccessStatusCode) await App.Current.MainPage.DisplayAlert("Error", "Cannot perform action.", "OK");
+                else
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    var country = JsonConvert.DeserializeObject<Country>(responseContent);
+                    CoreMethods.RemoveFromNavigation<InfoViewModel>(false);
+
+                    await CoreMethods.PushPageModel<InfoViewModel>(country, false, true);
                 }
             }
         }
