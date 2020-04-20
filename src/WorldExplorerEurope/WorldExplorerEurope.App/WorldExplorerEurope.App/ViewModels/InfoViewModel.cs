@@ -58,7 +58,7 @@ namespace WorldExplorerEurope.App.ViewModels
         {
             var user = _localService.GetUser();
             int count = 0;
-            if(user != null) count = _country.favourites.Where(m => m.UserId == user.Id).Count();
+            if (user != null) count = _country.favourites.Where(m => m.UserId == user.Id).Count();
             if (count > 0)
             {
                 LblFavouritesText = "Remove from Favourites";
@@ -513,6 +513,12 @@ namespace WorldExplorerEurope.App.ViewModels
                 }
             }
         }
+
+        public ICommand PlayTrackPreview() => new Command(
+            async () =>
+            {
+
+            });
 
     }
 }

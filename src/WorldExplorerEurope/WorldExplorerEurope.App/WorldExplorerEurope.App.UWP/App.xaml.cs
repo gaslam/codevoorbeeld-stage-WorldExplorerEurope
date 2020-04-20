@@ -105,7 +105,6 @@ assembliesToInclude.Add(typeof(SfNavigationDrawerRenderer).GetTypeInfo().Assembl
             rootFrame.NavigationFailed += OnNavigationFailed;
 
             await CrossMedia.Current.Initialize();
-            CrossMediaManager.Current.Init();
 
             // Ensure the current window is active
             Window.Current.Activate();

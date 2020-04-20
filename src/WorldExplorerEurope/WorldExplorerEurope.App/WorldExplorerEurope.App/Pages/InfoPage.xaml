@@ -171,7 +171,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                             </Button.FontFamily>
                         </Button>
                     </Grid>
-                    <listview:SfListView x:Name="lsvSpotify" ItemsSource="{Binding CountryPlaylist}" IsScrollingEnabled="True" HeightRequest="350">
+                    <listview:SfListView x:Name="lsvSpotify" ItemsSource="{Binding CountryPlaylist}" IsScrollingEnabled="True" HeightRequest="350" ItemTapped="lsvSpotify_ItemTapped">
                         <listview:SfListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid  x:Name="lsvGrid" HorizontalOptions="CenterAndExpand" HeightRequest="350">
