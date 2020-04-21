@@ -6,9 +6,9 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="clr-namespace:WorldExplorerEurope.App.Views"
              mc:Ignorable="d"
-             x:Class="WorldExplorerEurope.App.Pages.MainPage"
+             x:Class="WorldExplorerEurope.App.Pages.MyCountriesPage"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"  
-             xmlns:ffSvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms" >
+             xmlns:ffSvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
     <ContentPage.Content>
         <AbsoluteLayout>
             <StackLayout AbsoluteLayout.LayoutFlags="All"
@@ -20,20 +20,27 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                         <RowDefinition Height="auto"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="500"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <SearchBar x:Name="srbFilter"
-                       Placeholder="Find Country.."
-                       Grid.Row="0" Grid.Column="0" WidthRequest="100" TextChanged="OnFilterChanged">
-                        <SearchBar.FontFamily>
+                    <Button  Text="Favourites" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="0" Command="{Binding FavouritesCommand}">
+                        <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
-                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
-                                <On Platform="UWP">/Assets/Fonts/ROBOTOMONO-BOLD.TTF#Roboto Mono</On>
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto Mono</On>
                             </OnPlatform>
-                        </SearchBar.FontFamily>
-                    </SearchBar>
-                    <Button  Text="Locate" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="1" Command="{Binding LocationCommand}">
+                        </Button.FontFamily>
+                    </Button>
+                    <Button  Text="Wishlist" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="1" Command="{Binding WishlistsCommand}">
+                        <Button.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto Mono</On>
+                            </OnPlatform>
+                        </Button.FontFamily>
+                    </Button>
+                    <Button  Text="Logout" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="2" Command="{Binding LogoutCommand}">
                         <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
@@ -43,7 +50,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                     </Button>
                 </Grid>
                 <Grid>
-                    <listview:SfListView x:Name="SfListViewCountries" ItemSize="50" ItemTapped="SfListViewCountries_ItemTapped" TapCommand="{Binding ItemTappedCommand}" Margin="0,0,0,75">
+                    <listview:SfListView x:Name="SfListViewCountries" ItemSize="50" TapCommand="{Binding ItemTappedCommand}" ItemsSource="{Binding Countries}" Margin="0,0,0,75">
                         <listview:SfListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid VerticalOptions="End" x:Name="lsvGrid">

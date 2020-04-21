@@ -1,4 +1,5 @@
 ﻿using FreshMvvm;
+using MediaManager;
 using System;
 using WorldExplorerEurope.App.Pages;
 using WorldExplorerEurope.App.ViewModels;

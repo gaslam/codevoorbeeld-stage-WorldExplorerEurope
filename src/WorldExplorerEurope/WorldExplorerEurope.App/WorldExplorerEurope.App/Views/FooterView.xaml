@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="WorldExplorerEurope.App.Views.FooterView"
+             BackgroundColor="#FE5F55">
+    <ContentView.Content>
+        <StackLayout VerticalOptions="EndAndExpand">
+            <Grid HeightRequest="75" VerticalOptions="End" HorizontalOptions="CenterAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
+                    <ColumnDefinition Width="200"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Row="0" Grid.Column="0" HorizontalOptions="CenterAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="imgGesture1" ></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                    <Image.Source>
+                        <OnPlatform x:TypeArguments="ImageSource">
+                            <On Platform="Android">User.png</On>
+                            <On Platform="UWP">images/User.png</On>
+                        </OnPlatform>
+                    </Image.Source>
+                </Image>
+                <Label Text="Home" FontSize="16" Grid.Row="1" Grid.Column="0" TextColor="White" HorizontalOptions="CenterAndExpand">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="Android">Raleway-ExtraLight.ttf#Raleway</On>
+                            <On Platform="UWP">/Assets/Fonts/Raleway-ExtraLight.ttf#Raleway</On>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="lblGesture1" ></TapGestureRecognizer>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Image Grid.Row="0" Grid.Column="1" HorizontalOptions="CenterAndExpand">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="imgGesture2" ></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                    <Image.Source>
+                        <OnPlatform x:TypeArguments="ImageSource">
+                            <On Platform="Android">LogoWhite.png</On>
+                            <On Platform="UWP">images/LogoWhite.png</On>
+                        </OnPlatform>
+                    </Image.Source>
+                </Image>
+                <Label x:Name="lblUser" Text="Login" FontSize="16" Grid.Row="1" Grid.Column="1" TextColor="White" HorizontalOptions="CenterAndExpand">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="Android">Raleway-ExtraLight.ttf#Raleway</On>
+                            <On Platform="UWP">/Assets/Fonts/Raleway-ExtraLight.ttf#Raleway</On>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer x:Name="lblGesture2" ></TapGestureRecognizer>
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>
