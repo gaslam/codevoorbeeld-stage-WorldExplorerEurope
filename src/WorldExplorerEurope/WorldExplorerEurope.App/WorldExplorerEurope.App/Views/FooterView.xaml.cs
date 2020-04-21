@@ -27,14 +27,29 @@ namespace WorldExplorerEurope.App.Views
             var user = localService.GetUser();
             imgGesture1.Command = MainCommand;
             lblGesture1.Command = MainCommand;
-            imgGesture2.Command = LoginCommand;
-            lblGesture2.Command = LoginCommand;
+            if(user!= null)
+            {
+                lblUser.Text = "MyCountries";
+                imgGesture2.Command = MyCountryCommand;
+                lblGesture2.Command = MyCountryCommand;
+            }
+            else
+            {
+                imgGesture2.Command = LoginCommand;
+                lblGesture2.Command = LoginCommand;
+            }
         }
 
         public ICommand LoginCommand => new Command(
             async () =>
             {
                 App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<LoginViewModel>());
+            });
+
+        public ICommand MyCountryCommand => new Command(
+            async () =>
+            {
+                App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MyCountriesViewModel>());
             });
 
         public ICommand MainCommand => new Command(

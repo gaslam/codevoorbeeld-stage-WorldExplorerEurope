@@ -21,9 +21,14 @@ namespace WorldExplorerEurope.App.Domain.Services
             Application.Current.Properties["User"] = newUser;
         }
 
+        public void RemoveUser()
+        {
+            Application.Current.Properties["User"] = null;
+        }
+
         public User GetUser()
         {
-            if (Application.Current.Properties.ContainsKey("User"))
+            if (Application.Current.Properties.ContainsKey("User") && Application.Current.Properties["User"] != null)
             {
                 return Application.Current.Properties["User"] as User;
             }
