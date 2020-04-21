@@ -46,16 +46,12 @@ namespace WorldExplorerEurope.App.Views
                 App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<LoginViewModel>());
             });
 
+
         public ICommand MyCountryCommand => new Command(
             async () =>
             {
                 App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MyCountriesViewModel>());
             });
 
-        public ICommand MainCommand => new Command(
-            async () =>
-            {
-                App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>());
-            });
     }
 }

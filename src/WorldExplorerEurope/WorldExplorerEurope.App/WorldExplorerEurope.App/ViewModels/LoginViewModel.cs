@@ -108,6 +108,7 @@ namespace WorldExplorerEurope.App.ViewModels
                         UserService userService = new UserService();
                         userService.SetUser(user);
                         await CoreMethods.PushPageModel<MyCountriesViewModel>(user, false, true);
+
                         ActivityIndicator = false;
                     }
                 }
