@@ -10,25 +10,29 @@
     <button class="uk-button-primary uk-grid-width-large-1-1" style="padding:10px">Search</button>
     <button class="uk-button-primary uk-grid-width-large-1-1" style="padding:10px">Add</button>
 </div>
-<table class="uk-table uk-table-hover uk-table-striped">
+<table class="uk-table uk-table-expand uk-table-hover uk-table-striped">
     <caption>Users</caption>
     <thead>
-        <tr v-for="cols in cols">
-            <th>{{col}}</th>
+        <tr>
+            <th>Name:</th>
+            <th>Nationality:</th>
+            <th>Email:</th>
+            <th>Date of birth:</th>
             <th></th>
         </tr>
-        <tr>
-            <td>Gaspard</td>
-            <td>Lammertyn</td>
-            <td>E-mail</td>
-            <td>12/05/1998</td>
-            <td>Belgium</td>
+    </thead>
+    <tbody>
+        <tr v-for="user in users">
+            <td>{{user.firstName}} {{user.lastName}}</td>
+            <td>{{user.nationality}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.birthDate}}</td>
             <td>
                 <a class="uk-button-primary" style="padding:10px">Edit</a>
                 <a class="uk-button-danger" style="padding:10px">Delete</a>
             </td>
         </tr>
-    </thead>
+    </tbody>
 </table>
 
 @section Scripts{
@@ -37,7 +41,7 @@
         var app = new Vue({
             el: '#app',
             data: {
-                rows: []
+                users: []
             },
 
             created: function () {
@@ -45,43 +49,21 @@
                 self.GetData();
             },
 
-            computed: {
-                "Columns": function generateColumns() {
-                    if (this.rows.length > 0) {
-                        return [];
-                    }
-                    return Object.keys(this.row[0])
-                },
-
-                methods: {
-                    GetData: function () {
-                        axios.get(`${baseUrl}/countries/users`)
-                            .then(function (response) {
-                                if (response.data != null)
-                                    AddData(data);
-                                else
-                                    console.log(response.data);
-                            })
-                            .catch(function (error) {
-                                self.Error = error.response.data
-                            });
-                    },
-
-                    AddData: function (data) {
-                        data.foreach(function () {
-                            rows.push({
-                                newData{
-                                FirstName: data.firstName,
-                                LastName: data.lastName,
-                                Email: data.email,
-                                BirthDate: data.birthDate,
-                                Nationality: data.nationality,
-                            }
-                                }
-                                })
-                            });
+            methods: {
+                GetData: function () {
+                    var self = this;
+                    axios.get(`${baseUrl}/users`)
+                        .then((response) => {
+                            self.users = response.data;
+                            console.log(response.data);
                         }
-                    }
+                        )
+                        .catch(function (error) {
+                            self.Error = error.data
+                        });
+                },
+            }
+        });
     </script>
 }
 
