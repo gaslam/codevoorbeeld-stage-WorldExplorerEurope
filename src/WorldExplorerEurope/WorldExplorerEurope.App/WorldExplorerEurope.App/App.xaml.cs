@@ -1,6 +1,7 @@
 ﻿using FreshMvvm;
 using MediaManager;
 using System;
+using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Pages;
 using WorldExplorerEurope.App.ViewModels;
 using WorldExplorerEurope.ViewModels;
@@ -15,7 +16,10 @@ namespace WorldExplorerEurope.App
         {
             InitializeComponent();
 
-            MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>());
+            MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>())
+            {
+                BarBackgroundColor = Color.FromHex(ToolBarBackgroundcolor.backgroundColor)
+            };
         }
 
         protected override void OnStart()

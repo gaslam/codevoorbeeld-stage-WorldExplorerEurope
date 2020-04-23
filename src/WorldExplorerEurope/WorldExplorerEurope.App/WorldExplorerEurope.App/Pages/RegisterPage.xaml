@@ -6,7 +6,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="clr-namespace:WorldExplorerEurope.App.Views"
              mc:Ignorable="d"
-             x:Class="WorldExplorerEurope.App.Pages.RegisterPage">
+             x:Class="WorldExplorerEurope.App.Pages.RegisterPage"
+             Title="Register">
     <ContentPage.Content>
         <AbsoluteLayout>
             <StackLayout>
