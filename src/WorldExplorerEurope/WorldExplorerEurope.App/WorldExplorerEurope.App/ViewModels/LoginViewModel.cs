@@ -117,7 +117,7 @@ namespace WorldExplorerEurope.App.ViewModels
         public ICommand RegisterCommand => new Command(
             async () =>
                 {
-                    await CoreMethods.PushPageModel<RegisterViewModel>(1, false, true);
+                    await CoreMethods.PushPageModel<RegisterViewModel>(true);
 
                 }
             );
