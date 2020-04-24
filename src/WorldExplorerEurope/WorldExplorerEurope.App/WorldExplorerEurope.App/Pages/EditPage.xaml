@@ -6,7 +6,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="clr-namespace:WorldExplorerEurope.App.Views"
              mc:Ignorable="d"
-             x:Class="WorldExplorerEurope.App.Pages.EditPage">
+             x:Class="WorldExplorerEurope.App.Pages.EditPage"
+             Title="Edit">
     <ContentPage.Content>
         <AbsoluteLayout>
             <StackLayout AbsoluteLayout.LayoutFlags="All"

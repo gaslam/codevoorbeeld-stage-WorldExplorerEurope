@@ -25,8 +25,8 @@ namespace WorldExplorerEurope.App.Views
         {
             LocalService localService = new LocalService();
             var user = localService.GetUser();
-            imgGesture1.Command = MainCommand;
-            lblGesture1.Command = MainCommand;
+            //imgGesture1.Command = MainCommand;
+            //lblGesture1.Command = MainCommand;
             if(user!= null)
             {
                 lblUser.Text = "MyCountries";
@@ -41,16 +41,22 @@ namespace WorldExplorerEurope.App.Views
         }
 
         public ICommand LoginCommand => new Command(
-            async () =>
+            () =>
             {
-                App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<LoginViewModel>());
+                App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<LoginViewModel>())
+                {
+                    BarBackgroundColor = Color.FromHex(ToolBarBackgroundcolor.backgroundColor)
+                };
             });
 
 
         public ICommand MyCountryCommand => new Command(
             async () =>
             {
-                App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MyCountriesViewModel>());
+                App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MyCountriesViewModel>())
+                {
+                    BarBackgroundColor = Color.FromHex(ToolBarBackgroundcolor.backgroundColor)
+                };
             });
 
     }
