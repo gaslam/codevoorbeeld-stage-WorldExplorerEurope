@@ -29,6 +29,12 @@ namespace WorldExplorerEurope.VUE.Controllers
             return View();
         }
 
+        [Route("AddUser")]
+        public IActionResult AddUser()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
