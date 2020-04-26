@@ -5,17 +5,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using WorldExplorerEurope.VUE.Models;
+using WorldExplorerEurope.VUE.services;
+using WorldExplorerEurope.VUE.ViewModels;
 
 namespace WorldExplorerEurope.VUE.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApiService _apiService;
+
+        protected const string baseUrl = "https://localhost:5001/api/countries";
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _apiService = new ApiService();
         }
 
         public IActionResult Index()
@@ -33,6 +40,24 @@ namespace WorldExplorerEurope.VUE.Controllers
         public IActionResult AddUser()
         {
             return View();
+        }
+        [Route("UserDetails/{id}")]
+        public async Task<IActionResult> UserDetails(Guid id)
+        {
+            try
+            {
+                var userDetails = await _apiService.Get($"{baseUrl}/users/{id}");
+                var user = JsonConvert.DeserializeObject<UserViewModel>(userDetails);
+                if (user == null)
+                {
+                    return Content("User not found");
+                }
+                return View(user);
+            }
+            catch
+            {
+                return Content("You have no access to this page.");
+            }
         }
 
         public IActionResult Privacy()

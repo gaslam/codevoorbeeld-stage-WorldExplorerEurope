@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Home";
     Layout = "_Layout";
+    Guid id;
 }
 
 <h1 class="uk-heading-divider">Home</h1>
@@ -28,7 +29,7 @@
             <td>{{user.email}}</td>
             <td>{{user.birthDate}}</td>
             <td>
-                <a class="uk-button-primary" style="padding:10px">Edit</a>
+                <a class="uk-button-primary" style="padding:10px" v-bind:href="`../UserDetails/${user.id}`">Edit</a>
                 <a class="uk-button-danger" style="padding:10px">Delete</a>
             </td>
         </tr>
@@ -55,13 +56,19 @@
                     axios.get(`${baseUrl}/users`)
                         .then((response) => {
                             self.users = response.data;
-                            console.log(response.data);
+                            self.users.forEach(value => {
+                                value.link
+                            })
                         }
                         )
                         .catch(function (error) {
                             self.Error = error.data
                         });
                 },
+                Navigate: function (id) {
+                    var url = $`${window.current.location}/UserDetail/${id}`;
+                    window.location.href(url)
+                }
             }
         });
     </script>
