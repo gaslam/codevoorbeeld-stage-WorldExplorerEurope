@@ -49,13 +49,22 @@ namespace WorldExplorerEurope.App.Views
             async () =>
             {
                 App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>());
+            () =>
+            {
+                App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<LoginViewModel>())
+                {
+                    BarBackgroundColor = Color.FromHex(ToolBarBackgroundcolor.backgroundColor)
+                };
             });
 
 
         public ICommand MyCountryCommand => new Command(
             async () =>
             {
-                App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MyCountriesViewModel>());
+                App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MyCountriesViewModel>())
+                {
+                    BarBackgroundColor = Color.FromHex(ToolBarBackgroundcolor.backgroundColor)
+                };
             });
 
     }

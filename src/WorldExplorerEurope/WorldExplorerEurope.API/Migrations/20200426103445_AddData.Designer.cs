@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorldExplorerEurope.API.Data;
 
 namespace WorldExplorerEurope.API.Migrations
 {
     [DbContext(typeof(WorldExplorerContext))]
-    partial class WorldExplorerContextModelSnapshot : ModelSnapshot
+    [Migration("20200426103445_AddData")]
+    partial class AddData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -923,7 +925,6 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-
                             Id = new Guid("9303873f-6fd0-49e9-83c7-93751c8cf2fe"),
                             CountryId = new Guid("2ad570ec-459e-447d-ad1f-3fa2baa2f329"),
                             PlaylistId = "5fpIpFlXUplr5Uy1J1qHnO"
