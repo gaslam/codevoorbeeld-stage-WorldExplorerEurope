@@ -10,8 +10,8 @@ using WorldExplorerEurope.API.Data;
 namespace WorldExplorerEurope.API.Migrations
 {
     [DbContext(typeof(WorldExplorerContext))]
-    [Migration("20200424144211_NewData")]
-    partial class NewData
+    [Migration("20200426103445_AddData")]
+    partial class AddData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,7 +55,7 @@ namespace WorldExplorerEurope.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("715b5983-5104-49fa-83e7-5260bf1ce12e"),
+                            Id = new Guid("29823a38-45ad-4cfd-ae42-f69a4bc32c96"),
                             Capital = "Mariehamn",
                             Currency = "Euro",
                             Description = "The Åland Islands or Åland is an archipelago province at the entrance to the Gulf of Bothnia in the Baltic Sea belonging to Finland. It is autonomous, demilitarised and is the only monolingually Swedish-speaking region in Finland. It is the smallest region of Finland, constituting 0.51% of its land area and 0.54% of its population.",
@@ -66,7 +66,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8fc6529a-8ae2-4608-8d98-6b5279c576b1"),
+                            Id = new Guid("db62d090-3024-4f43-b0f3-fc07d5e4356c"),
                             Capital = "Tirana",
                             Currency = "Albanian lek",
                             Description = "Albania, officially the Republic of Albania, is a country in Southeast Europe on the Adriatic and Ionian Sea within the Mediterranean Sea. It shares land borders with Montenegro to the northwest, Kosovo to the northeast, North Macedonia to the east, Greece to the south and maritime borders with Greece, Montenegro and Italy to the west.",
@@ -77,7 +77,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("987d3955-e7c7-4086-a9e3-f765c632d770"),
+                            Id = new Guid("5b8ed155-5ab6-4100-98cc-272477e5dbc2"),
                             Capital = "Andorra la Vella",
                             Currency = "Euro",
                             Description = "Andorra, officially the Principality of Andorra, also called the Principality of the Valleys of Andorra, is a sovereign landlocked microstate on the Iberian Peninsula, in the eastern Pyrenees, bordered by France to the north and Spain to the south. Believed to have been created by Charlemagne, Andorra was ruled by the count of Urgell until 988, when it was transferred to the Roman Catholic Diocese of Urgell. The present principality was formed by a charter in 1278. It is known as a principality as it is a diarchy headed by two princes: the Catholic bishop of Urgell in Catalonia, Spain, and the president of the French Republic.",
@@ -88,7 +88,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a603c069-23e6-49fd-be8f-072267a75bfb"),
+                            Id = new Guid("04a273d4-2451-4ee0-8599-6de3f2202247"),
                             Capital = "Vienna",
                             Currency = "Euro",
                             Description = "Austria, officially the Republic of Austria, is a landlocked East Alpine country in the southern part of Central Europe. It is composed of nine federated states (Bundesländer), one of which is Vienna, Austria's capital and its largest city. It is bordered by Germany to the northwest, Czech Republic to the north, Slovakia to the northeast, Hungary to the east, Slovenia and Italy to the south, and Switzerland and Liechtenstein to the west. Austria occupies an area of 83,879 km2 (32,386 sq mi) and has a population of nearly 9 million people. While German is the country's official language, many Austrians communicate informally in a variety of Bavarian dialects.",
@@ -99,7 +99,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d78f8ddc-6ed1-426a-ac21-bfcc3bc4f2ff"),
+                            Id = new Guid("fa28edd6-b4cd-4df1-a2be-5e1ef2f83e57"),
                             Capital = "Minsk",
                             Currency = "New Belarusian ruble",
                             Description = "Belarus, officially the Republic of Belarus, formerly known by its Russian name Byelorussia or Belorussia, is a landlocked country in Eastern Europe bordered by Russia to the northeast, Ukraine to the south, Poland to the west, and Lithuania and Latvia to the northwest. Its capital and most populous city is Minsk. Over 40% of its 207,600 square kilometres (80,200 sq mi) is forested. Its major economic sectors are service industries and manufacturing. Until the 20th century, different states at various times controlled the lands of modern-day Belarus, including the Principality of Polotsk, the Grand Duchy of Lithuania, the Polish–Lithuanian Commonwealth, and the Russian Empire.",
@@ -110,7 +110,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b6a4953e-333a-4c02-b63b-eb445ea6bd22"),
+                            Id = new Guid("49ed5b29-1866-4547-a3d3-613fc155ade7"),
                             Capital = "Brussels",
                             Currency = "Euro",
                             Description = "Belgium, officially the Kingdom of Belgium, is a country in Western Europe. It is bordered by the Netherlands to the north, Germany to the east, Luxembourg to the southeast, France to the southwest, and the North Sea to the northwest. It covers an area of 30,689 km2 (11,849 sq mi) and has a population of more than 11.5 million, making it the 22nd most densely populated country in the world and the 6th most densely populated country in Europe, with a density of 376 per square kilometre (970/sq mi). The capital and largest city is Brussels; other major cities are Antwerp, Ghent, Charleroi and Liège.",
@@ -121,7 +121,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("038c1d5a-50a6-4784-97bd-2b93e5afc7e8"),
+                            Id = new Guid("fffd800c-45c5-497f-8385-58bb01029f12"),
                             Capital = "Sarajevo",
                             Currency = "Bosnia and Herzegovina convertible mark",
                             Description = "Bosnia and Herzegovina, abbreviated BiH or B&H, sometimes called Bosnia–Herzegovina and often known informally as Bosnia, is a country of South and Southeast Europe, located within the Balkans. Sarajevo is the capital and largest city.",
@@ -132,7 +132,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("bdae6797-eca5-44ca-91a3-279cc0ce5d10"),
+                            Id = new Guid("7059a2fa-7f13-4d91-beaa-59fe1a29d61a"),
                             Capital = "Sofia",
                             Currency = "Bulgarian lev",
                             Description = "Bulgaria, officially the Republic of Bulgaria, is a country in Southeast Europe. It is bordered by Romania to the north, Serbia and North Macedonia to the west, Greece and Turkey to the south, and the Black Sea to the east. The capital and largest city is Sofia; other major cities are Plovdiv, Varna and Burgas. With a territory of 110,994 square kilometres (42,855 sq mi), Bulgaria is Europe's 16th-largest country.",
@@ -143,7 +143,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0ef14b13-306b-4518-80e7-43d7dc2951fe"),
+                            Id = new Guid("84d0e2e3-d2dd-4a75-94f7-de4666c5686e"),
                             Capital = "Zagreb",
                             Currency = "Croatian kuna",
                             Description = "Croatia, officially the Republic of Croatia, is a country in Southeast Europe. It borders Slovenia to the northwest, Hungary to the northeast, Serbia to the east, Bosnia and Herzegovina, and Montenegro to the southeast, sharing a maritime border with Italy. Its capital, Zagreb, forms one of the country's primary subdivisions, along with twenty counties. Croatia has an area of 56,594 square kilometres and a population of 4.28 million, most of whom are Roman Catholics.",
@@ -154,7 +154,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fbfe63ab-24c2-4610-806e-9d394c275660"),
+                            Id = new Guid("85b81701-9c02-404b-8e7e-4a0d6d3f9710"),
                             Capital = "Nicosia",
                             Currency = "Euro",
                             Description = "Cyprus, officially the Republic of Cyprus, is an island country in the Eastern Mediterranean and the third-largest and third-most populous island in the Mediterranean, located south of Turkey, west of Syria and Lebanon, north of Israel, the Gaza Strip and Egypt, and southeast of Greece.",
@@ -165,7 +165,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4d2f929b-c2ad-4b53-8740-d590c80c97d4"),
+                            Id = new Guid("b37e9b2f-0d26-43ca-9b4c-b8d23d439436"),
                             Capital = "Prague",
                             Currency = "Czech koruna",
                             Description = "The Czech Republic, also known by its short-form name, Czechia, is a landlocked country in Central Europe bordered by Poland to the northeast, Slovakia to the southeast, Austria to the south, and Germany to the west. The Czech Republic has hilly landscape that covers an area of 78,866 square kilometers (30,450 sq mi) with a mostly temperate continental climate and oceanic climate. It is a unitary parliamentary republic, with 10.7 million inhabitants. Its capital and largest city is Prague, with 1.3 million residents; other major cities are Brno, Ostrava, Olomouc and Pilsen.",
@@ -176,7 +176,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("cadfda52-49a5-4e70-9f4c-a25c83bd81e9"),
+                            Id = new Guid("cea5163d-096b-407b-bf36-65dd3349b74a"),
                             Capital = "Copenhagen",
                             Currency = "Danish krone",
                             Description = "Denmark, officially the Kingdom of Denmark, is a Nordic country in Northwest Europe. Denmark proper, which is the southernmost of the Scandinavian countries, consists of a peninsula, Jutland, and an archipelago of 443 named islands, with the largest being Zealand, Funen and the North Jutlandic Island. The islands are characterised by flat, arable land and sandy coasts, low elevation and a temperate climate. The southernmost of the Scandinavian nations, Denmark lies southwest of Sweden and south of Norway, and is bordered to the south by Germany. The Kingdom of Denmark also includes two autonomous territories in the North Atlantic Ocean: the Faroe Islands and Greenland. Denmark has a total area of 42,924 km2 (16,573 sq mi), land area of 42,394 km2 (16,368 sq mi), and the total area including Greenland and the Faroe Islands is 2,210,579 km2 (853,509 sq mi), and a population of 5.8 million in Denmark proper.",
@@ -187,7 +187,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("23d2080a-ea0f-4bc9-a553-8ea7fcdf2f14"),
+                            Id = new Guid("674cbd70-8575-4142-a902-5725f52b05b6"),
                             Capital = "Tallinn",
                             Currency = "Euro",
                             Description = "Estonia, officially the Republic of Estonia, is a country on the eastern coast of the Baltic Sea in Northern Europe. It is bordered to the north by the Gulf of Finland with Finland on the other side, to the west by the Baltic Sea with Sweden on the other side, to the south by Latvia (343 km), and to the east by Lake Peipus and Russia (338.6 km). The territory of Estonia consists of the mainland and of 2,222 islands in the Baltic Sea, covering a total area of 45,227 km2 (17,462 sq mi), water 2,839 km2 (1,096 sq mi), land area 42,388 km2 (16,366 sq mi), and is influenced by a humid continental climate. The official language of the country, Estonian, is the second-most-spoken Finnic language.",
@@ -198,7 +198,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d4c672ad-da02-4544-b5c9-31508a2c5204"),
+                            Id = new Guid("4ae157aa-9ee5-4f69-bb64-1ec27d77c8f4"),
                             Capital = "Tórshavn",
                             Currency = "Danish krone",
                             Description = "The Faroe Islands, , is a North Atlantic archipelago located 320 kilometres (200 mi) north-northwest of Scotland, and about halfway between Norway and Iceland. It is an autonomous territory within the Kingdom of Denmark. The islands have a total area of about 1,400 square kilometres (540 sq mi) with a population of 51,783 as of June 2019.",
@@ -209,7 +209,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d9cf43a4-12b0-46b7-99a3-17d31c3fd73b"),
+                            Id = new Guid("7d1435f1-bcee-4e4d-a80a-35c401d1ff7d"),
                             Capital = "Helsinki",
                             Currency = "Euro",
                             Description = "Finland, officially the Republic of Finland, is a Nordic country in Northern Europe bordering the Baltic Sea, Gulf of Bothnia, and Gulf of Finland, between Sweden to the west, Russia to the east, Estonia to the south, and north-eastern Norway to the north. The capital and largest city is Helsinki. Other major cities are Espoo, Tampere, Vantaa, Oulu, Turku, Jyväskylä, Lahti and Kuopio.",
@@ -220,7 +220,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ca9a662d-c694-413b-adeb-d87367115f96"),
+                            Id = new Guid("f6ac32e3-60f6-4f38-bd9e-f5ac0eb5a530"),
                             Capital = "Paris",
                             Currency = "Euro",
                             Description = "France, officially the French Republic, is a country whose territory consists of metropolitan France in Western Europe and several overseas regions and territories. The metropolitan area of France extends from the Mediterranean Sea to the English Channel and the North Sea, and from the Rhine to the Atlantic Ocean. It is bordered by Belgium, Luxembourg and Germany to the northeast, Switzerland and Italy to the east, and Andorra and Spain to the south. The overseas territories include French Guiana in South America and several islands in the Atlantic, Pacific and Indian oceans. The country's 18 integral regions span a combined area of 643,801 square kilometres (248,573 sq mi) and a total population of 67.02 million. France is a unitary semi-presidential republic with its capital in Paris, the country's largest city and main cultural and commercial centre. Other major urban areas include Lyon, Marseille, Toulouse, Bordeaux, Lille and Nice. France, including its overseas territories, has the most number of time zones of any country, with a total of 12.",
@@ -231,7 +231,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3680c32e-4d9f-4389-aa3c-fc69202a476f"),
+                            Id = new Guid("29d7a6d7-14b6-45a9-9f4c-67f05de55315"),
                             Capital = "Berlin",
                             Currency = "Euro",
                             Description = "Germany, constitutionally the Federal Republic of Germany, is a country in Central and Western Europe. Covering an area of 357,022 square kilometres (137,847 sq mi), it lies between the Baltic and North seas to the north, and the Alps and Lake Constance to the south. It borders Denmark to the north, Poland and the Czech Republic to the east, Austria and Switzerland to the south, and France, Luxembourg, Belgium, and the Netherlands to the west. With 83 million inhabitants of its 16 constituent states, it is the second-most populous country in Europe after Russia, as well as the most populous member state of the European Union. Its capital and largest city is Berlin, while its largest urban area is the Ruhr. The country's financial capital is Frankfurt; other major cities include Hamburg, Munich, Cologne, and Stuttgart.",
@@ -242,7 +242,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("45da6736-60f6-4eb1-8926-afff908aa3db"),
+                            Id = new Guid("0649c543-3223-437a-893d-7906d90f07f6"),
                             Capital = "Gibraltar",
                             Currency = "Gibraltar pound",
                             Description = "Gibraltar is a British Overseas Territory located at the southern tip of the Iberian Peninsula. It has an area of 6.7 km2 (2.6 sq mi) and is bordered to the north by Spain. The landscape is dominated by the Rock of Gibraltar at the foot of which is a densely populated town area, home to over 32,000 people, primarily Gibraltarians.",
@@ -253,7 +253,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d8cc7ccc-66ff-43fb-a566-cdd515b03ee8"),
+                            Id = new Guid("8c478b07-5524-4d85-883b-f0fd781d2b74"),
                             Capital = "Athens",
                             Currency = "Euro",
                             Description = "Gibraltar is a British Overseas Territory located at the southern tip of the Iberian Peninsula. It has an area of 6.7 km2 (2.6 sq mi) and is bordered to the north by Spain. The landscape is dominated by the Rock of Gibraltar at the foot of which is a densely populated town area, home to over 32,000 people, primarily Gibraltarians.",
@@ -264,7 +264,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("deba5c66-7905-4565-80b9-32140bbebbf8"),
+                            Id = new Guid("7c36c8c6-c7b0-47b4-a71f-47597579f632"),
                             Capital = "St. Peter Port",
                             Currency = "British pound",
                             Description = "Guernsey is an island in the English Channel off the coast of Normandy. It lies roughly north of Saint-Malo and to the west of Jersey and the Cotentin Peninsula. With several smaller nearby islands, it forms a jurisdiction within the Bailiwick of Guernsey, a British Crown dependency. The jurisdiction is made up of ten parishes on the island of Guernsey, three other inhabited islands, and many small islets and rocks.",
@@ -275,7 +275,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("944666fc-38bf-47f3-b78f-b634a7bcb3d4"),
+                            Id = new Guid("1e27f37e-c84d-4dda-ab35-36fe2efd8bfb"),
                             Capital = "Rome",
                             Currency = "Euro",
                             Description = "The Holy See, also called the See of Rome, is the jurisdiction of the Bishop of Rome, known as the pope, which includes the apostolic episcopal see of the Diocese of Rome with universal ecclesiastical jurisdiction of the worldwide Catholic Church, as well as a sovereign entity of international law.",
@@ -286,7 +286,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("09664254-4dfe-44da-9c6c-568a689f6ae0"),
+                            Id = new Guid("85446c96-a711-47d4-9b4d-37465d42d9bb"),
                             Capital = "Budapest",
                             Currency = "Hungarian forint",
                             Description = "Hungary is a country in Central Europe. Spanning 93,030 square kilometres (35,920 sq mi) in the Carpathian Basin, it borders Slovakia to the north, Ukraine to the northeast, Romania to the east and southeast, Serbia to the south, Croatia and Slovenia to the southwest, and Austria to the west. With about 10 million inhabitants, Hungary is a medium-sized member state of the European Union. The official language is Hungarian, which is the most widely spoken Uralic language in the world, and among the few non-Indo-European languages to be widely spoken in Europe. Hungary's capital and largest city is Budapest; other major urban areas include Debrecen, Szeged, Miskolc, Pécs, and Győr.",
@@ -297,7 +297,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("5cd6ca5b-ce7c-45b1-a91b-2296f2c812e1"),
+                            Id = new Guid("f238eeb0-191d-417e-b603-6ee8f117a5c6"),
                             Capital = "Reykjavík",
                             Currency = "Icelandic króna",
                             Description = "Iceland is a Nordic island country in the North Atlantic, with a population of 364,260 and an area of 103,000 km2 (40,000 sq mi), making it the most sparsely populated country in Europe. The capital and largest city is Reykjavík. Reykjavik and the surrounding areas in the southwest of the country are home to over two-thirds of the population. Iceland is volcanically and geologically active. The interior consists of a plateau characterised by sand and lava fields, mountains, and glaciers, and many glacial rivers flow to the sea through the lowlands. Iceland is warmed by the Gulf Stream and has a temperate climate, despite a high latitude just outside the Arctic Circle. Its high latitude and marine influence keep summers chilly, with most of the archipelago having a polar climate.",
@@ -308,7 +308,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d705625b-034b-4b41-abda-cbd9bb2c7dbc"),
+                            Id = new Guid("8f5c1b43-daf6-46a2-9826-d64d008969d0"),
                             Capital = "Dublin",
                             Currency = "Euro",
                             Description = "Ireland is an island in the North Atlantic. It is separated from Great Britain to its east by the North Channel, the Irish Sea, and St George's Channel. Ireland is the second-largest island of the British Isles, the third-largest in Europe, and the twentieth-largest on Earth.",
@@ -319,7 +319,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b27208f0-7982-4f08-a4fa-2df9476477d3"),
+                            Id = new Guid("23aec1f9-b625-4619-942b-759175acdf3f"),
                             Capital = "Douglas",
                             Currency = "British pound",
                             Description = "The Isle of Man, also known as Mann, is a self-governing British Crown dependency situated in the Irish Sea between Great Britain and Ireland. The head of state, Queen Elizabeth II, holds the title of Lord of Mann and is represented by a lieutenant governor. The United Kingdom has responsibility for the island's defence.",
@@ -330,7 +330,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1e70e653-23eb-4ee5-94ac-a87c0c9a856c"),
+                            Id = new Guid("ec77e37e-57c2-4ef8-b265-1748391e5200"),
                             Capital = "Rome",
                             Currency = "Euro",
                             Description = "Italy, officially the Italian Republic, is a European country consisting of a peninsula delimited by the Alps and surrounded by several islands. Italy is located in south-central Europe, and it is also considered a part of western Europe. A unitary parliamentary republic with its capital in Rome, the country covers a total area of 301,340 km2 (116,350 sq mi) and shares land borders with France, Switzerland, Austria, Slovenia, and the enclaved microstates of Vatican City and San Marino. Italy has a territorial exclave in Switzerland (Campione) and a maritime exclave in the Tunisian Sea (Lampedusa). With around 60 million inhabitants, Italy is the third-most populous member state of the European Union.",
@@ -341,7 +341,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3168a338-fb37-4ede-9429-284383fbfad4"),
+                            Id = new Guid("ef859d47-db73-44d2-8654-2db5a18e6ef8"),
                             Capital = "Saint Helier",
                             Currency = "British pound",
                             Description = "Jersey, officially the Bailiwick of Jersey, is a British Crown dependency located near the coast of Normandy, France. It is the second-closest of the Channel Islands to France, after Alderney.",
@@ -352,7 +352,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4cfd9ff8-dc19-4617-81a4-24c30110da2c"),
+                            Id = new Guid("cfa9689d-04fb-4cba-b891-1e532f0893a1"),
                             Capital = "Riga",
                             Currency = "Euro",
                             Description = "Latvia, officially known as the Republic of Latvia, is a country in the Baltic region of Northern Europe. Since its independence, Latvia has been referred to as one of the Baltic states. It is bordered by Estonia to the north, Lithuania to the south, Russia to the east, Belarus to the southeast, and shares a maritime border with Sweden to the west. Latvia has 1,957,200 inhabitants and a territory of 64,589 km2 (24,938 sq mi). The country has a temperate seasonal climate. The Baltic Sea moderates climate, although it has four distinct seasons and snowy winters.",
@@ -363,7 +363,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("7e9e0494-d204-44a8-bef4-d5978172cd6b"),
+                            Id = new Guid("1ee0ff65-c4c7-4704-8d82-3d81de343636"),
                             Capital = "Vaduz",
                             Currency = "Swiss franc",
                             Description = "Liechtenstein, officially the Principality of Liechtenstein, is a German-speaking microstate situated in the Alps and in the southwest of Central Europe. The principality is a semi-constitutional monarchy headed by the Prince of Liechtenstein; the Prince's extensive powers are equivalent to those of a President in a semi-presidential system.",
@@ -374,7 +374,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("540ed0bb-df41-4b1d-ada6-418a140db177"),
+                            Id = new Guid("645ce5c4-967a-4a34-8b58-6e85f5684682"),
                             Capital = "Vilnius",
                             Currency = "Euro",
                             Description = "Lithuania, officially the Republic of Lithuania, is a country in the Baltic region of Europe. Lithuania is considered to be one of the Baltic states. The country is situated along the southeastern shore of the Baltic Sea, to the east of Sweden and Denmark. It is bordered by Latvia to the north, Belarus to the east and south, Poland to the south, and Kaliningrad Oblast to the southwest. Lithuania has an estimated population of 2.8 million people as of 2019, and its capital and largest city is Vilnius. Other major cities are Kaunas and Klaipėda. Lithuanians are Baltic people. The official language, Lithuanian, is one of only two living languages in the Baltic branch of the Indo-European language family, the other being Latvian.",
@@ -385,7 +385,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f252fddf-fd98-41b4-86e5-9d795b6a9a47"),
+                            Id = new Guid("ffdec425-bd10-4b7f-b12c-ed721a5ab93c"),
                             Capital = "Luxembourg",
                             Currency = "Euro",
                             Description = "Luxembourg, officially the Grand Duchy of Luxembourg, is a landlocked country in western Europe. It is bordered by Belgium to the west and north, Germany to the east, and France to the south. Its capital, Luxembourg City, is one of the four official capitals of the European Union and the seat of the European Court of Justice, the highest judicial authority in the EU. Its culture, people, and languages are highly intertwined with its neighbours, making it essentially a mixture of French and German cultures, as evident by the nation's three official languages: French, German, and the national language of Luxembourgish. The repeated invasions by Germany, especially in World War II, resulted in the country's strong will for mediation between France and Germany and, among other things, led to the foundation of the European Union.",
@@ -396,7 +396,7 @@ namespace WorldExplorerEurope.API.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a77a7c67-5437-4381-bfaf-8a8b7b25b167"),
+                            Id = new Guid("97962fc7-4cdb-4eed-8522-7d8fd63410db"),
                             Capital = "Skopje",
                             Currency = "Macedonian denar",
                             Description = @"Macedonia most commonly refers to:North Macedonia, a country in southeastern Europe, formerly known as the Republic of Macedonia
@@ -410,7 +410,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("9b133cd5-3484-4324-a8a6-d9b4cace314d"),
+                            Id = new Guid("4643e735-8924-4b93-add1-4489e16b9ed6"),
                             Capital = "Valletta",
                             Currency = "Euro",
                             Description = "Malta, officially known as the Republic of Malta, is a Southern European island country consisting of an archipelago in the Mediterranean Sea. It lies 80 km (50 mi) south of Italy, 284 km (176 mi) east of Tunisia, and 333 km (207 mi) north of Libya. With a population of about 475,000 over an area of 316 km2 (122 sq mi), Malta is the world's tenth smallest in area and fifth most densely populated sovereign country. Its capital is Valletta, which is the smallest national capital in the European Union by area at 0.8 km2 (0.31 sq mi). The official and national language is Maltese, which is descended from Sicilian Arabic that developed during the Emirate of Sicily, while English serves as the second official language.",
@@ -421,7 +421,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("56ec9342-4320-4737-a13f-46c952aefb2f"),
+                            Id = new Guid("68c71b3e-61f5-4706-b96d-36c6bfd32d0d"),
                             Capital = "Chișinău",
                             Currency = "Moldovan leu",
                             Description = "Moldova, officially the Republic of Moldova, is a landlocked country in Eastern Europe, bordered by Romania to the west and Ukraine to the north, east, and south. The capital city is Chișinău.",
@@ -432,7 +432,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("5e1e932a-ace4-44e4-b532-2306fbad158c"),
+                            Id = new Guid("8398cfe3-1569-4e49-bafb-618e1f84eab5"),
                             Capital = "Monaco",
                             Currency = "Euro",
                             Description = "Monaco, officially the Principality of Monaco, is a sovereign city-state, country, and microstate on the French Riviera in Western Europe. France borders the country on three sides while the other side borders the Mediterranean Sea. Monaco is about 15 km (9.3 mi) from the state border with Italy.",
@@ -443,7 +443,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("2d0d09c5-7094-4eb6-86a0-a4c77809f98c"),
+                            Id = new Guid("52cbfc19-28cc-4ad6-bb94-ea0b49a52673"),
                             Capital = "Podgorica",
                             Currency = "Euro",
                             Description = "Montenegro is a country of South and Southeast Europe on the coast of the Balkans. It borders Bosnia-Herzegovina to the northwest, Serbia to the northeast, Kosovo to the east, Albania to the southeast, the Adriatic Sea to the southwest, and Croatia to the west. Montenegro has an area of 13,812 square kilometres and a population of 620,079. Its capital, Podgorica, is one of the twenty-three municipalities in the country. Cetinje is designated as the Old Royal Capital.",
@@ -454,7 +454,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("cc853c5b-2a07-49b1-8c1b-df50716a08d5"),
+                            Id = new Guid("378b7776-22a8-4934-a74c-62593acd85a2"),
                             Capital = "Amsterdam",
                             Currency = "Euro",
                             Description = "The Netherlands, informally Holland, is a country in Northwestern Europe with some overseas territories in the Caribbean. In Europe, it consists of 12 provinces that border Germany to the east, Belgium to the south, and the North Sea to the northwest, with maritime borders in the North Sea with those countries and the United Kingdom. Together with the Caribbean Netherlands —Bonaire, Sint Eustatius and Saba—it forms a constituent country of the Kingdom of the Netherlands. The official language is Dutch and a secondary official language in the province of Friesland is West Frisian. In the north and east of the country, Low Saxon is also spoken, and in the southeast, Limburgish. In the Caribbean Netherlands English and Papiamento are recognised languages.",
@@ -465,7 +465,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("1a6f903f-fa5f-4316-a877-57b5553d37c3"),
+                            Id = new Guid("fc536902-28e1-4a74-91f5-18312e091f2c"),
                             Capital = "Oslo",
                             Currency = "Norwegian krone",
                             Description = "Norway, officially the Kingdom of Norway, is a Nordic country in Northwestern Europe whose territory comprises the western and northernmost portion of the Scandinavian Peninsula; the remote island of Jan Mayen and the archipelago of Svalbard are also part of the Kingdom of Norway. The sub-Antarctic Bouvet Island is a dependent territory and thus not considered part of the kingdom. Norway also lays claim to the Antarctic territories of Queen Maud Land and Peter I Island.",
@@ -476,7 +476,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("d41f026a-b9b3-4d55-a480-4867241124b6"),
+                            Id = new Guid("2f316e2d-96e8-4b94-b72c-8e00b4d3c55b"),
                             Capital = "Warsaw",
                             Currency = "Polish złoty",
                             Description = "Poland, officially the Republic of Poland, is a country located in Central Europe. It is divided into 16 administrative subdivisions, covering an area of 312,696 square kilometres (120,733 sq mi), and has a largely temperate seasonal climate. With a population of nearly 38.5 million people, Poland is the fifth most populous member state of the European Union. Poland's capital and largest metropolis is Warsaw. Other major cities include Kraków, Łódź, Wrocław, Poznań, Gdańsk, and Szczecin.",
@@ -487,7 +487,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("2b66ca54-4b4f-47d7-aa4a-64e09b7a7d6a"),
+                            Id = new Guid("2ad570ec-459e-447d-ad1f-3fa2baa2f329"),
                             Capital = "Lisbon",
                             Currency = "Euro",
                             Description = "Portugal, officially the Portuguese Republic, is a country located mostly on the Iberian Peninsula, in southwestern Europe. It is the westernmost sovereign state of mainland Europe, being bordered to the west and south by the Atlantic Ocean and to the north and east by Spain. Its territory also includes the Atlantic archipelagos of the Azores and Madeira, both autonomous regions with their own regional governments.",
@@ -498,7 +498,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("280ec463-48b9-4ab1-8c2c-16b718348eab"),
+                            Id = new Guid("75cdba65-4ac9-4cc4-889d-f9e67a3060b1"),
                             Capital = "Pristina",
                             Currency = "Euro",
                             Description = "Kosovo, officially the Republic of Kosovo, is a partially-recognized state in Southeast Europe, subject to a territorial dispute with the Republic of Serbia.",
@@ -509,7 +509,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("05b1d86c-666a-43c7-a343-f1d82ef9cbde"),
+                            Id = new Guid("4be00e21-ead6-41cc-bc55-18f35725d3d9"),
                             Capital = "Bucharest",
                             Currency = "Romanian leu",
                             Description = "Romania is a country located at the crossroads of Central, Eastern, and Southeastern Europe. It borders on the Black Sea to the southeast, and with Bulgaria to the south, Ukraine to the north, Hungary to the west, Serbia to the southwest, and Moldova to the east. It has a predominantly temperate-continental climate. With a total area of 238,397 square kilometres, Romania is the 12th-largest country in Europe and the 6th most populous member state of the European Union, having approximately 20 million inhabitants. Its capital and largest city is Bucharest. Other major urban areas include: Cluj-Napoca, Timișoara, Iași, Constanța, Craiova, Brașov, and Galați.",
@@ -520,7 +520,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("5afd6eee-19db-4d79-9729-423c6e247b8d"),
+                            Id = new Guid("b526f74d-71fc-4506-a59c-573b4efa5c82"),
                             Capital = "Moscow",
                             Currency = "Russian ruble",
                             Description = "Russia, or the Russian Federation, is a transcontinental country located in Eastern Europe and Northern Asia. At 17,125,200 square kilometres (6,612,100 sq mi), it is, by a considerable margin, the largest country in the world by area, covering more than one-eighth of the Earth's inhabited land area, spanning eleven time zones, and bordering 16 sovereign nations. The territory of Russia extends from the Baltic Sea in the west to the Pacific Ocean in the east, and from the Arctic Ocean in the north to the Black Sea and the Caucasus in the south. With 146.7 million inhabitants living in the country's 85 federal subjects, Russia is the most populous nation in Europe and the ninth-most populous nation in the world. Russia's capital and largest city is Moscow; other major urban areas include Saint Petersburg, Novosibirsk, Yekaterinburg, Nizhny Novgorod, Kazan and Chelyabinsk.",
@@ -531,7 +531,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("a71f7e57-c788-4f1a-b138-a629991270f6"),
+                            Id = new Guid("f27ca347-32c5-4465-bded-f0143719860f"),
                             Capital = "City of San Marino",
                             Currency = "Euro",
                             Description = "San Marino, officially the Republic of San Marino, also known as the Most Serene Republic of San Marino, is an enclave microstate in Southern Europe, on the northeastern side of the Apennine Mountains, completely surrounded by Italy.",
@@ -542,7 +542,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("94f25e07-45ee-4177-af5a-84e2174534d9"),
+                            Id = new Guid("7acc0ebf-b4c6-452c-9e6d-83e7e451bcae"),
                             Capital = "Belgrade",
                             Currency = "Serbian dinar",
                             Description = "Serbia, officially the Republic of Serbia, is a landlocked country situated at the crossroads of Central and Southeast Europe in the southern Pannonian Plain and the central Balkans. It borders Hungary to the north, Romania to the northeast, Bulgaria to the southeast, North Macedonia to the south, Croatia and Bosnia and Herzegovina to the west, and Montenegro to the southwest. The country claims a border with Albania through the disputed territory of Kosovo. Serbia's population numbers approximately seven million. Its capital, Belgrade, ranks among the largest citiеs in southeastern Europe.",
@@ -553,7 +553,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("50dafc8e-9df7-4a39-ad35-fa65b35ce553"),
+                            Id = new Guid("d8f29ccc-6b39-435d-b099-1ebba4307827"),
                             Capital = "Bratislava",
                             Currency = "Euro",
                             Description = "Slovakia, officially the Slovak Republic, is a landlocked country in Central Europe. It is bordered by Poland to the north, Ukraine to the east, Hungary to the south, Austria to the southwest, and the Czech Republic to the northwest. Slovakia's territory spans about 49,000 square kilometres (19,000 sq mi) and is mostly mountainous. The population is over 5.6 million and consists mostly of Slovaks. The capital and largest city is Bratislava, and the second-largest city is Košice. The official language is Slovak.",
@@ -564,7 +564,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("beda4f69-145e-4d7b-a2a7-7f29d6d5379c"),
+                            Id = new Guid("e781ff03-c6c5-42d1-a229-69532fbc5fda"),
                             Capital = "Ljubljana",
                             Currency = "Euro",
                             Description = "Slovenia, officially the Republic of Slovenia, is a country located in Europe at the crossroads of main European cultural and trade routes. It is bordered by Italy to the west, Austria to the north, Hungary to the northeast, Croatia to the southeast, and the Adriatic Sea to the southwest. Slovenia covers 20,273 square kilometers (7,827 sq mi) and has a population of 2.084 million. One of the successor states of the former Yugoslavia, Slovenia is now a parliamentary republic and member nation of the European Union, United Nations, and NATO. The capital and largest city is Ljubljana.",
@@ -575,7 +575,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("ee6e84b2-5fe2-47f1-bed8-012904779f77"),
+                            Id = new Guid("1b504ca1-5592-429d-b26d-1a33635e3808"),
                             Capital = "Madrid",
                             Currency = "Euro",
                             Description = "Spain, officially the Kingdom of Spain, is a country in Southwestern Europe with some pockets of Spanish territory across the Strait of Gibraltar and the Atlantic Ocean. Its continental European territory is situated on the Iberian Peninsula. Its territory also includes two archipelagoes: the Canary Islands off the coast of Africa, and the Balearic Islands in the Mediterranean Sea. The African enclaves of Ceuta, Melilla, and Peñón de Vélez de la Gomera make Spain the only European country to have a physical border with an African country (Morocco). Several small islands in the Alboran Sea are also part of Spanish territory. The country's mainland is bordered to the south and east by the Mediterranean Sea except for a small land boundary with Gibraltar; to the north and northeast by France, Andorra, and the Bay of Biscay; and to the west and northwest by Portugal and the Atlantic Ocean.",
@@ -586,7 +586,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("14c3dd8b-2a73-4b93-ae32-53f5d024fa27"),
+                            Id = new Guid("ac494bff-97e9-4096-b662-7c37242a6402"),
                             Capital = "Longyearbyen",
                             Currency = "Norwegian krone",
                             Description = "Svalbard and Jan Mayen is a statistical designation defined by ISO 3166-1 for a collective grouping of two remote jurisdictions of Norway: Svalbard and Jan Mayen. While the two are combined for the purposes of the International Organization for Standardization (ISO) category, they are not administratively related. This has further resulted in the country code top-level domain .sj being issued for Svalbard and Jan Mayen, and ISO 3166-2:SJ. The United Nations Statistics Division also uses this code, but has named it Svalbard and Jan Mayen Islands.",
@@ -597,7 +597,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("4fabf793-b65c-4d5a-88b7-b4f33e7b9320"),
+                            Id = new Guid("bb2e897e-1057-452d-addc-bde3587c7321"),
                             Capital = "Stockholm",
                             Currency = "Swedish krona",
                             Description = "Sweden, officially the Kingdom of Sweden, is a Scandinavian country in Northern Europe. It borders Norway to the west and north and Finland to the east, and is connected to Denmark in the southwest by a bridge-tunnel across the Öresund Strait. At 450,295 square kilometres (173,860 sq mi), Sweden is the largest country in Northern Europe, the third-largest country in the European Union and the fifth largest country in Europe by area. The capital city is Stockholm. Sweden has a total population of 10.3 million of which 2.6 million have a foreign background. Persons who have foreign backgrounds are defined as persons who are foreign born, or born in Sweden with foreign born parents. It has a low population density of 22 inhabitants per square kilometre (57/sq mi) and the highest urban concentration is in the central and southern half of the country.",
@@ -608,7 +608,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("3bbb0ec5-248c-4778-a08d-6833e8ce282b"),
+                            Id = new Guid("8f8c4ab0-d323-4295-9962-86aeb4df7d95"),
                             Capital = "Bern",
                             Currency = "Swiss franc",
                             Description = "Switzerland, officially the Swiss Confederation, is a country situated in the confluence of Western, Central, and Southern Europe. It is a federal republic composed of 26 cantons, with federal authorities seated in Bern. Switzerland is a landlocked country bordered by Italy to the south, France to the west, Germany to the north, and Austria and Liechtenstein to the east. It is geographically divided among the Swiss Plateau, the Alps, and the Jura, spanning a total area of 41,285 km2 (15,940 sq mi), and land area of 39,997 km2 (15,443 sq mi). While the Alps occupy the greater part of the territory, the Swiss population of approximately 8.5 million is concentrated mostly on the plateau, where the largest cities are located, among them the two global cities and economic centres of Zürich and Geneva.",
@@ -619,7 +619,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("a5353875-4dbf-407d-a6da-9a6506102bb8"),
+                            Id = new Guid("15d104a3-4d2d-45cd-8746-6bd52ac3589c"),
                             Capital = "Kiev",
                             Currency = "Ukrainian hryvnia",
                             Description = "Ukraine is a country in Eastern Europe. It is bordered by Russia to the north-east; Belarus to the north; Poland, Slovakia and Hungary to the west; and Romania, Moldova, and the Black Sea to the south. Ukraine is currently in a territorial dispute with Russia over the Crimean Peninsula, which Russia annexed in 2014. Including the Crimean Peninsula, Ukraine has an area of 603,628 km2 (233,062 sq mi), making it the second-largest country in Europe after Russia, and the 46th-largest country in the world. Excluding Crimea, Ukraine has a population of about 42 million, making it the eighth or ninth-most populous country in Europe and the 32nd-most populous country in the world. Its capital and largest city is Kiev. Ukrainian is the official language and its alphabet is Cyrillic. The dominant religion in the country is Eastern Orthodoxy.",
@@ -630,7 +630,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                         },
                         new
                         {
-                            Id = new Guid("c18d0b1b-366b-456b-8f14-98674a652f61"),
+                            Id = new Guid("4d1c3433-e036-4028-a107-dbc27171ecf4"),
                             Capital = "London",
                             Currency = "British pound",
                             Description = "The United Kingdom of Great Britain and Northern Ireland, commonly known as the United Kingdom or Britain, is a sovereign country located off the north­western coast of the European mainland. The United Kingdom includes the island of Great Britain, the north­eastern part of the island of Ireland, and many smaller islands. Northern Ireland shares a land border with the Republic of Ireland. Otherwise, the United Kingdom is surrounded by the Atlantic Ocean, with the North Sea to the east, the English Channel to the south and the Celtic Sea to the southwest, giving it the 12th-longest coastline in the world. The Irish Sea separates Great Britain and Ireland. The total area of the United Kingdom is 94,000 square miles (240,000 km2).",
@@ -739,266 +739,266 @@ Macedonia (region), a geographic and historical region that today includes parts
                     b.HasData(
                         new
                         {
-                            Id = new Guid("77590e70-ac0b-421c-a16b-7f4f5592baec"),
-                            CountryId = new Guid("715b5983-5104-49fa-83e7-5260bf1ce12e"),
+                            Id = new Guid("8803863d-d27e-449a-b0c5-4f709bfc5abe"),
+                            CountryId = new Guid("29823a38-45ad-4cfd-ae42-f69a4bc32c96"),
                             PlaylistId = "2CusBjVWAtRWy0L5BfmikW"
                         },
                         new
                         {
-                            Id = new Guid("12a374e9-41d9-495e-b63b-82af1f1d89d6"),
-                            CountryId = new Guid("8fc6529a-8ae2-4608-8d98-6b5279c576b1"),
+                            Id = new Guid("452ffe35-f3be-4b5f-8b7a-3dd0240b9b4c"),
+                            CountryId = new Guid("db62d090-3024-4f43-b0f3-fc07d5e4356c"),
                             PlaylistId = "7l0CFkcQuUzGolpc36QMIC"
                         },
                         new
                         {
-                            Id = new Guid("e52ba583-df79-4824-9232-c5ec632810e8"),
-                            CountryId = new Guid("a603c069-23e6-49fd-be8f-072267a75bfb"),
+                            Id = new Guid("6b878ddb-52c4-4ab1-8b9a-49505208e14c"),
+                            CountryId = new Guid("04a273d4-2451-4ee0-8599-6de3f2202247"),
                             PlaylistId = "53lWeMXMoJ2wWUS1nYnBgl"
                         },
                         new
                         {
-                            Id = new Guid("29ba8818-4132-4917-9bb7-7c59e9fb364d"),
-                            CountryId = new Guid("d78f8ddc-6ed1-426a-ac21-bfcc3bc4f2ff"),
+                            Id = new Guid("b0019d95-529d-4670-8f12-d17cc502d0d3"),
+                            CountryId = new Guid("fa28edd6-b4cd-4df1-a2be-5e1ef2f83e57"),
                             PlaylistId = "5Gu9Cbjqk2MAXo1yY09lCk"
                         },
                         new
                         {
-                            Id = new Guid("a4980a41-cd95-4c8e-961f-2c9f66d77a16"),
-                            CountryId = new Guid("b6a4953e-333a-4c02-b63b-eb445ea6bd22"),
+                            Id = new Guid("73dea612-6aab-470f-b8f7-782e8db1ad0a"),
+                            CountryId = new Guid("49ed5b29-1866-4547-a3d3-613fc155ade7"),
                             PlaylistId = "50AOO2iX1bfP12JDe2cSAN"
                         },
                         new
                         {
-                            Id = new Guid("e8fd85b3-8ae8-45c5-8f3c-89c8daed4bbc"),
-                            CountryId = new Guid("bdae6797-eca5-44ca-91a3-279cc0ce5d10"),
+                            Id = new Guid("8ebff6ef-385e-426b-974d-fd0389fecbce"),
+                            CountryId = new Guid("7059a2fa-7f13-4d91-beaa-59fe1a29d61a"),
                             PlaylistId = "6DpX8j1kTO55ZazVWIUJ9H"
                         },
                         new
                         {
-                            Id = new Guid("8048e9f4-1a1a-4e84-b324-04f5abc883d5"),
-                            CountryId = new Guid("0ef14b13-306b-4518-80e7-43d7dc2951fe"),
+                            Id = new Guid("61e833e6-1108-4bd3-b97c-e2db7e4b87ef"),
+                            CountryId = new Guid("84d0e2e3-d2dd-4a75-94f7-de4666c5686e"),
                             PlaylistId = "0LexRqlNAFHzIG3upGcA0S"
                         },
                         new
                         {
-                            Id = new Guid("293fa585-b990-43a3-b9a6-79f3017a803c"),
-                            CountryId = new Guid("fbfe63ab-24c2-4610-806e-9d394c275660"),
+                            Id = new Guid("437bed67-d3c3-4350-b497-1c84659999a3"),
+                            CountryId = new Guid("85b81701-9c02-404b-8e7e-4a0d6d3f9710"),
                             PlaylistId = "0T73gC6LcZuhHfxuhTUSd5"
                         },
                         new
                         {
-                            Id = new Guid("1028fcb8-1308-4db2-92ae-08df79797ae8"),
-                            CountryId = new Guid("4d2f929b-c2ad-4b53-8740-d590c80c97d4"),
+                            Id = new Guid("15297526-69d2-4556-8ac0-45803999be70"),
+                            CountryId = new Guid("b37e9b2f-0d26-43ca-9b4c-b8d23d439436"),
                             PlaylistId = "253ARKQpYyLw3VYbIiy2zn"
                         },
                         new
                         {
-                            Id = new Guid("3e900a52-0421-45e3-9d49-f3c485da72ea"),
-                            CountryId = new Guid("cadfda52-49a5-4e70-9f4c-a25c83bd81e9"),
+                            Id = new Guid("02beb692-4d8a-43e9-b308-bdaa9df973d3"),
+                            CountryId = new Guid("cea5163d-096b-407b-bf36-65dd3349b74a"),
                             PlaylistId = "7nUxZrzOz1FS67LYqsjdIv"
                         },
                         new
                         {
-                            Id = new Guid("44d96918-7804-4781-82c5-bbc23b02e2a7"),
-                            CountryId = new Guid("23d2080a-ea0f-4bc9-a553-8ea7fcdf2f14"),
+                            Id = new Guid("aa1f8df9-7920-436a-8d77-532c1aea4005"),
+                            CountryId = new Guid("674cbd70-8575-4142-a902-5725f52b05b6"),
                             PlaylistId = "1ObBKzabSHf6WD4VZI8fJU"
                         },
                         new
                         {
-                            Id = new Guid("e4fc261a-6a0f-4396-a9e5-3577bef63f9b"),
-                            CountryId = new Guid("d4c672ad-da02-4544-b5c9-31508a2c5204"),
+                            Id = new Guid("e6dcef24-7269-4a63-9854-86e6f3bc1fc1"),
+                            CountryId = new Guid("4ae157aa-9ee5-4f69-bb64-1ec27d77c8f4"),
                             PlaylistId = "5EC6uJxihNWkD5ZlYXKpL5"
                         },
                         new
                         {
-                            Id = new Guid("41943a09-5d28-4dcf-928f-83ebf67f3762"),
-                            CountryId = new Guid("d9cf43a4-12b0-46b7-99a3-17d31c3fd73b"),
+                            Id = new Guid("11a7fc78-f246-4c09-addc-ca4f4993befe"),
+                            CountryId = new Guid("7d1435f1-bcee-4e4d-a80a-35c401d1ff7d"),
                             PlaylistId = "2CusBjVWAtRWy0L5BfmikW"
                         },
                         new
                         {
-                            Id = new Guid("94321a27-ac44-4776-88c4-c1d18ccd1b78"),
-                            CountryId = new Guid("ca9a662d-c694-413b-adeb-d87367115f96"),
+                            Id = new Guid("e317dbf7-ae52-43e0-bf53-4099991f5ae4"),
+                            CountryId = new Guid("f6ac32e3-60f6-4f38-bd9e-f5ac0eb5a530"),
                             PlaylistId = "0QgtRvswo2Ugn0B1MTHQkW"
                         },
                         new
                         {
-                            Id = new Guid("88e63212-c49d-4e98-b2fc-95ed481f79b2"),
-                            CountryId = new Guid("3680c32e-4d9f-4389-aa3c-fc69202a476f"),
+                            Id = new Guid("890e17fa-c1df-4b3e-b2e4-181302a599f2"),
+                            CountryId = new Guid("29d7a6d7-14b6-45a9-9f4c-67f05de55315"),
                             PlaylistId = "7Cdk1T18F4mJKNPJxmP8o3"
                         },
                         new
                         {
-                            Id = new Guid("2bc30dca-754c-49cd-8307-1af6a620e8a0"),
-                            CountryId = new Guid("45da6736-60f6-4eb1-8926-afff908aa3db"),
+                            Id = new Guid("0418bd42-768f-4051-92ee-4565bf33fe8f"),
+                            CountryId = new Guid("0649c543-3223-437a-893d-7906d90f07f6"),
                             PlaylistId = "30EHPgCW4KRgOR4VumFHfs"
                         },
                         new
                         {
-                            Id = new Guid("2d38dc4d-6c87-43c8-8dc7-0ceb9356a88a"),
-                            CountryId = new Guid("d8cc7ccc-66ff-43fb-a566-cdd515b03ee8"),
+                            Id = new Guid("85fc599e-777e-4c24-a140-bd9b67b526c2"),
+                            CountryId = new Guid("8c478b07-5524-4d85-883b-f0fd781d2b74"),
                             PlaylistId = "1s8ckUBY7ZZjrJMPZ4BtOj"
                         },
                         new
                         {
-                            Id = new Guid("72078287-0eba-48a3-b78c-e091afe474fa"),
-                            CountryId = new Guid("09664254-4dfe-44da-9c6c-568a689f6ae0"),
+                            Id = new Guid("c5af3726-bd74-4909-9273-abbe06129838"),
+                            CountryId = new Guid("85446c96-a711-47d4-9b4d-37465d42d9bb"),
                             PlaylistId = "7LsbwkqPWuIVjM8OmqJyJh"
                         },
                         new
                         {
-                            Id = new Guid("6fda0f47-772d-4153-8f2f-e0725f08433a"),
-                            CountryId = new Guid("5cd6ca5b-ce7c-45b1-a91b-2296f2c812e1"),
+                            Id = new Guid("11a01c55-fc4a-4131-a733-23a9c4fa8e5f"),
+                            CountryId = new Guid("f238eeb0-191d-417e-b603-6ee8f117a5c6"),
                             PlaylistId = "2dvjKJLYeizywy2NQiKlVO"
                         },
                         new
                         {
-                            Id = new Guid("01f913b6-ec5d-4573-b86d-c98e27971f6c"),
-                            CountryId = new Guid("d705625b-034b-4b41-abda-cbd9bb2c7dbc"),
+                            Id = new Guid("cccc4c24-3fa6-48ea-bde8-4e5fbfd6405d"),
+                            CountryId = new Guid("8f5c1b43-daf6-46a2-9826-d64d008969d0"),
                             PlaylistId = "2zesk6vpZhemqH9FbZKZnq"
                         },
                         new
                         {
-                            Id = new Guid("0cd66344-9fe7-4337-b01c-9a07b0d7aad1"),
-                            CountryId = new Guid("b27208f0-7982-4f08-a4fa-2df9476477d3"),
+                            Id = new Guid("46d41fec-4af4-4546-8932-bacfe20c66c7"),
+                            CountryId = new Guid("23aec1f9-b625-4619-942b-759175acdf3f"),
                             PlaylistId = "2zesk6vpZhemqH9FbZKZnq"
                         },
                         new
                         {
-                            Id = new Guid("74cfb1d4-7a37-4748-bf8e-12d746200047"),
-                            CountryId = new Guid("1e70e653-23eb-4ee5-94ac-a87c0c9a856c"),
+                            Id = new Guid("315e4420-ad25-42df-ad4e-3997eb6bb6a8"),
+                            CountryId = new Guid("ec77e37e-57c2-4ef8-b265-1748391e5200"),
                             PlaylistId = "0ylcsCmX0r03zT9yISmFWp"
                         },
                         new
                         {
-                            Id = new Guid("b2f2aef8-bcdb-4db2-9964-b8161e599b31"),
-                            CountryId = new Guid("540ed0bb-df41-4b1d-ada6-418a140db177"),
+                            Id = new Guid("cbfd8eaf-66b8-48ff-a096-f72aaa4a3c43"),
+                            CountryId = new Guid("645ce5c4-967a-4a34-8b58-6e85f5684682"),
                             PlaylistId = "12CfDHYf2nkZANtS9f9Vew"
                         },
                         new
                         {
-                            Id = new Guid("f9cd94f6-327c-4329-88e9-de7104e7558f"),
-                            CountryId = new Guid("f252fddf-fd98-41b4-86e5-9d795b6a9a47"),
+                            Id = new Guid("e98d7901-dd28-45bb-a159-1cac4fdbac6c"),
+                            CountryId = new Guid("ffdec425-bd10-4b7f-b12c-ed721a5ab93c"),
                             PlaylistId = "09TxUze3BuYVNvMY6d418n"
                         },
                         new
                         {
-                            Id = new Guid("65908071-f3a1-4a2f-9b59-98ef432ecf1c"),
-                            CountryId = new Guid("a77a7c67-5437-4381-bfaf-8a8b7b25b167"),
+                            Id = new Guid("33bdc5a6-2c88-456d-957d-2823ef6b5147"),
+                            CountryId = new Guid("97962fc7-4cdb-4eed-8522-7d8fd63410db"),
                             PlaylistId = "6wk61XRax6dMvX3WClLYbH"
                         },
                         new
                         {
-                            Id = new Guid("8998442b-1d4e-4cd3-96b0-2ba90bdf59a7"),
-                            CountryId = new Guid("56ec9342-4320-4737-a13f-46c952aefb2f"),
+                            Id = new Guid("ddaada19-f24f-401c-9069-8f03ca03d017"),
+                            CountryId = new Guid("68c71b3e-61f5-4706-b96d-36c6bfd32d0d"),
                             PlaylistId = "3ZzdoANeDnNgpPDN8BdL59"
                         },
                         new
                         {
-                            Id = new Guid("c07acd90-1109-4ffb-8783-f0d4328e36ff"),
-                            CountryId = new Guid("5e1e932a-ace4-44e4-b532-2306fbad158c"),
+                            Id = new Guid("6489d741-2a83-4d31-945b-637913aca240"),
+                            CountryId = new Guid("8398cfe3-1569-4e49-bafb-618e1f84eab5"),
                             PlaylistId = "3gl4XsDZjDEhP6ENWG0SSm"
                         },
                         new
                         {
-                            Id = new Guid("f9265063-2722-4c9a-9393-bdaffb506a44"),
-                            CountryId = new Guid("2d0d09c5-7094-4eb6-86a0-a4c77809f98c"),
+                            Id = new Guid("4a056190-309b-4e29-a388-1d705f3b31b5"),
+                            CountryId = new Guid("52cbfc19-28cc-4ad6-bb94-ea0b49a52673"),
                             PlaylistId = "4AJvqhZvRE796GP9RYNrYc"
                         },
                         new
                         {
-                            Id = new Guid("d6e3fdac-f0d9-45c1-8dc9-3b16f5c91b9d"),
-                            CountryId = new Guid("cc853c5b-2a07-49b1-8c1b-df50716a08d5"),
+                            Id = new Guid("4d79721f-e786-4a5c-a8de-83f6b214b5ca"),
+                            CountryId = new Guid("378b7776-22a8-4934-a74c-62593acd85a2"),
                             PlaylistId = "0FRAi3HnfdGT5Gn69MvYlT"
                         },
                         new
                         {
-                            Id = new Guid("40a9718b-df2d-4974-977f-ac15738d650f"),
-                            CountryId = new Guid("1a6f903f-fa5f-4316-a877-57b5553d37c3"),
+                            Id = new Guid("847ca598-c91b-4f1d-8239-b624b1ff2872"),
+                            CountryId = new Guid("fc536902-28e1-4a74-91f5-18312e091f2c"),
                             PlaylistId = "6KgYE0tontk4mf54YQfXXS"
                         },
                         new
                         {
-                            Id = new Guid("19855d52-7c89-4cfe-870b-8c10f7bff75c"),
-                            CountryId = new Guid("d41f026a-b9b3-4d55-a480-4867241124b6"),
+                            Id = new Guid("7151c8e9-4fda-4773-b1e5-5c8bcce8e1a3"),
+                            CountryId = new Guid("2f316e2d-96e8-4b94-b72c-8e00b4d3c55b"),
                             PlaylistId = "29XoM5S9Yc6Heflhp9fIoC"
                         },
                         new
                         {
-                            Id = new Guid("fdaccac4-eef8-41d8-9171-f4b566ffa430"),
-                            CountryId = new Guid("2b66ca54-4b4f-47d7-aa4a-64e09b7a7d6a"),
+                            Id = new Guid("9303873f-6fd0-49e9-83c7-93751c8cf2fe"),
+                            CountryId = new Guid("2ad570ec-459e-447d-ad1f-3fa2baa2f329"),
                             PlaylistId = "5fpIpFlXUplr5Uy1J1qHnO"
                         },
                         new
                         {
-                            Id = new Guid("0891e69f-0425-41ab-96b7-42891cfe0fd5"),
-                            CountryId = new Guid("280ec463-48b9-4ab1-8c2c-16b718348eab"),
+                            Id = new Guid("729154f5-0571-4efc-9788-b59ce21557a8"),
+                            CountryId = new Guid("75cdba65-4ac9-4cc4-889d-f9e67a3060b1"),
                             PlaylistId = "47dFbcLDn04CX7UorU8Iq8"
                         },
                         new
                         {
-                            Id = new Guid("ecf1605a-9d19-422d-b744-7950f770cb05"),
-                            CountryId = new Guid("05b1d86c-666a-43c7-a343-f1d82ef9cbde"),
+                            Id = new Guid("50b99558-987f-433f-88bd-3d7e04077e96"),
+                            CountryId = new Guid("4be00e21-ead6-41cc-bc55-18f35725d3d9"),
                             PlaylistId = "0g5twCr1C6oituq3La2Div"
                         },
                         new
                         {
-                            Id = new Guid("d43bc784-db5c-40ad-a6ef-809286ba36ed"),
-                            CountryId = new Guid("5afd6eee-19db-4d79-9729-423c6e247b8d"),
+                            Id = new Guid("25fc0234-c819-4c0e-8c4c-ad287e7b8a95"),
+                            CountryId = new Guid("b526f74d-71fc-4506-a59c-573b4efa5c82"),
                             PlaylistId = "6d3Zwzras2ghumJvnlIqsI"
                         },
                         new
                         {
-                            Id = new Guid("d505dfbf-501e-4b9e-94be-558a33a12636"),
-                            CountryId = new Guid("a71f7e57-c788-4f1a-b138-a629991270f6"),
+                            Id = new Guid("c064b935-4fc3-4802-a5f3-e67060b6fcfa"),
+                            CountryId = new Guid("f27ca347-32c5-4465-bded-f0143719860f"),
                             PlaylistId = "7BSjWFXtpiJxdvzMSBl7Sq"
                         },
                         new
                         {
-                            Id = new Guid("ef4ae27f-69f4-4aaf-a56c-d729b346fde7"),
-                            CountryId = new Guid("94f25e07-45ee-4177-af5a-84e2174534d9"),
+                            Id = new Guid("66b193de-1089-40be-9edc-1a543bb85985"),
+                            CountryId = new Guid("7acc0ebf-b4c6-452c-9e6d-83e7e451bcae"),
                             PlaylistId = "1nN2hfHzcXNsVeGAwXev3s"
                         },
                         new
                         {
-                            Id = new Guid("3ce9db91-e31b-43c9-aae0-3289f80ea853"),
-                            CountryId = new Guid("50dafc8e-9df7-4a39-ad35-fa65b35ce553"),
+                            Id = new Guid("d97aa337-4be7-4d5b-b065-81eb7db02260"),
+                            CountryId = new Guid("d8f29ccc-6b39-435d-b099-1ebba4307827"),
                             PlaylistId = "65nrfnJcCxTLsyyjf8WCXe"
                         },
                         new
                         {
-                            Id = new Guid("f8ff64cf-9c8e-4dda-ab97-d36f0e6c59ed"),
-                            CountryId = new Guid("ee6e84b2-5fe2-47f1-bed8-012904779f77"),
+                            Id = new Guid("1df82b14-dec2-4e89-833e-15f555eca88b"),
+                            CountryId = new Guid("1b504ca1-5592-429d-b26d-1a33635e3808"),
                             PlaylistId = "1irDloS9VCX40czYAS2klR"
                         },
                         new
                         {
-                            Id = new Guid("351676ee-e990-441f-a888-919ef0a04a53"),
-                            CountryId = new Guid("14c3dd8b-2a73-4b93-ae32-53f5d024fa27"),
+                            Id = new Guid("e7f37aa0-27b5-4c2f-8feb-2e5cecd1f549"),
+                            CountryId = new Guid("ac494bff-97e9-4096-b662-7c37242a6402"),
                             PlaylistId = "6KgYE0tontk4mf54YQfXXS"
                         },
                         new
                         {
-                            Id = new Guid("55d67826-1755-45b7-bf0d-8f9af78f4b32"),
-                            CountryId = new Guid("4fabf793-b65c-4d5a-88b7-b4f33e7b9320"),
+                            Id = new Guid("6ed5ba83-02a3-4c89-b59d-04719e3b93d8"),
+                            CountryId = new Guid("bb2e897e-1057-452d-addc-bde3587c7321"),
                             PlaylistId = "3BeBGfOciz2pHhmMYGF7Qq"
                         },
                         new
                         {
-                            Id = new Guid("0d493f8f-ccb5-43b9-bef7-95068aced9cf"),
-                            CountryId = new Guid("3bbb0ec5-248c-4778-a08d-6833e8ce282b"),
+                            Id = new Guid("8853d002-bd2e-4577-a52e-a0020a0f2344"),
+                            CountryId = new Guid("8f8c4ab0-d323-4295-9962-86aeb4df7d95"),
                             PlaylistId = "7KCEnXSAo8e4aHkC3Barql"
                         },
                         new
                         {
-                            Id = new Guid("37d37757-625c-4eb8-a924-8ce306a49466"),
-                            CountryId = new Guid("a5353875-4dbf-407d-a6da-9a6506102bb8"),
+                            Id = new Guid("a4853e6b-916a-4ddd-800d-e5066945579b"),
+                            CountryId = new Guid("15d104a3-4d2d-45cd-8746-6bd52ac3589c"),
                             PlaylistId = "5S1GVxkVbKXxoTV8DwBKGi"
                         },
                         new
                         {
-                            Id = new Guid("4bc36771-9157-49a6-a138-3364e1701595"),
-                            CountryId = new Guid("c18d0b1b-366b-456b-8f14-98674a652f61"),
+                            Id = new Guid("10da62fe-ff77-4589-9945-fd859d2052ca"),
+                            CountryId = new Guid("4d1c3433-e036-4028-a107-dbc27171ecf4"),
                             PlaylistId = "1y7E5GXSac77FzesM2ASjx"
                         });
                 });
@@ -1044,7 +1044,7 @@ Macedonia (region), a geographic and historical region that today includes parts
                             IsAdmin = true,
                             LastName = "Lammertyn",
                             Nationality = "Belgium",
-                            Password = "AQAAAAEAACcQAAAAEHfXTF0ZTWD0tQVdVVYpfxLzoz0+z8w3H/kknjIGsJZMrZOwUekBnUtZ1djBqZPJ0g=="
+                            Password = "AQAAAAEAACcQAAAAEOT0lp9yQ1qqSu24DxCZpp6gVdiM6vEr3neM3771ZwcVHEfmfU1SAbCYWP7h32KbfA=="
                         });
                 });
 
