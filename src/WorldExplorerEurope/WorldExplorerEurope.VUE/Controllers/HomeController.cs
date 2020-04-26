@@ -60,6 +60,19 @@ namespace WorldExplorerEurope.VUE.Controllers
             }
         }
 
+        [Route("EditUser/{id}")]
+        public IActionResult EditUser(Guid id)
+        {
+            try
+            {
+                return View(id);
+            }
+            catch
+            {
+                return Content("You have no access to this page.");
+            }
+        }
+
         public IActionResult Privacy()
         {
             return View();

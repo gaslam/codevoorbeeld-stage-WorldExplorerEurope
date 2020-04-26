@@ -48,9 +48,6 @@ namespace WorldExplorerEurope.App.Views
         public ICommand MainCommand => new Command(
             async () =>
             {
-                App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>());
-            () =>
-            {
                 App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<LoginViewModel>())
                 {
                     BarBackgroundColor = Color.FromHex(ToolBarBackgroundcolor.backgroundColor)
