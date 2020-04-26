@@ -1,0 +1,167 @@
+﻿@model Guid
+@{
+    ViewData["Title"] = "EditUser";
+}
+
+<h1>EditUser</h1>
+
+<form method="post" class="uk-form-stacked">
+    <p v-if="Errors.length">
+        <b>Please correct the following error(s):</b>
+        <ul>
+            <li class="uk-form-danger" v-for="error in Errors">{{ error }}</li>
+        </ul>
+    </p>
+    <div class="uk-margin uk-grid-small uk-form-">
+        <label class="uk-form-label">Firstname:</label>
+        <div class="uk-form-controls uk-margin">
+            <input class="uk-input" type="text" placeholder="Enter firstname" v-model="FirstName" />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">Lastname:</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" type="text" placeholder="Enter lastname" v-model="LastName"  />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">E-mail:</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" type="email" placeholder="Enter your Email" v-model="Email"  />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">Nationality</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" type="text" placeholder="Enter Nationality" v-model="Nationality"  />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">Date of birth</label>
+        <div class="uk-form-controls">
+            <input class="uk-datepicker" type="date" v-model="BirthDate"  />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <div class="uk-form-controls">
+            <label><input class="uk-radio" type="radio" value="Admin" v-model="IsAdmin">Admin</label>
+        </div>
+    </div>
+</form>
+
+<div class="uk-button-group">
+    <a class="uk-button-primary" style="padding:10px;margin:10px" v-on:click="check()">Save</a>
+    <a class="uk-button-danger" style="padding:10px;margin:10px" asp-controller="Home" asp-action="Home">Go back</a>
+</div>
+
+@section Scripts{
+    <script>
+        var baseUrl = 'https://localhost:5001/api/countries';
+        var app = new Vue({
+            el: '#app',
+            data: {
+                Id: "",
+                FirstName: "",
+                LastName: "",
+                Nationality: "",
+                BirthDate: new Date(),
+                Email: "",
+                IsAdmin: "",
+                CheckData:"",
+                Errors: []
+            },
+
+            created: function () {
+                var self = this;
+                self.GetUser();
+                
+            },
+
+            methods: {
+                check: function () {
+                    var self = this;
+                    var regEmail = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    var date = new Date();
+                    var today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+                    var minDate = (date.getFullYear() - 12) + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+
+                    self.CheckData = true;
+                    self.Errors = new Array();
+                    if (self.FirstName.length == 0) {
+                        self.CheckData = false;
+                        self.Errors.push("Enter a valid name");
+                    }
+                    if (self.LastName.length == 0) {
+                        self.CheckData = false;
+                        self.Errors.push("Enter a valid name");
+                    }
+                    if (!regEmail.test(self.Email)) {
+                        self.CheckData = false;
+                        self.Errors.push("Enter a valid email");
+                    }
+                    if (self.BirthDate.length == 0) {
+                        self.CheckData = false;
+                        self.Errors.push("Enter a valid Birth date")
+                    }
+                    if (self.BirthDate > today) {
+                        self.CheckData = false;
+                        self.Errors.push("You cannot be born in the future");
+                    }
+                    if (self.BirthDate > minDate) {
+                        self.CheckData = false;
+                        self.Errors.push("User must be at least 12 years old");
+                    }
+                    if (self.CheckData == true) {
+                        self.EditUser()
+                    }
+                },
+
+                GetUser: function() {
+                    var self = this;
+                    if (self.IsAdmin.length > 0) user.isAdmin = true;
+
+                    axios.get(`${baseUrl}/users/@Model`)
+                        .then(function (response) {
+                            self.Id = response.data.id;
+                            self.FirstName = response.data.firstName;
+                            self.LastName = response.data.lastName;
+                            var dates = response.data.birthDate.split('-');
+                            self.BirthDate = new Date (dates[0], dates[1], dates[2]);
+                            self.Nationality = response.data.nationality;
+                            self.Email = response.data.email;
+                            self.Password = response.data.password;
+                            if (response.data.isAdmin == true) self.IsAdmin = "Admin";
+                        })
+                        .catch(function (error) {
+                            self.Errors.push(error.response.data);
+                        });
+                },
+                EditUser: function () {
+                    var self = this;
+                    var user = {
+                        id : self.Id,
+                        firstname: self.FirstName,
+                        lastname: self.LastName,
+                        email: self.Email,
+                        nationality: self.Nationality,
+                        birthDate: self.BirthDate,
+                        password: self.Password,
+                        isAdmin: self.IsAdmin,
+                    };
+
+                    if (user.isAdmin.length == true) self.IsAdmin = true;
+                    else user.isAdmin = false;
+
+                    axios.put(`${baseUrl}/users/update/${self.Id}`, user)
+                        .then(function (response) {
+                            alert("User has been updated succesfully");
+                            window.location.href = window.location.origin + '/Home';
+                        })
+                        .catch(function (error) {
+                            self.Errors.push(error.response.data);
+                        });
+                }
+            }
+        });
+    </script>
+} 

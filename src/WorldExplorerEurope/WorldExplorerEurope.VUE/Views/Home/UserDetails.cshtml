@@ -37,12 +37,6 @@
         </div>
     </div>
     <div class="uk-margin">
-        <label class="uk-form-label">Password:</label>
-        <div class="uk-form-controls">
-            <input class="uk-input" type="password" placeholder="Enter password" asp-for="@Model.Password" disabled />
-        </div>
-    </div>
-    <div class="uk-margin">
         <div class="uk-form-controls">
             <label>        @Html.RadioButtonFor(model => model.IsAdmin, Model.IsAdmin, new { @Class = "uk-radio" })Admin</label>
         </div>
@@ -50,7 +44,7 @@
 </form>
 
 <div class="uk-button-group">
-    <a class="uk-button-primary" style="padding:10px;margin:10px" asp-controller="Home" asp-action="Edit" asp-all-route-id="@Model.Id">Edit</a>
+    <a class="uk-button-primary" style="padding:10px;margin:10px" asp-controller="Home" asp-action="EditUser" asp-route-id="@Model.Id">Edit</a>
     <a class="uk-button-danger" style="padding:10px;margin:10px" asp-controller="Home" asp-action="Home">Go back</a>
 </div>
 
