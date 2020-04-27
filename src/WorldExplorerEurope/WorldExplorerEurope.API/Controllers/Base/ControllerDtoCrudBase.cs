@@ -80,13 +80,13 @@ namespace WorldExplorerEurope.API.Controllers.Base
         }
 
         [HttpDelete("delete/{id}")]
-        public virtual async Task<IActionResult> Delete([FromBody]Guid id)
+        public virtual async Task<IActionResult> Delete([FromRoute]Guid id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var entity = _mappingRepository.GetById(id);
+            var entity = await _mappingRepository.GetById(id);
             if(entity == null)
             {
                 return BadRequest("Object niet gevonden");

@@ -7,9 +7,9 @@
 
 <h1 class="uk-heading-divider">Home</h1>
 <div class="uk-grid-margin-small">
-    <input name="serach" class="uk-search uk-search-field uk-grid-width-small-1-3" placeholder="Serach.." />
-    <button class="uk-button-primary uk-grid-width-large-1-1" style="padding:10px">Search</button>
-    <button class="uk-button-primary uk-grid-width-large-1-1" style="padding:10px">Add</button>
+    <input name="search" class="uk-search uk-search-field uk-grid-width-small-1-3" placeholder="Search.."  v-model="Searchterm" v-on:input="filter()"/>
+    <a class="uk-button-primary uk-grid-width-large-1-1" style="padding:10px" v-on:click="filter()">Search</a>
+    <a class="uk-button-primary uk-grid-width-large-1-1" style="padding:10px" asp-controller="Home" asp-action="AddUser">Add</a>
 </div>
 <table class="uk-table uk-table-expand uk-table-hover uk-table-striped">
     <caption>Users</caption>
@@ -23,14 +23,14 @@
         </tr>
     </thead>
     <tbody>
-        <tr v-for="user in users">
+        <tr v-for="user in filtereditems">
             <td>{{user.firstName}} {{user.lastName}}</td>
             <td>{{user.nationality}}</td>
             <td>{{user.email}}</td>
             <td>{{user.birthDate}}</td>
             <td>
                 <a class="uk-button-primary" style="padding:10px" v-bind:href="`../UserDetails/${user.id}`">Edit</a>
-                <a class="uk-button-danger" style="padding:10px">Delete</a>
+                <a class="uk-button-danger" style="padding:10px" v-on:click="DeleteData(`${user.id}`)" >Delete</a>
             </td>
         </tr>
     </tbody>
@@ -42,7 +42,9 @@
         var app = new Vue({
             el: '#app',
             data: {
-                users: []
+                users: [],
+                Searchterm: "",
+                filtereditems: [],
             },
 
             created: function () {
@@ -56,6 +58,7 @@
                     axios.get(`${baseUrl}/users`)
                         .then((response) => {
                             self.users = response.data;
+                            self.filtereditems = self.users;
                             self.users.forEach(value => {
                                 value.link
                             })
@@ -65,9 +68,53 @@
                             self.Error = error.data
                         });
                 },
+                DeleteData: function (id) {
+                    var self = this;
+                    axios.delete(`${baseUrl}/users/delete/${id}`)
+                        .then((response) => {
+                            alert("User has been deleted successfully");
+                            self.GetData();                          
+                        }
+                        )
+                        .catch(function (error) {
+                            alert(error.data);
+                        });
+                },
                 Navigate: function (id) {
                     var url = $`${window.current.location}/UserDetail/${id}`;
                     window.location.href(url)
+                },
+
+                filter: async function () {
+                    var self = this;
+                    var newFiltereditems = new Array();
+                    self.filtereditems = self.users;
+                    if (self.Searchterm.length > 0 && self.users != null) {
+                        self.users.forEach(item => {
+                            var fullName = `${item.firstName.toLowerCase()} ${item.lastName.toLowerCase()}`;
+                            if (fullName.includes(self.Searchterm.toLowerCase())) {
+                                newFiltereditems.push(item);
+                                return;
+                            }
+                            if (item.firstName.toLowerCase().includes(self.Searchterm.toLowerCase())) {
+                                newFiltereditems.push(item);
+                                return;
+                            }
+                            if (item.lastName.toLowerCase().includes(self.Searchterm.toLowerCase())) {
+                                newFiltereditems.push(item);
+                                return;
+                            }
+                            if (item.nationality.toLowerCase().includes(self.Searchterm.toLowerCase())) {
+                                newFiltereditems.push(item);
+                                return;
+                            }
+                            if (item.email.toLowerCase().includes(self.Searchterm.toLowerCase())) {
+                                newFiltereditems.push(item);
+                                return;
+                            }
+                        });
+                        self.filtereditems = newFiltereditems;
+                    }
                 }
             }
         });
