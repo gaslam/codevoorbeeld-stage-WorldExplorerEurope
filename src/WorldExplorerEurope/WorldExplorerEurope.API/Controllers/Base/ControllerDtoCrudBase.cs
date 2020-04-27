@@ -43,6 +43,7 @@ namespace WorldExplorerEurope.API.Controllers.Base
             {
                 return BadRequest(ModelState);
             }
+            dto.Id = Guid.NewGuid();
             var addedEntity = _mappingRepository.Add(dto);
 
             if (addedEntity == null)

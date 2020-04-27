@@ -43,6 +43,26 @@ namespace WorldExplorerEurope.API.Controllers
              }
          }*/
 
+        [HttpPost("add")]
+        public async Task<IActionResult> AddCountry([FromBody]CountryDto country)
+        {
+            var existingCountry = _countryMapperRepo.GetAll().FirstOrDefault(m => m.Name == country.Name);
+            if (existingCountry != null)
+            {
+                return BadRequest("Country already exists");
+            }
+
+            try
+            {
+                await _countryMapperRepo.Add(country);
+                return Ok(country);
+            }
+            catch
+            {
+                return BadRequest("User cannot be added");
+            }
+        }
+
         [HttpPost("{countryId}/{userId}/memory")]
         public async Task<IActionResult> PostPhotoMemory([FromRoute]Guid countryId, [FromRoute] Guid userId, IFormFile file)
         {
