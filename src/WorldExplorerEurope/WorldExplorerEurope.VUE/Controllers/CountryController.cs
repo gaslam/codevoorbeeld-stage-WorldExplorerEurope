@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using WorldExplorerEurope.VUE.services;
+using WorldExplorerEurope.VUE.ViewModels;
 
 namespace WorldExplorerEurope.VUE.Controllers
 {
@@ -30,6 +32,25 @@ namespace WorldExplorerEurope.VUE.Controllers
         public IActionResult AddCountry()
         {
             return View();
+        }
+
+        [Route("CountryDetails/{id}")]
+        public async Task<IActionResult> CountryDetails(Guid id)
+        {
+            try
+            {
+                var countryDetails = await _apiService.Get($"{baseUrl}/{id}");
+                var country = JsonConvert.DeserializeObject<CountryViewModel>(countryDetails);
+                if (country == null)
+                {
+                    return Content("Country not found");
+                }
+                return View(country);
+            }
+            catch
+            {
+                return Content("You have no access to this page.");
+            }
         }
     }
 }
