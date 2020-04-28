@@ -52,5 +52,18 @@ namespace WorldExplorerEurope.VUE.Controllers
                 return Content("You have no access to this page.");
             }
         }
+
+        [Route("EditCountry/{id}")]
+        public IActionResult EditCountry(Guid id)
+        {
+            try
+            {
+                return View(id);
+            }
+            catch
+            {
+                return Content("You have no access to this page.");
+            }
+        }
     }
 }

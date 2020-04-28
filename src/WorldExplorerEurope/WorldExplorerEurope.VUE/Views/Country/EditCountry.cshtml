@@ -1,10 +1,9 @@
-﻿
+﻿@model Guid
 @{
-    ViewData["Title"] = "AddCountry";
-    Layout = "_Layout";
+    ViewData["Title"] = "Edit Country";
 }
 
-<h1>Add Country</h1>
+<h1>Edit Country</h1>
 
 <form method="post" class="uk-form-stacked">
 
@@ -41,18 +40,18 @@
     <div class="uk-margin">
         <label class="uk-form-label">Description:</label>
         <div class="uk-form-controls">
-            <textarea class="uk-input" placeholder="Give the new country a description" v-model="Description" rows="6" cols="80" ></textarea>
+            <textarea class="uk-input" placeholder="Give the country a description" v-model="Description" rows="6" cols="80"></textarea>
         </div>
     </div>
     <div class="uk-margin">
         <div class="uk-form-controls">
-            <label><input class="uk-radio" type="radio" value="EUMember" v-model="IsEUMember"/>EU Member?</label>
+            <label><input class="uk-radio" type="radio" value="EUMember" v-model="IsEUMember" />EU Member?</label>
         </div>
     </div>
 </form>
 
 <div class="uk-button-group">
-    <a class="uk-button-primary" style="padding:10px;margin:10px" v-on:click="check()">Add</a>
+    <a class="uk-button-primary" style="padding:10px;margin:10px" v-on:click="check()">Save</a>
     <a class="uk-button-danger" style="padding:10px;margin:10px" asp-controller="Country" asp-action="Index">Go back</a>
 </div>
 
@@ -62,20 +61,29 @@
         var app = new Vue({
             el: '#app',
             data: {
+                Id: "",
                 Name: "",
-                FlagUrl: "https://restcountries.eu/data/gib.svg",
+                FlagUrl: "",
                 Population: 0,
-                IsEUMember:"",
+                IsEUMember: "",
                 Capital: "",
                 Currency: "",
                 Description: "",
+                Favourites: new Array(),
+                CountryPhotoMemories: new Array(),
+                CountryWishlists: new Array(),
                 Errors: []
+            },
+
+            created: function () {
+                var self = this;
+                self.GetCountry();
+                
             },
 
             methods: {
                 check: function () {
                     var self = this;
-
                     self.CheckData = true;
                     self.Errors = new Array();
                     if (self.Name.length == 0) {
@@ -100,35 +108,55 @@
                         self.Errors.push(`Population cannot be ${self.Population}. Please enter a value higher than 0.`);
                     }
                     if (self.CheckData == true) {
-                        self.AddCountry()
+                        self.EditCountry()
                     }
                 },
 
-                AddCountry: function() {
+                GetCountry: function() {
+                    var self = this;
+
+                    axios.get(`${baseUrl}/@Model`)
+                        .then(function (response) {
+                            self.Id = response.data.id;
+                            self.Name = response.data.name;
+                            self.FlagUrl = response.data.flagUrl;
+                            self.Population = response.data.population;
+                            self.Capital = response.data.capital;
+                            self.Currency = response.data.currency;
+                            self.Description = response.data.description;
+                            self.Favourites = response.data.favourites;
+                            self.CountryPhotoMemories = response.data.countryPhotoMemories;
+                            self.CountryWishlists = response.data.countryWishlists;
+                            if (response.data.isEUMember == true) self.IsEUMember = "EUMember";
+                        })
+                        .catch(function (error) {
+                            self.Errors.push(error.response.data);
+                        });
+                },
+                EditCountry: function () {
                     var self = this;
                     var country = {
-                        name: self.Name,
+                        id : self.Id,
+                        name : self.Name,
                         flagUrl: self.FlagUrl,
                         population: Number(self.Population),
                         capital: self.Capital,
                         currency: self.Currency,
-                        isEUMember: false,
                         description: self.Description,
-                        favourites: new Array(),
-                        countryPhotoMemories: new Array(),
-                        countryWishlists: new Array(),
+                        favourites: self.Favourites,
+                        isEUMember: self.IsEUMember,
+                        favourites: self.Favourites,
+                        countryPhotoMemories: self.CountryPhotoMemories,
+                        countryWishlists: self.CountryWishlists,
+                        isEUMember: false,
                     };
-                    if (self.IsEUMember.length > 0) country.isEUMember = true;
 
-                    axios.post(`${baseUrl}/add`, country)
+                    if (country.isEUMember.length > 0) country.isEUMember = true;
+
+                    axios.put(`${baseUrl}/update/${self.Id}`, country)
                         .then(function (response) {
-                            alert("Country has been added succesfully");
-                            self.Name = "";
-                            self.Currency = "";
-                            self.Population = 0;
-                            self.Capital = "";
-                            self.Description = "";
-                            self.IsEUMember = "";
+                            alert("Country has been updated succesfully");
+                            window.location.href = window.location.origin + '/Country';
                         })
                         .catch(function (error) {
                             self.Errors.push(error.response.data);
@@ -137,5 +165,4 @@
             }
         });
     </script>
-}
-
+} 
