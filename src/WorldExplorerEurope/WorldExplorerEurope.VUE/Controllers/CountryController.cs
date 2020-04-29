@@ -65,5 +65,10 @@ namespace WorldExplorerEurope.VUE.Controllers
                 return Content("You have no access to this page.");
             }
         }
+
+        public IActionResult Popular()
+        {
+            return View();
+        }
     }
 }
