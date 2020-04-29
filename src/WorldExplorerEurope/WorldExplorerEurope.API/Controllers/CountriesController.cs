@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -73,7 +74,7 @@ namespace WorldExplorerEurope.API.Controllers
             };
             try
             {
-                var filename = await _memoryPhotoService.CreateImage(file, Guid.NewGuid());
+                var filename = await _memoryPhotoService.CreateImage(file, Guid.NewGuid(),nameof(Country).ToLower());
                 var memory = new PhotoMemory()
                 {
                     Id = Guid.NewGuid(),
@@ -205,6 +206,26 @@ namespace WorldExplorerEurope.API.Controllers
             catch
             {
                 return BadRequest("Cannot delete favourite!!");
+            }
+        }
+
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateCountry([FromRoute]Guid countryId, [FromRoute] Guid userId, IFormFile file)
+        {
+            var entity = await _mappingRepository.GetById(countryId);
+            if (entity == null)
+            {
+                return NotFound($"Cannot find country with id: {countryId}!!");
+            };
+            try
+            {
+                var filename = await _memoryPhotoService.CreateImage(file, Guid.NewGuid(), "flags");
+
+                return Ok(await _countryMapperRepo.Update(countryId.ToString(), entity));
+            }
+            catch
+            {
+                return BadRequest("Cannot save image!!");
             }
         }
     }
