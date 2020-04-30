@@ -38,6 +38,12 @@
         </div>
     </div>
     <div class="uk-margin">
+        <label class="uk-form-label">Flag:</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" type="file" id="image" name="image" placeholder="Select file" />
+        </div>
+    </div>
+    <div class="uk-margin">
         <label class="uk-form-label">Description:</label>
         <div class="uk-form-controls">
             <textarea class="uk-input" placeholder="Give the country a description" v-model="Description" rows="6" cols="80"></textarea>
@@ -108,7 +114,7 @@
                         self.Errors.push(`Population cannot be ${self.Population}. Please enter a value higher than 0.`);
                     }
                     if (self.CheckData == true) {
-                        self.EditCountry()
+                        self.EditCountryFlag()
                     }
                 },
 
@@ -133,11 +139,25 @@
                             self.Errors.push(error.response.data);
                         });
                 },
-                EditCountry: function () {
+                EditCountryFlag: function () {
+                    var self = this;
+                    formData = new FormData();
+                    formData.append('flag', $('#image')[0].files[0]);
+                    axios.put(`${baseUrl}/${self.Name}/flag/update`, formData, { headers: { "Content-Type": "multipart/form-data" } })
+                        .then(function (response) {
+                            self.FlagUrl = response.data;
+                            self.UpdateCountry();
+                        })
+                        .catch(function (error) {
+                            self.Errors.push(error.response.data);
+                        });
+                },
+
+                UpdateCountry: function () {
                     var self = this;
                     var country = {
-                        id : self.Id,
-                        name : self.Name,
+                        id: self.Id,
+                        name: self.Name,
                         flagUrl: self.FlagUrl,
                         population: Number(self.Population),
                         capital: self.Capital,
@@ -150,9 +170,7 @@
                         countryWishlists: self.CountryWishlists,
                         isEUMember: false,
                     };
-
                     if (country.isEUMember.length > 0) country.isEUMember = true;
-
                     axios.put(`${baseUrl}/update/${self.Id}`, country)
                         .then(function (response) {
                             alert("Country has been updated succesfully");

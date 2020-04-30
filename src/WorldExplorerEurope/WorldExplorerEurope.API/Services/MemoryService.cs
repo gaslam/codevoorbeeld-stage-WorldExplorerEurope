@@ -43,7 +43,7 @@ namespace WorldExplorerEurope.API.Services
                 }
             }
 
-            return new Uri($"http://192.168.0.181:5000/images/{foldername}/{newFileExtension}", UriKind.Absolute);
+            return new Uri($"http://192.168.0.218:5000/images/{foldername}/{newFileExtension}", UriKind.Absolute);
         }
     }
 }

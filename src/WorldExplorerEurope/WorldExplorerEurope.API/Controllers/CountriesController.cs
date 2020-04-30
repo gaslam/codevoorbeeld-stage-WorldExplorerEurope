@@ -60,7 +60,7 @@ namespace WorldExplorerEurope.API.Controllers
             }
             catch
             {
-                return BadRequest("User cannot be added");
+                return BadRequest("country cannot be added");
             }
         }
 
@@ -227,6 +227,46 @@ namespace WorldExplorerEurope.API.Controllers
             {
                 return BadRequest("Cannot save image!!");
             }
+        }
+
+        [HttpPost("/{countryName}flag")]
+        public async Task<IActionResult> UploadFlag([FromRoute] string countryName, IFormFile flag)
+        {
+            var existingCountry = _countryMapperRepo.GetAll().FirstOrDefault(m => m.Name.ToLower() == countryName.ToLower());
+            if (existingCountry != null)
+            {
+                return BadRequest("Country already exists");
+            }
+            if (Path.GetExtension(flag.FileName) != ".svg")
+            {
+                return BadRequest($"{Path.GetExtension(flag.FileName)} is not a valid extension. Only svg's are accepted.");
+            }
+            Uri url = await _memoryPhotoService.CreateImage(flag, Guid.NewGuid(), "flags");
+            if(url == null)
+            {
+                return BadRequest("Cannot add image");
+            }
+            return Ok(url);
+        }
+
+        [HttpPut("{countryName}/flag/update")]
+        public async Task<IActionResult> UpdateFlag([FromRoute] string countryName, IFormFile flag)
+        {
+            var existingCountry = _countryMapperRepo.GetAll().FirstOrDefault(m => m.Name.ToLower() == countryName.ToLower());
+            if (existingCountry == null)
+            {
+                return NotFound("Country not found");
+            }
+            if (Path.GetExtension(flag.FileName) != ".svg")
+            {
+                return BadRequest($"{Path.GetExtension(flag.FileName)} is not a valid extension. Only svg's are accepted.");
+            }
+            Uri url = await _memoryPhotoService.CreateImage(flag, Guid.NewGuid(), "flags");
+            if (url == null)
+            {
+                return BadRequest("Cannot add image");
+            }
+            return Ok(url);
         }
     }
 }
