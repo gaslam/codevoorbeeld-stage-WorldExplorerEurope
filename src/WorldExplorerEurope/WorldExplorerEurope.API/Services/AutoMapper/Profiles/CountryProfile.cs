@@ -15,7 +15,7 @@ namespace WorldExplorerEurope.API.Services.AutoMapper.Profiles
             CreateMap<Country, CountryDto>()
                 .ForMember(dest => dest.CountryPhotoMemories, opt => opt.MapFrom(src => src.Memories.Select(g => g.Memory)))
                 .ForMember(dest => dest.Favourites, opt => opt.MapFrom(src => src.Favourites.Select(g => g.Favourite)))
-                .ForMember(dest => dest.CountryWishlists, opt => opt.MapFrom(src => src.CountryWishlists))
+                .ForMember(dest => dest.CountryWishlists, opt => opt.MapFrom(src => src.CountryWishlists.Select(g => g.Wishlist)))
                 .ForMember(dest => dest.FlagUrl, opt => opt.MapFrom(src => src.Flag));
             CreateMap<CountryDto, Country>()
 

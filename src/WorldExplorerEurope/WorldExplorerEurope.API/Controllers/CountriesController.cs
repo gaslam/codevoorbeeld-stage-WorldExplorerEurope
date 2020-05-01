@@ -151,9 +151,8 @@ namespace WorldExplorerEurope.API.Controllers
                 await _worldExplorerContext.SaveChangesAsync();
                 var wishlistDto = new WishlistDto()
                 {
-                    Id = Guid.NewGuid(),
-                    UserId = userId,
-                    CountryId = countryId
+                    Id = wishlist.Id,
+                    UserId = userId
                 };
                 entity.CountryWishlists.Add(wishlistDto);
                 return Ok(await _countryMapperRepo.Update(countryId.ToString(), entity));
