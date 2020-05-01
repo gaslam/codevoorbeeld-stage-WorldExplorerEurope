@@ -23,6 +23,7 @@ namespace WorldExplorerEurope.App.ViewModels
         {
             base.Init(initData);
             _country = await GetCountries();
+            ActivityIndicator = false;
             GetCountryByWishlist();
         }
 
@@ -55,6 +56,21 @@ namespace WorldExplorerEurope.App.ViewModels
 
         }
 
+        private bool activityIndicator;
+
+        public bool ActivityIndicator
+        {
+            get
+            {
+                return activityIndicator;
+            }
+            set
+            {
+                activityIndicator = value;
+                ChangeProperty(nameof(ActivityIndicator));
+            }
+        }
+
         private void ChangeProperty(string property)
         {
             if (PropertyChanged != null)
@@ -65,6 +81,7 @@ namespace WorldExplorerEurope.App.ViewModels
 
         private void GetCountryByWishlist()
         {
+            ActivityIndicator = true;
             var user = localService.GetUser();
             ObservableCollection<Country> wishlistCountries = new ObservableCollection<Country>();
             foreach (var country in _country)
@@ -73,10 +90,12 @@ namespace WorldExplorerEurope.App.ViewModels
                 if (wishlist != null) wishlistCountries.Add(country);
             }
             Countries = wishlistCountries;
+            ActivityIndicator = false;
         }
         public ICommand FavouritesCommand => new Command(
              () =>
              {
+                 ActivityIndicator = true;
                  var user = localService.GetUser();
                  ObservableCollection<Country> favouritesCountries = new ObservableCollection<Country>();
                  foreach (var country in _country)
@@ -85,8 +104,7 @@ namespace WorldExplorerEurope.App.ViewModels
                      if (wishlist != null) favouritesCountries.Add(country);
                  }
                  Countries = favouritesCountries;
-
-
+                 ActivityIndicator = false;
              });
 
         public ICommand WishlistsCommand => new Command(
