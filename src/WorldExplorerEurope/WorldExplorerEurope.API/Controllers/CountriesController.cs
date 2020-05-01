@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -59,7 +60,7 @@ namespace WorldExplorerEurope.API.Controllers
             }
             catch
             {
-                return BadRequest("User cannot be added");
+                return BadRequest("country cannot be added");
             }
         }
 
@@ -73,7 +74,7 @@ namespace WorldExplorerEurope.API.Controllers
             };
             try
             {
-                var filename = await _memoryPhotoService.CreateImage(file, Guid.NewGuid());
+                var filename = await _memoryPhotoService.CreateImage(file, Guid.NewGuid(),nameof(Country).ToLower());
                 var memory = new PhotoMemory()
                 {
                     Id = Guid.NewGuid(),
@@ -206,6 +207,66 @@ namespace WorldExplorerEurope.API.Controllers
             {
                 return BadRequest("Cannot delete favourite!!");
             }
+        }
+
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateCountry([FromRoute]Guid countryId, [FromRoute] Guid userId, IFormFile file)
+        {
+            var entity = await _mappingRepository.GetById(countryId);
+            if (entity == null)
+            {
+                return NotFound($"Cannot find country with id: {countryId}!!");
+            };
+            try
+            {
+                var filename = await _memoryPhotoService.CreateImage(file, Guid.NewGuid(), "flags");
+
+                return Ok(await _countryMapperRepo.Update(countryId.ToString(), entity));
+            }
+            catch
+            {
+                return BadRequest("Cannot save image!!");
+            }
+        }
+
+        [HttpPost("/{countryName}flag")]
+        public async Task<IActionResult> UploadFlag([FromRoute] string countryName, IFormFile flag)
+        {
+            var existingCountry = _countryMapperRepo.GetAll().FirstOrDefault(m => m.Name.ToLower() == countryName.ToLower());
+            if (existingCountry != null)
+            {
+                return BadRequest("Country already exists");
+            }
+            if (Path.GetExtension(flag.FileName) != ".svg")
+            {
+                return BadRequest($"{Path.GetExtension(flag.FileName)} is not a valid extension. Only svg's are accepted.");
+            }
+            Uri url = await _memoryPhotoService.CreateImage(flag, Guid.NewGuid(), "flags");
+            if(url == null)
+            {
+                return BadRequest("Cannot add image");
+            }
+            return Ok(url);
+        }
+
+        [HttpPut("{countryName}/flag/update")]
+        public async Task<IActionResult> UpdateFlag([FromRoute] string countryName, IFormFile flag)
+        {
+            var existingCountry = _countryMapperRepo.GetAll().FirstOrDefault(m => m.Name.ToLower() == countryName.ToLower());
+            if (existingCountry == null)
+            {
+                return NotFound("Country not found");
+            }
+            if (Path.GetExtension(flag.FileName) != ".svg")
+            {
+                return BadRequest($"{Path.GetExtension(flag.FileName)} is not a valid extension. Only svg's are accepted.");
+            }
+            Uri url = await _memoryPhotoService.CreateImage(flag, Guid.NewGuid(), "flags");
+            if (url == null)
+            {
+                return BadRequest("Cannot add image");
+            }
+            return Ok(url);
         }
     }
 }

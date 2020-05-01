@@ -17,12 +17,11 @@ namespace WorldExplorerEurope.API.Services
         {
             _webHostEnv = webHostEnv;
         }
-        public async Task<Uri> CreateImage(IFormFile file, Guid fileId)
+        public async Task<Uri> CreateImage(IFormFile file, Guid fileId, string foldername)
         {
-            Path.ChangeExtension(file.FileName, ".png");
             var newFileExtension = $"{fileId}{Path.GetExtension(file.FileName)}";
 
-            var root = Path.Combine(_webHostEnv.WebRootPath, "images", typeof(T).Name.ToLower());
+            var root = Path.Combine(_webHostEnv.WebRootPath, "images", foldername);
 
             if (!Directory.Exists(root))
             {
@@ -30,6 +29,11 @@ namespace WorldExplorerEurope.API.Services
             }
 
             var filePath = Path.Combine(root, newFileExtension);
+
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
 
             if (file.Length > 0)
             {
@@ -39,7 +43,7 @@ namespace WorldExplorerEurope.API.Services
                 }
             }
 
-            return new Uri($"http://192.168.0.181:5000/images/{typeof(T).Name.ToLower()}/{newFileExtension}", UriKind.Absolute);
+            return new Uri($"http://192.168.0.218:5000/images/{foldername}/{newFileExtension}", UriKind.Absolute);
         }
     }
 }

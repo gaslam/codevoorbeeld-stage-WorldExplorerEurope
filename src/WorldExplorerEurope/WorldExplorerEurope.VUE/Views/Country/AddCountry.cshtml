@@ -39,14 +39,20 @@
         </div>
     </div>
     <div class="uk-margin">
+        <label class="uk-form-label">Flag:</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" type="file" id="image" name="image" placeholder="Select file" />
+        </div>
+    </div>
+    <div class="uk-margin">
         <label class="uk-form-label">Description:</label>
         <div class="uk-form-controls">
-            <textarea class="uk-input" placeholder="Give the new country a description" v-model="Description" rows="6" cols="80" ></textarea>
+            <textarea class="uk-input" placeholder="Give the new country a description" v-model="Description" rows="6" cols="80"></textarea>
         </div>
     </div>
     <div class="uk-margin">
         <div class="uk-form-controls">
-            <label><input class="uk-radio" type="radio" value="EUMember" v-model="IsEUMember"/>EU Member?</label>
+            <label><input class="uk-radio" type="radio" value="EUMember" v-model="IsEUMember" />EU Member?</label>
         </div>
     </div>
 </form>
@@ -63,12 +69,13 @@
             el: '#app',
             data: {
                 Name: "",
-                FlagUrl: "https://restcountries.eu/data/gib.svg",
                 Population: 0,
                 IsEUMember:"",
                 Capital: "",
                 Currency: "",
                 Description: "",
+                FlagUrl: "",
+                Files: [],
                 Errors: []
             },
 
@@ -100,7 +107,7 @@
                         self.Errors.push(`Population cannot be ${self.Population}. Please enter a value higher than 0.`);
                     }
                     if (self.CheckData == true) {
-                        self.AddCountry()
+                        self.uploadFlag()
                     }
                 },
 
@@ -129,6 +136,21 @@
                             self.Capital = "";
                             self.Description = "";
                             self.IsEUMember = "";
+                            self.FlagUrl = "";
+                            $('#image')[0].files = new Array();
+                        })
+                        .catch(function (error) {
+                            self.Errors.push(error.response.data);
+                        });
+                },
+                uploadFlag: function () {
+                    var self = this;
+                    formData = new FormData();
+                    formData.append('flag', $('#image')[0].files[0]);
+                    axios.post(`${baseUrl}/${self.Name}/flag`, formData, {headers: {"Content-Type": "multipart/form-data"}} )
+                        .then(function (response) {
+                            self.FlagUrl = response.data;
+                            self.AddCountry()
                         })
                         .catch(function (error) {
                             self.Errors.push(error.response.data);
