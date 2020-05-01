@@ -16,7 +16,7 @@ namespace WorldExplorerEurope.API.Services.AutoMapper.Profiles
                 .ForMember(dest => dest.Wishlists, opt => opt.MapFrom(src => src.Wishlists.Select(g => g.Wishlist)));
 
             CreateMap<WishlistDto, Wishlist>()
-                .ForMember(dest => dest.Wishlists, opt => opt.MapFrom(src => src.Wishlists.Select(g => new CountryWishlists { WishlistId = src.Id, CountryId = g.CountryId })));
+                .ForMember(dest => dest.Wishlists, opt => opt.MapFrom(src => src.Wishlists.Select(g => new CountryWishlists { WishlistId = src.Id, CountryId = g.Id })));
 
             CreateMap<WishlistDto, CountryWishlists>()
                 .ForMember(dest => dest.WishlistId, opt => opt.MapFrom(src => src.Id));

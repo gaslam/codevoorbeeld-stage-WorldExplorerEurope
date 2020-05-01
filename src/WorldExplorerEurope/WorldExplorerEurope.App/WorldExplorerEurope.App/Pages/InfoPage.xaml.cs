@@ -18,7 +18,7 @@ using System.Net.Http;
 namespace WorldExplorerEurope.App.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class InfoPage : ContentPage
+    public partial class InfoPage : TabbedPage
     {
         ISimpleAudioPlayer player;
         private InfoViewModel _infoViewModel;

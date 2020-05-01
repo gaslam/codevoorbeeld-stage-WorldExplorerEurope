@@ -33,7 +33,6 @@ namespace WorldExplorerEurope.App.Droid
             var ignore = typeof(SvgCachedImage);
             LoadApplication(new App());
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
-            CrossMediaManager.Current.Init();
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

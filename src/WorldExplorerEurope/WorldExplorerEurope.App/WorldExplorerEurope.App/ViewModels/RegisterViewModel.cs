@@ -81,6 +81,7 @@ namespace WorldExplorerEurope.App.ViewModels
                     var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
                     LocalService userService = new LocalService();
                     userService.SetUser(user);
+                    await CoreMethods.PushPageModel<DetailViewModel>(user, false, true);
                 }
             }
         });

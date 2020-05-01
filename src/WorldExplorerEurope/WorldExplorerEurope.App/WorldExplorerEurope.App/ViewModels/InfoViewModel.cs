@@ -50,6 +50,8 @@ namespace WorldExplorerEurope.App.ViewModels
             UserMemories = await GetUserMemories();
             ActivityIndicator = false;
             ChangePageContentBasedOnUser();
+            AddedInFavourites = $"Times added: {_country.favourites.Count}";
+            AddedInWishlist = $"Times added: {_country.countryWishlists.Count}";
             base.Init(initData);
 
         }
@@ -58,6 +60,7 @@ namespace WorldExplorerEurope.App.ViewModels
         {
             var user = _localService.GetUser();
             int count = 0;
+            int count2 = 0;
             if (user != null) count = _country.favourites.Where(m => m.UserId == user.Id).Count();
             if (count > 0)
             {
@@ -69,10 +72,10 @@ namespace WorldExplorerEurope.App.ViewModels
                 LblFavouritesText = "Add to Favourites";
                 FavouriteCommand = AddFavouriteCommand;
             }
-            var count2 = _country.countryWishlists.Where(m => m.UserId == user.Id).Count();
+            if(user != null) count2 = _country.countryWishlists.Where(m => m.UserId == user.Id).Count();
             if (count2 > 0)
             {
-                lblWishlistsText = "Remove from Wishlist";
+                LblWishlistsText = "Remove from Wishlist";
                 WishlistCommand = RemoveWishlistCommand;
             }
             else
@@ -228,7 +231,7 @@ namespace WorldExplorerEurope.App.ViewModels
             set
             {
                 lblWishlistsText = value;
-                ChangeProperty(nameof(LblFavouritesText));
+                ChangeProperty(nameof(LblWishlistsText));
             }
         }
 
@@ -243,19 +246,32 @@ namespace WorldExplorerEurope.App.ViewModels
             return new ObservableCollection<PhotoMemoryDto>(new ObservableCollection<PhotoMemoryDto>(_country.countryPhotoMemories.Where(m => m.UserId == user.Id).ToList()));
         }
 
+        private string addedInFavourites;
         public string AddedInFavourites
         {
             get
             {
-                return $"Times added: {_country.favourites.Count}";
+                return addedInFavourites;
+            }
+            set
+            {
+                addedInFavourites = value;
+                ChangeProperty(nameof(AddedInFavourites));
             }
         }
+
+        private string addedInWishlist;
 
         public string AddedInWishlist
         {
             get
             {
-                return $"Times added: {_country.countryWishlists.Count}";
+                return addedInWishlist;
+            }
+            set
+            {
+                addedInWishlist = value;
+                ChangeProperty(nameof(AddedInWishlist));
             }
         }
 
@@ -365,19 +381,13 @@ namespace WorldExplorerEurope.App.ViewModels
         {
             var content = new MultipartFormDataContent();
             content.Add(new StreamContent(media.GetStream()), "\"file\"", $"\"{media.Path}\"");
-            var upload = UploadPicture(content).Result;
-            if (!upload.IsSuccessStatusCode)
-            {
-                await App.Current.MainPage.DisplayAlert("Cannot upload picture", "The service is currently unavailable.\n Just wait 1 hour and try again.", "Ok");
-                ActivityIndicator = false;
-            }
+            var upload = await UploadPicture(content);
+            if (!upload.IsSuccessStatusCode) await App.Current.MainPage.DisplayAlert("Error", "Cannot perform action.", "OK");
             else
             {
-                var pagetorefresh = new LoginViewModel();
-                CoreMethods.RemoveFromNavigation<InfoViewModel>(false);
-                var countries = await _localService.GetCountriesAsync();
-                _country = countries.SingleOrDefault(m => m.Name == _country.Name);
-                await CoreMethods.PushPageModel<InfoViewModel>(_country, false, true);
+                string responseContent = await upload.Content.ReadAsStringAsync();
+                var country = JsonConvert.DeserializeObject<Country>(responseContent);
+                _country = country;
                 ActivityIndicator = false;
             }
         }
@@ -425,7 +435,7 @@ namespace WorldExplorerEurope.App.ViewModels
             set
             {
                 wishlistCommand = value;
-                ChangeProperty(nameof(FavouriteCommand));
+                ChangeProperty(nameof(WishlistCommand));
             }
         }
 
@@ -436,6 +446,9 @@ namespace WorldExplorerEurope.App.ViewModels
                 if (user != null)
                 {
                     await Add($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/favourites");
+                    var countries = await _localService.GetCountriesAsync();
+                    var updatedCountry = countries.FirstOrDefault(m => m.Name == _country.Name);
+                    updateFavouriteAndWishlistCount(updatedCountry);
                     return;
                 }
                 await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
@@ -448,6 +461,9 @@ namespace WorldExplorerEurope.App.ViewModels
                 var user = _localService.GetUser();
                 var favourite = _country.favourites.FirstOrDefault(m => m.UserId == user.Id);
                 await Remove($"{WorldExplorerAPIService.BaseUrl}/favourites/remove/{_country.Id}/{favourite.Id}");
+                var countries = await _localService.GetCountriesAsync();
+                var updatedCountry = countries.FirstOrDefault(m => m.Name == _country.Name);
+                updateFavouriteAndWishlistCount(updatedCountry);
             });
 
         ICommand AddWishlistCommand => new Command(
@@ -457,17 +473,32 @@ namespace WorldExplorerEurope.App.ViewModels
                 if (user != null)
                 {
                     await Add($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/wishlist");
+                    var countries = await _localService.GetCountriesAsync();
+                    var updatedCountry = countries.FirstOrDefault(m => m.Name == _country.Name);
+                    updateFavouriteAndWishlistCount(updatedCountry);
                     return;
                 }
                 await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
                 await CoreMethods.PushPageModel<LoginViewModel>(true);
             });
 
+        private void updateFavouriteAndWishlistCount(Country country)
+        {
+            _country = country;
+            AddedInWishlist = $"Times added: {_country.countryWishlists.Count}";
+            AddedInFavourites = $"Times added: {_country.favourites.Count}";
+            ChangePageContentBasedOnUser();
+        }
+
         ICommand RemoveWishlistCommand => new Command(
             async () =>
             {
                 var user = _localService.GetUser();
-                await Remove($"{WorldExplorerAPIService.BaseUrl}/wishlists/remove/{_country.Id}/{user.Id}");
+                var wishlist = _country.countryWishlists.SingleOrDefault(m => m.UserId == user.Id);
+                await Remove($"{WorldExplorerAPIService.BaseUrl}/wishlists/remove/{_country.Id}/{wishlist.Id}");
+                var countries = await _localService.GetCountriesAsync();
+                var updatedCountry = countries.FirstOrDefault(m => m.Name == _country.Name);
+                updateFavouriteAndWishlistCount(updatedCountry);
             });
 
         private async Task Add(string url)
@@ -482,9 +513,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
                     var country = JsonConvert.DeserializeObject<Country>(responseContent);
-                    CoreMethods.RemoveFromNavigation<InfoViewModel>(false);
-
-                    await CoreMethods.PushPageModel<InfoViewModel>(country, false, true);
+                    _country = country;
                 }
             }
         }
@@ -507,9 +536,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
                     var country = JsonConvert.DeserializeObject<Country>(responseContent);
-                    CoreMethods.RemoveFromNavigation<InfoViewModel>(false);
-
-                    await CoreMethods.PushPageModel<InfoViewModel>(country, false, true);
+                    _country = country;
                 }
             }
         }
