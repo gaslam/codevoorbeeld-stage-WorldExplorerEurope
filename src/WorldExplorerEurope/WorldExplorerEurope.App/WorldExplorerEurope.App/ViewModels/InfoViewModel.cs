@@ -381,19 +381,13 @@ namespace WorldExplorerEurope.App.ViewModels
         {
             var content = new MultipartFormDataContent();
             content.Add(new StreamContent(media.GetStream()), "\"file\"", $"\"{media.Path}\"");
-            var upload = UploadPicture(content).Result;
-            if (!upload.IsSuccessStatusCode)
-            {
-                await App.Current.MainPage.DisplayAlert("Cannot upload picture", "The service is currently unavailable.\n Just wait 1 hour and try again.", "Ok");
-                ActivityIndicator = false;
-            }
+            var upload = await UploadPicture(content);
+            if (!upload.IsSuccessStatusCode) await App.Current.MainPage.DisplayAlert("Error", "Cannot perform action.", "OK");
             else
             {
-                var pagetorefresh = new LoginViewModel();
-                CoreMethods.RemoveFromNavigation<InfoViewModel>(false);
-                var countries = await _localService.GetCountriesAsync();
-                _country = countries.SingleOrDefault(m => m.Name == _country.Name);
-                await CoreMethods.PushPageModel<InfoViewModel>(_country, false, true);
+                string responseContent = await upload.Content.ReadAsStringAsync();
+                var country = JsonConvert.DeserializeObject<Country>(responseContent);
+                _country = country;
                 ActivityIndicator = false;
             }
         }
