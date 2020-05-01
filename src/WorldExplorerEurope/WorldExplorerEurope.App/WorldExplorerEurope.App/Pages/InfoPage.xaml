@@ -265,7 +265,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                 <listview:SfListView ItemsSource="{Binding UserMemories}" Orientation="Horizontal" ItemSize="450" Grid.ColumnSpan="2" Grid.Row="1" HeightRequest="450" HorizontalOptions="CenterAndExpand">
                     <listview:SfListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid HeightRequest="500">
+                            <Grid HeightRequest="450">
                                 <Image Source="{Binding PhotoName}" HeightRequest="450" Margin="10,0,0,0"></Image>
                             </Grid>
                         </DataTemplate>
