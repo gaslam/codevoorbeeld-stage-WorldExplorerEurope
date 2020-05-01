@@ -349,4 +349,4 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-src/WorldExplorerEurope/WorldExplorerEurope.API/wwwroot/images/Country/*
+src/WorldExplorerEurope/WorldExplorerEurope.API/wwwroot/images/*
