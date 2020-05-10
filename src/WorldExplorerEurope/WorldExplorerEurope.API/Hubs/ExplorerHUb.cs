@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WorldExplorerEurope.API.Hubs
 {
-    public class ExplorerHub : Hub
+    public class ExplorerHUb : Hub
     {
         public async Task AddFavourite()
         {
