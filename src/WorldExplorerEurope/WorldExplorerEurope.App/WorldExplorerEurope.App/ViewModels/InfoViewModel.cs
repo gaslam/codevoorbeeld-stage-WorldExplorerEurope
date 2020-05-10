@@ -20,6 +20,7 @@ using WorldExplorerEurope.API.Services.Interface;
 using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Domain.Services.API;
+using WorldExplorerEurope.App.ViewModels.SignalR;
 using WorldExplorerEurope.App.ViewModels.Syncfusion;
 using WorldExplorerEurope.App.Views;
 using WorldExplorerEurope.Domain.Models;
@@ -37,15 +38,18 @@ namespace WorldExplorerEurope.App.ViewModels
         private IAPIinterface _apiService;
         private MainViewModel mainViewModel = new MainViewModel();
         private LocalService _localService;
+        private ExplorerHubViewModel explorerHubViewModel;
 
         public InfoViewModel()
         {
             this._apiService = new APIservice();
             _localService = new LocalService();
+            explorerHubViewModel = new ExplorerHubViewModel();
         }
 
         public async override void Init(object initData)
         {
+            await explorerHubViewModel.Connect();
             var country = initData as Country;
             this._country = mainViewModel.GetCountry();
             this.countryPlaylist = GetCountryPlaylist().Result;
