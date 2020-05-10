@@ -49,7 +49,6 @@ namespace WorldExplorerEurope.App.ViewModels
 
         public async override void Init(object initData)
         {
-            await explorerHubViewModel.Connect();
             var country = initData as Country;
             this._country = mainViewModel.GetCountry();
             this.countryPlaylist = GetCountryPlaylist().Result;
@@ -58,6 +57,7 @@ namespace WorldExplorerEurope.App.ViewModels
             ChangePageContentBasedOnUser();
             AddedInFavourites = $"Times added: {_country.favourites.Count}";
             AddedInWishlist = $"Times added: {_country.countryWishlists.Count}";
+            await explorerHubViewModel.Connect();
             base.Init(initData);
 
         }
@@ -457,6 +457,7 @@ namespace WorldExplorerEurope.App.ViewModels
                     var countries = await _localService.GetCountriesAsync();
                     var updatedCountry = countries.FirstOrDefault(m => m.Name == _country.Name);
                     updateFavouriteAndWishlistCount(updatedCountry);
+                    await explorerHubViewModel.UpdateLists(updatedCountry);
                     return;
                 }
                 await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");

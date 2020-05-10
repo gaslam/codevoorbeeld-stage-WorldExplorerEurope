@@ -3,14 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WorldExplorerEurope.App.Domain.Models;
 
 namespace WorldExplorerEurope.API.Hubs
 {
     public class ExplorerHub : Hub
     {
-        public async Task AddFavourite()
+        public async Task AddFavourite(object favourite)
         {
-            await Clients.All.SendAsync("addFavourite");
+            await Clients.All.SendAsync("addFavourite", favourite);
         }
     }
 }

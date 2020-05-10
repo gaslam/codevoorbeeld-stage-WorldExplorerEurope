@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using WorldExplorerEurope.App.Domain.Models;
+using WorldExplorerEurope.Domain.Models;
 using Xamarin.Forms;
 
 namespace WorldExplorerEurope.App.ViewModels.SignalR
@@ -13,12 +15,9 @@ namespace WorldExplorerEurope.App.ViewModels.SignalR
         HubConnection hubConnection;
         public ExplorerHubViewModel()
         {
-            var ip = "localhost";
-            if (Device.RuntimePlatform == Device.Android)
-                ip = "10.0.2.2";
 
             hubConnection = new HubConnectionBuilder()
-                .WithUrl($"http://{ip}:5000/chatHub")
+                .WithUrl($"http://192.168.0.218:5000/ExplorerHub")
                 .Build();
         }
 
@@ -35,11 +34,12 @@ namespace WorldExplorerEurope.App.ViewModels.SignalR
             }
         }
 
-        public async Task UpdateFavourites()
+        public async Task UpdateLists(Country country)
         {
             try
             {
-                await hubConnection.InvokeAsync("SendMessage");
+                object countryToSend = (object)country;
+                await hubConnection.InvokeAsync("addFavourite", countryToSend);
                 IsConnected = true;
             }
             catch (Exception ex)
