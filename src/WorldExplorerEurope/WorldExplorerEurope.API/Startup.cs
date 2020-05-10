@@ -117,7 +117,7 @@ namespace WorldExplorerEurope.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<ExplorerHUb>("/ExplorerHub");
+                endpoints.MapHub<ExplorerHub>("/ExplorerHub");
             });
 
             app.UseSwagger();
