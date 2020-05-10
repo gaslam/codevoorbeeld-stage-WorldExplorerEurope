@@ -69,7 +69,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 BirthDate = newUser.BirthDate,
                 Nationality = newUser.Nationality,
                 Password = newUser.Password,
-                IsAdmin = false
+                Role = "Visitor"
             };
             if (DataForm.Validate() == true)
             {
@@ -81,6 +81,7 @@ namespace WorldExplorerEurope.App.ViewModels
                     var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
                     LocalService userService = new LocalService();
                     userService.SetUser(user);
+                    await CoreMethods.PushPageModel<DetailViewModel>(user, false, true);
                 }
             }
         });

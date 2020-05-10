@@ -107,7 +107,8 @@ namespace WorldExplorerEurope.App.ViewModels
                         var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
                         UserService userService = new UserService();
                         userService.SetUser(user);
-                        await CoreMethods.PushPageModel<DetailViewModel>(user, false, true);
+                        await CoreMethods.PushPageModel<MyCountriesViewModel>(user, false, true);
+
                         ActivityIndicator = false;
                     }
                 }
@@ -116,7 +117,8 @@ namespace WorldExplorerEurope.App.ViewModels
         public ICommand RegisterCommand => new Command(
             async () =>
                 {
-                    await CoreMethods.PushPageModel<RegisterViewModel>(null, true, true);
+                    await CoreMethods.PushPageModel<RegisterViewModel>(true);
+
                 }
             );
     }

@@ -1,0 +1,170 @@
+﻿
+@{
+    ViewData["Title"] = "AddCountry";
+    Layout = "_Layout";
+}
+
+<h1>Add Country</h1>
+
+<form method="post" class="uk-form-stacked">
+
+    <p v-if="Errors.length">
+        <b>Please correct the following error(s):</b>
+        <ul>
+            <li class="uk-form-danger" v-for="error in Errors">{{ error }}</li>
+        </ul>
+    </p>
+    <div class="uk-margin uk-grid-small">
+        <label class="uk-form-label">Name:</label>
+        <div class="uk-form-controls uk-margin">
+            <input class="uk-input" type="text" placeholder="Enter Name" v-model="Name" />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">Capital:</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" type="text" placeholder="Enter Capital" v-model="Capital" />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">Population:</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" type="number" min="1" value="1" placeholder="Enter Population" v-model="Population" />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">Currency:</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" type="text" maxlength="20" placeholder="Enter currency" v-model="Currency" />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">Flag:</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" type="file" id="image" name="image" placeholder="Select file" />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">Description:</label>
+        <div class="uk-form-controls">
+            <textarea class="uk-input" placeholder="Give the new country a description" v-model="Description" rows="6" cols="80"></textarea>
+        </div>
+    </div>
+    <div class="uk-margin">
+        <div class="uk-form-controls">
+            <label><input class="uk-radio" type="radio" value="EUMember" v-model="IsEUMember" />EU Member?</label>
+        </div>
+    </div>
+</form>
+
+<div class="uk-button-group">
+    <a class="uk-button-primary" style="padding:10px;margin:10px" v-on:click="check()">Add</a>
+    <a class="uk-button-danger" style="padding:10px;margin:10px" asp-controller="Country" asp-action="Index">Go back</a>
+</div>
+
+@section Scripts{
+    <script>
+        var baseUrl = 'https://localhost:5001/api/countries';
+        var app = new Vue({
+            el: '#app',
+            data: {
+                Name: "",
+                Population: 0,
+                IsEUMember:"",
+                Capital: "",
+                Currency: "",
+                Description: "",
+                FlagUrl: "",
+                Files: [],
+                Errors: []
+            },
+
+            created: function () {
+                var token = sessionStorage.getItem('token');
+                if (token == null) {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
+            },
+
+            methods: {
+                check: function () {
+                    var self = this;
+
+                    self.CheckData = true;
+                    self.Errors = new Array();
+                    if (self.Name.length == 0) {
+                        self.CheckData = false;
+                        self.Errors.push("Enter a name");
+                    }
+                    if (self.Description.length == 0) {
+                        self.CheckData = false;
+                        self.Errors.push("Enter a description");
+                    }
+                    if (self.Capital.length == 0) {
+                        self.CheckData = false;
+                        self.Errors.push("Enter a capital");
+                    }
+                    if (self.Currency.length == 0) {
+                        self.CheckData = false;
+                        //Misschien niet politiek neutraal, maar een grapje mag wel eens verteld worden hé 😁
+                        self.Errors.push("Enter a currency. Do you really expect the government to hand out free stuff?? 🙄");
+                    }
+                    if (self.Population <= 0) {
+                        self.CheckData = false;
+                        self.Errors.push(`Population cannot be ${self.Population}. Please enter a value higher than 0.`);
+                    }
+                    if (self.CheckData == true) {
+                        self.uploadFlag()
+                    }
+                },
+
+                AddCountry: function() {
+                    var self = this;
+                    var country = {
+                        name: self.Name,
+                        flagUrl: self.FlagUrl,
+                        population: Number(self.Population),
+                        capital: self.Capital,
+                        currency: self.Currency,
+                        isEUMember: false,
+                        description: self.Description,
+                        favourites: new Array(),
+                        countryPhotoMemories: new Array(),
+                        countryWishlists: new Array(),
+                    };
+                    if (self.IsEUMember.length > 0) country.isEUMember = true;
+
+                    axios.post(`${baseUrl}/add`, country)
+                        .then(function (response) {
+                            alert("Country has been added succesfully");
+                            self.Name = "";
+                            self.Currency = "";
+                            self.Population = 0;
+                            self.Capital = "";
+                            self.Description = "";
+                            self.IsEUMember = "";
+                            self.FlagUrl = "";
+                            $('#image')[0].files = new Array();
+                        })
+                        .catch(function (error) {
+                            self.Errors.push(error.response.data);
+                        });
+                },
+                uploadFlag: function () {
+                    var self = this;
+                    formData = new FormData();
+                    formData.append('flag', $('#image')[0].files[0]);
+                    axios.post(`${baseUrl}/${self.Name}/flag`, formData, {headers: {"Content-Type": "multipart/form-data"}} )
+                        .then(function (response) {
+                            self.FlagUrl = response.data;
+                            self.AddCountry()
+                        })
+                        .catch(function (error) {
+                            self.Errors.push(error.response.data);
+                        });
+                }
+            }
+        });
+    </script>
+}
+

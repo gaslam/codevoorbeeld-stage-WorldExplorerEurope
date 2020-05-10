@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace WorldExplorerEurope.API.Repositories.Base
         /* <summary>
  Gets all instances of the current Entity.
  </summary> */
+        [AllowAnonymous]
         public IQueryable<Dto> GetAll()
         {
             return _worldExplorerContext.Set<T>().ProjectTo<Dto>(_mapper.ConfigurationProvider) ;

@@ -14,11 +14,13 @@
   <ItemGroup>
     <PackageReference Include="FreshMvvm" Version="3.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Plugin.MediaManager" Version="0.9.7" />
     <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
     <PackageReference Include="Syncfusion.Xamarin.SfDataForm" Version="18.1.0.44" />
     <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="18.1.0.44" />
     <PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer" Version="18.1.0.44" />
     <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
+    <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.4.0" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.SVG.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.2" />
@@ -47,6 +49,9 @@
     <EmbeddedResource Update="Pages\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Pages\MyCountriesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Pages\RegisterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -56,5 +61,9 @@
     <EmbeddedResource Update="Views\FooterView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Domain\Services\API\" />
   </ItemGroup>
 </Project>

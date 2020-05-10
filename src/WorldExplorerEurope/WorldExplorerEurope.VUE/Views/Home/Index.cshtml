@@ -53,7 +53,8 @@
                             if (response.data.isAdmin == false)
                                 self.Error = "You're not an admin. Please, do not hack my website 😥"
                             else
-                                console.log(response.data.email);
+                                sessionStorage.setItem('token', response.data.token);
+                                window.location.href = window.location.origin + '/Home';
                         })
                         .catch(function (error) {
                             self.Error = error.response.data

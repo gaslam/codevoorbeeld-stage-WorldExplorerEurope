@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WorldExplorerEurope.API.Domain.Models
 {
-    public class CountryWishlists : EntityBase
+    public class CountryWishlists
     {
         public Guid CountryId { get; set; }
         public Guid WishlistId { get; set; }

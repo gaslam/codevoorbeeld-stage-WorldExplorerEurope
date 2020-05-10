@@ -9,7 +9,6 @@ namespace WorldExplorerEurope.API.Domain.Models
     {
         public Guid UserId { get; set; }
 
-        [JsonIgnore]
         public ICollection<CountryWishlists> Wishlists { get; set; }
     }
 }

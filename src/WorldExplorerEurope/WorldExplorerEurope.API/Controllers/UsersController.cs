@@ -1,28 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using WorldExplorerEurope.API.Controllers.Base;
 using WorldExplorerEurope.API.Domain.DTO;
 using WorldExplorerEurope.API.Domain.Interfaces;
 using WorldExplorerEurope.API.Domain.Models;
+using WorldExplorerEurope.API.Domain.Services;
+using WorldExplorerEurope.API.Helpers;
 
 namespace WorldExplorerEurope.API.Controllers
 {
+    [Authorize]
     [Route("api/countries/[controller]")]
     [ApiController]
     public class UsersController : ControllerDtoCrudBase<UserDto, IMappingRepository<UserDto>>
     {
         private readonly IMappingRepository<UserDto> _userMappingRepo;
 
-        public UsersController(IMappingRepository<UserDto> userMappingRepo) : base(userMappingRepo)
+        private IUserService _userService;
+
+        public UsersController(IMappingRepository<UserDto> userMappingRepo, IOptions<AppSettings> appSettings, IUserService userService) : base(userMappingRepo)
         {
             _userMappingRepo = userMappingRepo;
+            _userService = userService;
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> login([FromBody]UserLoginDto userLoginDto)
         {
@@ -38,13 +51,16 @@ namespace WorldExplorerEurope.API.Controllers
             {
                 return BadRequest("Password Incorrect!!");
             }
+            user.Token = _userService.GenerateToken(user);
             return Ok(user);
         }
+
+        [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<IActionResult>addUser([FromBody]UserDto user)
+        public async Task<IActionResult> addUser([FromBody]UserDto user)
         {
             var existingUser = _userMappingRepo.GetAll().FirstOrDefault(m => m.Email == user.Email);
-            if(existingUser != null)
+            if (existingUser != null)
             {
                 return BadRequest("User already exists");
             }
@@ -54,6 +70,7 @@ namespace WorldExplorerEurope.API.Controllers
                 var hasher = new PasswordHasher<UserDto>();
                 user.Password = hasher.HashPassword(user, user.Password);
                 await _userMappingRepo.Add(user);
+                user.Token = _userService.GenerateToken(user);
                 return Ok(user);
             }
             catch
@@ -62,6 +79,7 @@ namespace WorldExplorerEurope.API.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("all")]
         public async Task<IActionResult> GetAllBasicUsers()
         {

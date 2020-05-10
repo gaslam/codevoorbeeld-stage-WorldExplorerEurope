@@ -12,6 +12,7 @@ using Plugin.Media;
 using Plugin.CurrentActivity;
 using Android.Support.V4.App;
 using Android;
+using MediaManager;
 
 namespace WorldExplorerEurope.App.Droid
 {

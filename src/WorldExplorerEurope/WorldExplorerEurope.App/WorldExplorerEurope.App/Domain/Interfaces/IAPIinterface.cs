@@ -10,7 +10,7 @@ namespace WorldExplorerEurope.API.Services.Interface
     {
         Task<string> Get(string url);
         Task<HttpResponseMessage> Post(string url, string json);
-        Task<HttpResponseMessage> Put(string url, string json);
-        Task<HttpResponseMessage> Delete(string url);
+        Task<HttpResponseMessage> Put(string url, string json, string token);
+        Task<HttpResponseMessage> Delete(string url, string token);
     }
 }

@@ -22,13 +22,23 @@ namespace WorldExplorerEurope.API.Repositories
         {
             var entity = _mapper.Map<Country>(country);
             _worldExplorerContext.Entry(entity).State = EntityState.Modified;
-            var countries = await _worldExplorerContext.CountryPhotoMemories.Where(m => m.CountryId == country.Id).ToListAsync();
+            var memories = await _worldExplorerContext.CountryPhotoMemories.Where(m => m.CountryId == country.Id).ToListAsync();
+            var favourites = await _worldExplorerContext.CountryFavourites.Where(m => m.CountryId == country.Id).ToListAsync();
+            var wishlists = await _worldExplorerContext.CountryWishlists.Where(m => m.CountryId == country.Id).ToListAsync();
 
             try
             {
-                _worldExplorerContext.CountryPhotoMemories.RemoveRange(countries);
+                _worldExplorerContext.CountryPhotoMemories.RemoveRange(memories);
+                await _worldExplorerContext.SaveChangesAsync();
+                _worldExplorerContext.CountryWishlists.RemoveRange(wishlists);
+                await _worldExplorerContext.SaveChangesAsync();
+                _worldExplorerContext.CountryFavourites.RemoveRange(favourites);
                 await _worldExplorerContext.SaveChangesAsync();
                 _worldExplorerContext.CountryPhotoMemories.AddRange(entity.Memories);
+                await _worldExplorerContext.SaveChangesAsync();
+                _worldExplorerContext.CountryFavourites.AddRange(entity.Favourites);
+                await _worldExplorerContext.SaveChangesAsync();
+                _worldExplorerContext.CountryWishlists.AddRange(entity.CountryWishlists);
                 await _worldExplorerContext.SaveChangesAsync();
             }
             catch
