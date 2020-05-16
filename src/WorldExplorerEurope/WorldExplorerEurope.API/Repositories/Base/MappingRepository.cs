@@ -14,6 +14,7 @@ using WorldExplorerEurope.API.Domain.Models;
 
 namespace WorldExplorerEurope.API.Repositories.Base
 {
+    [Authorize]
     public class MappingRepository<T, Dto> : Repository<T>, IMappingRepository<Dto> where T : EntityBase where Dto : DtoBaseId
     {
         protected readonly IMapper _mapper;
