@@ -134,7 +134,7 @@ namespace WorldExplorerEurope.API.Controllers
             }
         }
 
-        [HttpPost("{countryId}/{userId}/wishlist")]
+        [HttpPut("{countryId}/{userId}/wishlist")]
         public async Task<IActionResult> PostWishlist([FromRoute]Guid countryId, [FromRoute] Guid userId)
         {
             var entity = await _mappingRepository.GetById(countryId);
