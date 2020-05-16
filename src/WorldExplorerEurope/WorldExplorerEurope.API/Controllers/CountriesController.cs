@@ -46,7 +46,6 @@ namespace WorldExplorerEurope.API.Controllers
              }
          }*/
 
-        [Authorize(Roles = "Admin")]
         [HttpPost("add")]
         public async Task<IActionResult> AddCountry([FromBody]CountryDto country)
         {
@@ -67,7 +66,6 @@ namespace WorldExplorerEurope.API.Controllers
             }
         }
 
-        [Authorize]
         [HttpPost("{countryId}/{userId}/memory")]
         public async Task<IActionResult> PostPhotoMemory([FromRoute]Guid countryId, [FromRoute] Guid userId, IFormFile file)
         {
@@ -105,7 +103,6 @@ namespace WorldExplorerEurope.API.Controllers
             }
         }
 
-        [Authorize]
         [HttpPut("{countryId}/{userId}/favourites")]
         public async Task<IActionResult> PostFavourite([FromRoute]Guid countryId, [FromRoute] Guid userId)
         {
@@ -137,7 +134,6 @@ namespace WorldExplorerEurope.API.Controllers
             }
         }
 
-        [Authorize]
         [HttpPut("{countryId}/{userId}/wishlist")]
         public async Task<IActionResult> PostWishlist([FromRoute]Guid countryId, [FromRoute] Guid userId)
         {
@@ -169,7 +165,6 @@ namespace WorldExplorerEurope.API.Controllers
             }
         }
 
-        [Authorize]
         [HttpDelete("favourites/remove/{countryId}/{favouriteId}")]
         public async Task<IActionResult> DeleteFavourite([FromRoute] Guid countryId, Guid favouriteId)
         {
@@ -192,7 +187,7 @@ namespace WorldExplorerEurope.API.Controllers
             }
         }
 
-        [Authorize]
+
         [HttpDelete("wishlists/remove/{countryId}/{wishlistId}")]
         public async Task<IActionResult> DeleteWishlist([FromRoute] Guid countryId, Guid wishlistId)
         {
@@ -215,7 +210,6 @@ namespace WorldExplorerEurope.API.Controllers
             }
         }
 
-        [Authorize]
         [HttpPut("update")]
         public async Task<IActionResult> UpdateCountry([FromRoute]Guid countryId, [FromRoute] Guid userId, IFormFile file)
         {
@@ -236,7 +230,6 @@ namespace WorldExplorerEurope.API.Controllers
             }
         }
 
-        [Authorize (Roles = "Admin")]
         [HttpPost("/{countryName}flag")]
         public async Task<IActionResult> UploadFlag([FromRoute] string countryName, IFormFile flag)
         {
@@ -257,7 +250,6 @@ namespace WorldExplorerEurope.API.Controllers
             return Ok(url);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPut("{countryName}/flag/update")]
         public async Task<IActionResult> UpdateFlag([FromRoute] string countryName, IFormFile flag)
         {
