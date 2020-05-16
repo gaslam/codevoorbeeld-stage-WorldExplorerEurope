@@ -1,4 +1,5 @@
 ﻿using FreshMvvm;
+using Microsoft.AspNetCore.SignalR.Client;
 using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -10,7 +11,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -18,6 +21,7 @@ using WorldExplorerEurope.API.Services.Interface;
 using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Domain.Services.API;
+using WorldExplorerEurope.App.ViewModels.SignalR;
 using WorldExplorerEurope.App.ViewModels.Syncfusion;
 using WorldExplorerEurope.App.Views;
 using WorldExplorerEurope.Domain.Models;
@@ -35,11 +39,14 @@ namespace WorldExplorerEurope.App.ViewModels
         private IAPIinterface _apiService;
         private MainViewModel mainViewModel = new MainViewModel();
         private LocalService _localService;
+        private ExplorerHubViewModel explorerHubViewModel;
+        private HubConnection connection;
 
         public InfoViewModel()
         {
             this._apiService = new APIservice();
             _localService = new LocalService();
+            explorerHubViewModel = new ExplorerHubViewModel();
         }
 
         public async override void Init(object initData)
@@ -52,10 +59,25 @@ namespace WorldExplorerEurope.App.ViewModels
             ChangePageContentBasedOnUser();
             AddedInFavourites = $"Times added: {_country.favourites.Count}";
             AddedInWishlist = $"Times added: {_country.countryWishlists.Count}";
+            await explorerHubViewModel.Connect();
+            if (explorerHubViewModel.IsConnected == true)
+            {
+                connection = getHubConnection();
+                addConnectionEventHandler();
+            }
             base.Init(initData);
 
         }
 
+        private void addConnectionEventHandler()
+        {
+            connection.On<string>("addFavourites", (string country) =>
+            {
+                _country = JsonConvert.DeserializeObject<Country>(country);
+                updateFavouriteAndWishlistCount(_country);
+            });
+        }
+        
         private void ChangePageContentBasedOnUser()
         {
             var user = _localService.GetUser();
@@ -72,7 +94,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 LblFavouritesText = "Add to Favourites";
                 FavouriteCommand = AddFavouriteCommand;
             }
-            if(user != null) count2 = _country.countryWishlists.Where(m => m.UserId == user.Id).Count();
+            if (user != null) count2 = _country.countryWishlists.Where(m => m.UserId == user.Id).Count();
             if (count2 > 0)
             {
                 LblWishlistsText = "Remove from Wishlist";
@@ -243,6 +265,7 @@ namespace WorldExplorerEurope.App.ViewModels
             {
                 return new ObservableCollection<PhotoMemoryDto>();
             }
+            var memories = new ObservableCollection<PhotoMemoryDto>(_country.countryPhotoMemories.Where(m => m.UserId == user.Id).ToList());
             return new ObservableCollection<PhotoMemoryDto>(new ObservableCollection<PhotoMemoryDto>(_country.countryPhotoMemories.Where(m => m.UserId == user.Id).ToList()));
         }
 
@@ -400,6 +423,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 {
                     var user = _localService.GetUser();
                     ActivityIndicator = false;
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
                     return await client.PostAsync($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/memory", content);
                 }
             }
@@ -460,10 +484,10 @@ namespace WorldExplorerEurope.App.ViewModels
             {
                 var user = _localService.GetUser();
                 var favourite = _country.favourites.FirstOrDefault(m => m.UserId == user.Id);
-                await Remove($"{WorldExplorerAPIService.BaseUrl}/favourites/remove/{_country.Id}/{favourite.Id}");
+                await Remove($"{WorldExplorerAPIService.BaseUrl}/favourites/remove/{_country.Id}/{favourite.Id}", user.Token);
                 var countries = await _localService.GetCountriesAsync();
                 var updatedCountry = countries.FirstOrDefault(m => m.Name == _country.Name);
-                updateFavouriteAndWishlistCount(updatedCountry);
+                updateFavouriteAndWishlistCount(updatedCountry).Wait();
             });
 
         ICommand AddWishlistCommand => new Command(
@@ -475,14 +499,14 @@ namespace WorldExplorerEurope.App.ViewModels
                     await Add($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/wishlist");
                     var countries = await _localService.GetCountriesAsync();
                     var updatedCountry = countries.FirstOrDefault(m => m.Name == _country.Name);
-                    updateFavouriteAndWishlistCount(updatedCountry);
+                    updateFavouriteAndWishlistCount(updatedCountry).Wait();
                     return;
                 }
                 await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
                 await CoreMethods.PushPageModel<LoginViewModel>(true);
             });
 
-        private void updateFavouriteAndWishlistCount(Country country)
+        private async Task updateFavouriteAndWishlistCount(Country country)
         {
             _country = country;
             AddedInWishlist = $"Times added: {_country.countryWishlists.Count}";
@@ -495,7 +519,7 @@ namespace WorldExplorerEurope.App.ViewModels
             {
                 var user = _localService.GetUser();
                 var wishlist = _country.countryWishlists.SingleOrDefault(m => m.UserId == user.Id);
-                await Remove($"{WorldExplorerAPIService.BaseUrl}/wishlists/remove/{_country.Id}/{wishlist.Id}");
+                await Remove($"{WorldExplorerAPIService.BaseUrl}/wishlists/remove/{_country.Id}/{wishlist.Id}", user.Token);
                 var countries = await _localService.GetCountriesAsync();
                 var updatedCountry = countries.FirstOrDefault(m => m.Name == _country.Name);
                 updateFavouriteAndWishlistCount(updatedCountry);
@@ -503,41 +527,33 @@ namespace WorldExplorerEurope.App.ViewModels
 
         private async Task Add(string url)
         {
-            using (var client = new HttpClient())
+            var user = _localService.GetUser();
+            string rawJSON = JsonConvert.SerializeObject(_country);
+            var response = await _apiService.Put(url, rawJSON, user.Token);
+            if (!response.IsSuccessStatusCode) await App.Current.MainPage.DisplayAlert("Error", "Cannot perform action.", "OK");
+            else
             {
-                var user = _localService.GetUser();
-                string rawJSON = JsonConvert.SerializeObject(_country);
-                var response = await client.PostAsync(url, new StringContent(rawJSON, Encoding.UTF8, "application/json"));
-                if (!response.IsSuccessStatusCode) await App.Current.MainPage.DisplayAlert("Error", "Cannot perform action.", "OK");
-                else
-                {
-                    string responseContent = await response.Content.ReadAsStringAsync();
-                    var country = JsonConvert.DeserializeObject<Country>(responseContent);
-                    _country = country;
-                }
+                string responseContent = await response.Content.ReadAsStringAsync();
+                var country = JsonConvert.DeserializeObject<Country>(responseContent);
+                await explorerHubViewModel.UpdateLists(country);
             }
         }
 
-        private async Task Remove(string url)
+        private HubConnection getHubConnection()
         {
-            using (var client = new HttpClient())
+            return explorerHubViewModel.GetHub();
+        }
+
+        private async Task Remove(string url, string token)
+        {
+            var response = await _apiService.Delete(url, token);
+            if (!response.IsSuccessStatusCode) await App.Current.MainPage.DisplayAlert("Error", "Cannot perform action.", "OK");
+            else
             {
-                var user = _localService.GetUser();
-                string rawJSON = JsonConvert.SerializeObject(_country);
-                HttpRequestMessage httpRequestMessage = new HttpRequestMessage()
-                {
-                    Content = new StringContent(rawJSON, Encoding.UTF8, "application/json"),
-                    Method = HttpMethod.Delete,
-                    RequestUri = new Uri(url)
-                };
-                var response = await client.SendAsync(httpRequestMessage);
-                if (!response.IsSuccessStatusCode) await App.Current.MainPage.DisplayAlert("Error", "Cannot perform action.", "OK");
-                else
-                {
-                    string responseContent = await response.Content.ReadAsStringAsync();
-                    var country = JsonConvert.DeserializeObject<Country>(responseContent);
-                    _country = country;
-                }
+                string responseContent = await response.Content.ReadAsStringAsync();
+                var country = JsonConvert.DeserializeObject<Country>(responseContent);
+                _country = country;
+                await explorerHubViewModel.UpdateLists(_country);
             }
         }
 

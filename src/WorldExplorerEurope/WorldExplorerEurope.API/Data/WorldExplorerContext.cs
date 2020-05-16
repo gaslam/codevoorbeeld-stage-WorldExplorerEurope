@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -206,7 +205,7 @@ namespace WorldExplorerEurope.API.Data
                 BirthDate = Convert.ToDateTime("12/05/1998"),
                 Email = "gaspard.lammertyn@student.howest.be",
                 Nationality = "Belgium",
-                IsAdmin = true
+                Role = "Admin"
             };
             user.Password = hasher.HashPassword(user, "t}F87)8GBaj<");
 

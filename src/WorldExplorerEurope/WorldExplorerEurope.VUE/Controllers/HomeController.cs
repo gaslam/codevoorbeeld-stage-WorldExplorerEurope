@@ -41,41 +41,34 @@ namespace WorldExplorerEurope.VUE.Controllers
         {
             return View();
         }
+
         [Route("UserDetails/{id}")]
         public async Task<IActionResult> UserDetails(Guid id)
         {
-            try
+            var userDetails = await _apiService.Get($"{baseUrl}/users/{id}");
+            var user = JsonConvert.DeserializeObject<UserViewModel>(userDetails);
+            if (user == null)
             {
-                var userDetails = await _apiService.Get($"{baseUrl}/users/{id}");
-                var user = JsonConvert.DeserializeObject<UserViewModel>(userDetails);
-                if (user == null)
-                {
-                    return Content("User not found");
-                }
-                return View(user);
+                return Content("User not found");
             }
-            catch
-            {
-                return Content("You have no access to this page.");
-            }
+            return View(user);
         }
 
         [Route("EditUser/{id}")]
         public IActionResult EditUser(Guid id)
         {
-            try
-            {
                 return View(id);
-            }
-            catch
-            {
-                return Content("You have no access to this page.");
-            }
         }
 
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        [Route("NotAllowed")]
+        public IActionResult NotAllowed()
+        {
+            return Content("You have no access to this page.");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

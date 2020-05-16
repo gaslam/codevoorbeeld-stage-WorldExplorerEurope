@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using WorldExplorerEurope.API.Services.Interface;
@@ -16,13 +17,13 @@ namespace WorldExplorerEurope.App.Domain.Services
         {
             try
             {
-                using (var webClient = new WebClient())
+                using (var webClient = new HttpClient())
                 {
-                    string download = webClient.DownloadString(url);
-                    return download;
+                    var download = webClient.GetStringAsync(url).Result;
+                    return download.ToString();
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 return null;
             }
@@ -45,12 +46,13 @@ namespace WorldExplorerEurope.App.Domain.Services
             }
         }
 
-        public async Task<HttpResponseMessage> Delete(string url)
+        public async Task<HttpResponseMessage> Delete(string url, string token)
         {
             try
             {
                 using (var httpClient = new HttpClient())
                 {
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                     HttpResponseMessage responseMessage = await httpClient.DeleteAsync(url);
                     return responseMessage;
                 }
@@ -60,12 +62,13 @@ namespace WorldExplorerEurope.App.Domain.Services
                 return null;
             }
         }
-        public async Task<HttpResponseMessage> Put(string url, string json)
+        public async Task<HttpResponseMessage> Put(string url, string json, string token)
         {
             try
             {
                 using (var httpClient = new HttpClient())
                 {
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
                     HttpResponseMessage responseMessage = await httpClient.PutAsync(url, content);
                     return responseMessage;

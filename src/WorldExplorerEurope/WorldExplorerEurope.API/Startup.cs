@@ -21,6 +21,11 @@ using Microsoft.OpenApi.Models;
 using WorldExplorerEurope.API.Domain.Services;
 using WorldExplorerEurope.API.Services;
 using Microsoft.AspNetCore.Http;
+using WorldExplorerEurope.API.Domain.Helpers;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using WorldExplorerEurope.API.Hubs;
 
 namespace WorldExplorerEurope.API
 {
@@ -36,7 +41,6 @@ namespace WorldExplorerEurope.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<WorldExplorerContext>(options => options
                 .UseSqlServer(Configuration.GetConnectionString("WorldExplorerService")));
 
@@ -51,6 +55,32 @@ namespace WorldExplorerEurope.API
             services.AddScoped<IMemoryPhotoService, MemoryService<Country>>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 
             services.AddSwaggerGen(c =>
@@ -58,6 +88,7 @@ namespace WorldExplorerEurope.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WorldExplorer API", Version = "v1" });
             });
             services.AddCors();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,17 +104,21 @@ namespace WorldExplorerEurope.API
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseRouting();
-            app.UseAuthorization();
             app.UseCors(builder => builder.AllowAnyOrigin()
 .AllowAnyHeader()
 .AllowAnyMethod());
-            app.UseEndpoints(endpoints =>
-            endpoints.MapControllers());
 
             app.UseStaticFiles();
 
             //app.UseHttpsRedirection();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<ExplorerHub>("/ExplorerHub");
+            });
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -91,6 +126,11 @@ namespace WorldExplorerEurope.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "WorldExplorer API");
                 c.RoutePrefix = string.Empty;
             });
+
+            /*app.UseSignalR(routes =>
+            {
+                routes.MapHub<ExplorerHub>("/ExplorerHub");
+            });*/
         }
     }
 }

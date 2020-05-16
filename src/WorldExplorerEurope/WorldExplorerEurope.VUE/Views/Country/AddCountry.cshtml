@@ -79,6 +79,13 @@
                 Errors: []
             },
 
+            created: function () {
+                var token = sessionStorage.getItem('token');
+                if (token == null) {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
+            },
+
             methods: {
                 check: function () {
                     var self = this;

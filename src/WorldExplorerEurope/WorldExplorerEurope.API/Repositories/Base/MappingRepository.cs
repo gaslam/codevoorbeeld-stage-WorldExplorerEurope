@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using WorldExplorerEurope.API.Domain.Models;
 
 namespace WorldExplorerEurope.API.Repositories.Base
 {
+    [Authorize]
     public class MappingRepository<T, Dto> : Repository<T>, IMappingRepository<Dto> where T : EntityBase where Dto : DtoBaseId
     {
         protected readonly IMapper _mapper;
@@ -25,6 +27,7 @@ namespace WorldExplorerEurope.API.Repositories.Base
         /* <summary>
  Gets all instances of the current Entity.
  </summary> */
+        [AllowAnonymous]
         public IQueryable<Dto> GetAll()
         {
             return _worldExplorerContext.Set<T>().ProjectTo<Dto>(_mapper.ConfigurationProvider) ;

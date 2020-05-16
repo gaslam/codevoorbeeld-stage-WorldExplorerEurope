@@ -37,33 +37,19 @@ namespace WorldExplorerEurope.VUE.Controllers
         [Route("CountryDetails/{id}")]
         public async Task<IActionResult> CountryDetails(Guid id)
         {
-            try
+            var countryDetails = await _apiService.Get($"{baseUrl}/{id}");
+            var country = JsonConvert.DeserializeObject<CountryViewModel>(countryDetails);
+            if (country == null)
             {
-                var countryDetails = await _apiService.Get($"{baseUrl}/{id}");
-                var country = JsonConvert.DeserializeObject<CountryViewModel>(countryDetails);
-                if (country == null)
-                {
-                    return Content("Country not found");
-                }
-                return View(country);
+                return Content("Country not found");
             }
-            catch
-            {
-                return Content("You have no access to this page.");
-            }
+            return View(country);
         }
 
         [Route("EditCountry/{id}")]
         public IActionResult EditCountry(Guid id)
         {
-            try
-            {
-                return View(id);
-            }
-            catch
-            {
-                return Content("You have no access to this page.");
-            }
+            return View(id);
         }
 
         public IActionResult Popular()

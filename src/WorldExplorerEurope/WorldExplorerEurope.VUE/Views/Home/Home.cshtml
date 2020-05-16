@@ -48,8 +48,14 @@
             },
 
             created: function () {
-                var self = this;
-                self.GetData();
+                var token = sessionStorage.getItem('token');
+                if (token != null) {
+                    var self = this;
+                    self.GetData();
+                }
+                else {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
             },
 
             methods: {

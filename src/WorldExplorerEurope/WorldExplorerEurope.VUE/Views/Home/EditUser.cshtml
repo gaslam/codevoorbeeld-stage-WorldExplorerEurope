@@ -72,8 +72,14 @@
             },
 
             created: function () {
-                var self = this;
-                self.GetUser();
+                var token = sessionStorage.getItem('token');
+                if (token != null) {
+                    var self = this;
+                    self.GetUser();
+                }
+                else {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
                 
             },
 
@@ -155,7 +161,7 @@
                     axios.put(`${baseUrl}/users/update/${self.Id}`, user)
                         .then(function (response) {
                             alert("User has been updated succesfully");
-                            window.location.href = window.location.origin + '/Home';
+                            window.location.href = window.location.origin + '/NotAllowed';
                         })
                         .catch(function (error) {
                             self.Errors.push(error.response.data);

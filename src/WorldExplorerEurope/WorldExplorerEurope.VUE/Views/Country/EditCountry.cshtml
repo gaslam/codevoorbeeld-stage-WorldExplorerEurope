@@ -82,8 +82,14 @@
             },
 
             created: function () {
-                var self = this;
-                self.GetCountry();
+                var token = sessionStorage.getItem('token');
+                if (token != null) {
+                    var self = this;
+                    self.GetCountry();
+                }
+                else {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
                 
             },
 

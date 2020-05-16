@@ -9,13 +9,13 @@
     <div class="uk-margin uk-grid-small uk-form-">
         <label class="uk-form-label">Firstname:</label>
         <div class="uk-form-controls uk-margin">
-            <input class="uk-input" type="text" placeholder="Enter firstname" asp-for="@Model.FirstName" disabled/>
+            <input class="uk-input" type="text" placeholder="Enter firstname" asp-for="@Model.FirstName" disabled />
         </div>
     </div>
     <div class="uk-margin">
         <label class="uk-form-label">Lastname:</label>
         <div class="uk-form-controls">
-            <input class="uk-input" type="text" placeholder="Enter lastname" asp-for="@Model.LastName" disabled/>
+            <input class="uk-input" type="text" placeholder="Enter lastname" asp-for="@Model.LastName" disabled />
         </div>
     </div>
     <div class="uk-margin">
@@ -38,7 +38,7 @@
     </div>
     <div class="uk-margin">
         <div class="uk-form-controls">
-            <label>        @Html.RadioButtonFor(model => model.IsAdmin, Model.IsAdmin, new { @Class = "uk-radio" })Admin</label>
+            <label>        @Html.RadioButtonFor(model => model.Role, Model.Role, new { @Class = "uk-radio" })Admin</label>
         </div>
     </div>
 </form>
@@ -47,4 +47,20 @@
     <a class="uk-button-primary" style="padding:10px;margin:10px" asp-controller="Home" asp-action="EditUser" asp-route-id="@Model.Id">Edit</a>
     <a class="uk-button-danger" style="padding:10px;margin:10px" asp-controller="Home" asp-action="Home">Go back</a>
 </div>
+
+@section Scripts{
+    <script>
+        var app = new Vue({
+            el: '#app',
+            created: function () {
+                var token = sessionStorage.getItem('token');
+                if (token == null) {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
+            },
+        }
+        );
+
+    </script>
+}
 

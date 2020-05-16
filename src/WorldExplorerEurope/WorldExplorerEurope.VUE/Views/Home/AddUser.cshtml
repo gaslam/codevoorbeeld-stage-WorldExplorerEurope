@@ -87,8 +87,10 @@
             },
 
             created: function () {
-                var self = this;
-                self.title = "Dashboard";
+                var token = sessionStorage.getItem('token');
+                if (token == null) {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
             },
 
             methods: {

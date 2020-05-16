@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 using WorldExplorerEurope.API.Domain.DTO.Bases;
 using WorldExplorerEurope.API.Domain.Models;
@@ -15,6 +16,7 @@ namespace WorldExplorerEurope.API.Domain.DTO
         public string Email { get; set; }
         public DateTime BirthDate { get; set; }
         public string Password { get; set; }
-        public bool IsAdmin { get; set; }
+        public string Token { get; set; }
+        public string Role { get; set; }
     }
 }

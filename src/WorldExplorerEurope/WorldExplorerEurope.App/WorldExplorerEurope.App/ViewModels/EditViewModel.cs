@@ -50,6 +50,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Nationality = user.Nationality,
+                Token = user.Token
             };
             return userEdit;
         }
@@ -92,7 +93,7 @@ namespace WorldExplorerEurope.App.ViewModels
             if (DataForm.Validate() == true)
             {
                 ActivityIndicator = true;
-                var request = await _apiService.Put($"{WorldExplorerAPIService.BaseUrl}/users/update/{editUser.Id}", JsonConvert.SerializeObject(editUser));
+                var request = await _apiService.Put($"{WorldExplorerAPIService.BaseUrl}/users/update/{editUser.Id}", JsonConvert.SerializeObject(editUser), user.Token);
                 //if (request == null) await App.Current.MainPage.DisplayAlert("Service not reachable!!", "Cannot connect to WorldExplorerService.\n\nCheck your wifi settings or try later to connect!!", "OK");
                 if (!request.IsSuccessStatusCode)
                 {

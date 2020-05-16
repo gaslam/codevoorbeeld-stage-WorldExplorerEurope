@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using WorldExplorerEurope.API.Domain.Interfaces;
 
 namespace WorldExplorerEurope.API.Controllers.Base
 {
+    [Authorize]
     public class ControllerDtoCrudBase<Dto, Mr> : ControllerBase where Dto : DtoBaseId where Mr : IMappingRepository<Dto>
     {
         protected Mr _mappingRepository;
@@ -17,6 +19,7 @@ namespace WorldExplorerEurope.API.Controllers.Base
             _mappingRepository = mappingRepository;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public virtual async Task<IActionResult> ListAll()
         {
@@ -24,6 +27,7 @@ namespace WorldExplorerEurope.API.Controllers.Base
             return Ok(dto);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public virtual async Task<IActionResult> GetById([FromRoute]Guid id)
         {
@@ -36,6 +40,7 @@ namespace WorldExplorerEurope.API.Controllers.Base
             return Ok(dto);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Add([FromBody]Dto dto)
         {
@@ -80,6 +85,7 @@ namespace WorldExplorerEurope.API.Controllers.Base
             return Ok(dto);
         }
 
+        [Authorize]
         [HttpDelete("delete/{id}")]
         public virtual async Task<IActionResult> Delete([FromRoute]Guid id)
         {

@@ -9,13 +9,13 @@
     <div class="uk-margin uk-grid-small uk-form-">
         <label class="uk-form-label">Name:</label>
         <div class="uk-form-controls uk-margin">
-            <input class="uk-input" type="text" asp-for="@Model.Name" disabled/>
+            <input class="uk-input" type="text" asp-for="@Model.Name" disabled />
         </div>
     </div>
     <div class="uk-margin">
         <label class="uk-form-label">Capital:</label>
         <div class="uk-form-controls">
-            <input class="uk-input" type="text" asp-for="@Model.Capital" disabled/>
+            <input class="uk-input" type="text" asp-for="@Model.Capital" disabled />
         </div>
     </div>
     <div class="uk-margin">
@@ -48,3 +48,18 @@
     <a class="uk-button-danger" style="padding:10px;margin:10px" asp-controller="Country" asp-action="Index">Go back</a>
 </div>
 
+@section Scripts{
+    <script>
+        var app = new Vue({
+            el: '#app',
+            created: function () {
+                var token = sessionStorage.getItem('token');
+                if (token == null) {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
+            },
+        }
+        );
+
+    </script>
+}
