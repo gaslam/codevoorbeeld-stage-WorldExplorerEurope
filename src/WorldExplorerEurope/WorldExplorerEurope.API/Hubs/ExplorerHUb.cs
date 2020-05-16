@@ -9,9 +9,9 @@ namespace WorldExplorerEurope.API.Hubs
 {
     public class ExplorerHub : Hub
     {
-        public async Task AddFavourite(object favourite)
+        public async Task AddFavourites(string favourite)
         {
-            await Clients.All.SendAsync("addFavourite", favourite);
+            await Clients.All.SendAsync("addFavourites", favourite);
         }
     }
 }

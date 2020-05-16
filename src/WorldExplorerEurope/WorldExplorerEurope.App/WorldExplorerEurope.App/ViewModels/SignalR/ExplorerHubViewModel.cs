@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,8 +12,8 @@ namespace WorldExplorerEurope.App.ViewModels.SignalR
 {
     public class ExplorerHubViewModel
     {
-        public static bool IsConnected = false;
-        HubConnection hubConnection;
+        public bool IsConnected = false;
+        private static HubConnection hubConnection;
         public ExplorerHubViewModel()
         {
 
@@ -38,8 +39,8 @@ namespace WorldExplorerEurope.App.ViewModels.SignalR
         {
             try
             {
-                object countryToSend = (object)country;
-                await hubConnection.InvokeAsync("addFavourite", countryToSend);
+                string countryToSend = JsonConvert.SerializeObject(country);
+                await hubConnection.InvokeAsync("addFavourites", countryToSend);
                 IsConnected = true;
             }
             catch (Exception ex)
@@ -47,6 +48,11 @@ namespace WorldExplorerEurope.App.ViewModels.SignalR
                 // send failed
                 IsConnected = false;
             }
+        }
+
+        public HubConnection GetHub()
+        {
+            return hubConnection;
         }
     }
 }

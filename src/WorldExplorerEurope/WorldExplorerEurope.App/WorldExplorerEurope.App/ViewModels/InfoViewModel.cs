@@ -1,4 +1,5 @@
 ﻿using FreshMvvm;
+using Microsoft.AspNetCore.SignalR.Client;
 using Newtonsoft.Json;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
@@ -39,6 +40,7 @@ namespace WorldExplorerEurope.App.ViewModels
         private MainViewModel mainViewModel = new MainViewModel();
         private LocalService _localService;
         private ExplorerHubViewModel explorerHubViewModel;
+        private HubConnection connection;
 
         public InfoViewModel()
         {
@@ -58,10 +60,24 @@ namespace WorldExplorerEurope.App.ViewModels
             AddedInFavourites = $"Times added: {_country.favourites.Count}";
             AddedInWishlist = $"Times added: {_country.countryWishlists.Count}";
             await explorerHubViewModel.Connect();
+            if (explorerHubViewModel.IsConnected == true)
+            {
+                connection = getHubConnection();
+                addConnectionEventHandler();
+            }
             base.Init(initData);
 
         }
 
+        private void addConnectionEventHandler()
+        {
+            connection.On<string>("addFavourites", (string country) =>
+            {
+                _country = JsonConvert.DeserializeObject<Country>(country);
+                updateFavouriteAndWishlistCount(_country);
+            });
+        }
+        
         private void ChangePageContentBasedOnUser()
         {
             var user = _localService.GetUser();
@@ -457,7 +473,6 @@ namespace WorldExplorerEurope.App.ViewModels
                     var countries = await _localService.GetCountriesAsync();
                     var updatedCountry = countries.FirstOrDefault(m => m.Name == _country.Name);
                     updateFavouriteAndWishlistCount(updatedCountry);
-                    await explorerHubViewModel.UpdateLists(updatedCountry);
                     return;
                 }
                 await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
@@ -472,7 +487,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 await Remove($"{WorldExplorerAPIService.BaseUrl}/favourites/remove/{_country.Id}/{favourite.Id}", user.Token);
                 var countries = await _localService.GetCountriesAsync();
                 var updatedCountry = countries.FirstOrDefault(m => m.Name == _country.Name);
-                updateFavouriteAndWishlistCount(updatedCountry);
+                updateFavouriteAndWishlistCount(updatedCountry).Wait();
             });
 
         ICommand AddWishlistCommand => new Command(
@@ -484,14 +499,14 @@ namespace WorldExplorerEurope.App.ViewModels
                     await Add($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/wishlist");
                     var countries = await _localService.GetCountriesAsync();
                     var updatedCountry = countries.FirstOrDefault(m => m.Name == _country.Name);
-                    updateFavouriteAndWishlistCount(updatedCountry);
+                    updateFavouriteAndWishlistCount(updatedCountry).Wait();
                     return;
                 }
                 await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
                 await CoreMethods.PushPageModel<LoginViewModel>(true);
             });
 
-        private void updateFavouriteAndWishlistCount(Country country)
+        private async Task updateFavouriteAndWishlistCount(Country country)
         {
             _country = country;
             AddedInWishlist = $"Times added: {_country.countryWishlists.Count}";
@@ -520,8 +535,13 @@ namespace WorldExplorerEurope.App.ViewModels
             {
                 string responseContent = await response.Content.ReadAsStringAsync();
                 var country = JsonConvert.DeserializeObject<Country>(responseContent);
-                _country = country;
+                await explorerHubViewModel.UpdateLists(country);
             }
+        }
+
+        private HubConnection getHubConnection()
+        {
+            return explorerHubViewModel.GetHub();
         }
 
         private async Task Remove(string url, string token)
@@ -533,6 +553,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 string responseContent = await response.Content.ReadAsStringAsync();
                 var country = JsonConvert.DeserializeObject<Country>(responseContent);
                 _country = country;
+                await explorerHubViewModel.UpdateLists(_country);
             }
         }
 

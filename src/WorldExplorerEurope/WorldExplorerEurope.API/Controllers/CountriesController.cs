@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ using WorldExplorerEurope.API.Domain.Services;
 
 namespace WorldExplorerEurope.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CountriesController : ControllerDtoCrudBase<CountryDto, IMappingRepository<CountryDto>>
@@ -101,7 +103,7 @@ namespace WorldExplorerEurope.API.Controllers
             }
         }
 
-        [HttpPost("{countryId}/{userId}/favourites")]
+        [HttpPut("{countryId}/{userId}/favourites")]
         public async Task<IActionResult> PostFavourite([FromRoute]Guid countryId, [FromRoute] Guid userId)
         {
             var entity = await _mappingRepository.GetById(countryId);
