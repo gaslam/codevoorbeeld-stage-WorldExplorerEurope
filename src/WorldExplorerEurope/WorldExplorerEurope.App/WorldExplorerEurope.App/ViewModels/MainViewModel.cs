@@ -120,6 +120,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 }
                 catch
                 {
+                    ActivityIndicator = false;
                     await App.Current.MainPage.DisplayAlert("Error", "Cannot get your location.", "Ok");
                 }
             });
