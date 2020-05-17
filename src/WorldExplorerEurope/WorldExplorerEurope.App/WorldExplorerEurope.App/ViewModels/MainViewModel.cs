@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Net.Http;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -63,7 +65,7 @@ namespace WorldExplorerEurope.App.ViewModels
 
         }
 
-        public static Country selectedCountry;
+        public Country selectedCountry;
 
         public void setSelectedCountry(Country country)
         {
@@ -106,6 +108,12 @@ namespace WorldExplorerEurope.App.ViewModels
                 await CoreMethods.PushPageModel<InfoViewModel>(selectedCountry, false, true);
                 ActivityIndicator = false;
             });
+
+        public List<Country> Filter(string country)
+        {
+            return countries.Where(m => m.Name.ToLower().Contains(country.ToLower())).ToList();
+        }
+
         public ICommand LocationCommand => new Command(
             async () =>
             {

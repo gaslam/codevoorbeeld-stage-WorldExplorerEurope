@@ -229,7 +229,7 @@ namespace WorldExplorerEurope.App.Domain.Services
             {
                 using (var webclient = new WebClient())
                 {
-                    string ApiUrl = $"https://api.opencagedata.com/geocode/v1/json?q={lat}+{lng}&key=(PLACE_KEY_HERE!!!)";
+                    string ApiUrl = $"https://api.opencagedata.com/geocode/v1/json?q={lat}+{lng}&key=d41c893d59b24581ac5b1596decc612b";
                     string rawJSON = webclient.DownloadString(ApiUrl);
                     var deviceCountry = JsonConvert.DeserializeObject<Rootobject>(rawJSON);
                     LocalService localService = new LocalService();
