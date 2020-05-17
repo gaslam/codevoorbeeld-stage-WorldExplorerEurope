@@ -25,6 +25,7 @@ using WorldExplorerEurope.API.Domain.Helpers;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using WorldExplorerEurope.API.Hubs;
 
 namespace WorldExplorerEurope.API
 {
@@ -87,6 +88,7 @@ namespace WorldExplorerEurope.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WorldExplorer API", Version = "v1" });
             });
             services.AddCors();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -112,7 +114,11 @@ namespace WorldExplorerEurope.API
 
             //app.UseHttpsRedirection();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<ExplorerHub>("/ExplorerHub");
+            });
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -120,6 +126,11 @@ namespace WorldExplorerEurope.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "WorldExplorer API");
                 c.RoutePrefix = string.Empty;
             });
+
+            /*app.UseSignalR(routes =>
+            {
+                routes.MapHub<ExplorerHub>("/ExplorerHub");
+            });*/
         }
     }
 }
