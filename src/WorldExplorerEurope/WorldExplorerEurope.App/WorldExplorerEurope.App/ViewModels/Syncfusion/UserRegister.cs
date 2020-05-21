@@ -74,7 +74,6 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
             }
             set
             {
-                value = DateTime.Now.Date.AddYears(-12);
                 birthdate = value;
                 RaisePropertyChanged(nameof(BirthDate));
             }
@@ -134,7 +133,7 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
 
             if (propertyName.Equals(nameof(FirstName)) || propertyName.Equals(nameof(LastName)))
             {
-                if ((string.IsNullOrEmpty(FirstName) || string.IsNullOrWhiteSpace(FirstName)))
+                if ((string.IsNullOrEmpty(FirstName) || string.IsNullOrWhiteSpace(LastName)))
                     list.Add("Please, enter a valid name");
             }
 
@@ -153,12 +152,12 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
 
             if (propertyName.Equals("Password"))
             {
-                if (string.IsNullOrEmpty(Password) || string.IsNullOrWhiteSpace(Password))
+                if (string.IsNullOrEmpty(Password))
                     list.Add("Please, enter a password");
 
-                if (!Regex.IsMatch(Password, "^.*(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*$"))
+                if (!string.IsNullOrEmpty(Password) && !Regex.IsMatch(Password, "^.*(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*$"))
                     list.Add("Password must contain at least 1 Upper/lower case letter and a digit.");
-                if (Password.Length < 10)
+                if (Password != null && Password.Length < 10)
                     list.Add("Password must at least have 10 characters.");
 
                 if (PasswordRepeat != Password && PasswordRepeat != null)

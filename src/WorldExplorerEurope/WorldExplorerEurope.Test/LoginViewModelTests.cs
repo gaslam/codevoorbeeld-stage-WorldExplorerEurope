@@ -1,11 +1,16 @@
-﻿using FakeItEasy;
+﻿using AutoMapper;
+using FakeItEasy;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Syncfusion.DataSource.Extensions;
 using Syncfusion.XForms.DataForm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using WorldExplorerEurope.API;
+using WorldExplorerEurope.API.Data;
 using WorldExplorerEurope.App.ViewModels;
 using WorldExplorerEurope.ViewModels.Syncfusion;
 using Xamarin.Forms;

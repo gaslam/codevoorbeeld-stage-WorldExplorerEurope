@@ -36,7 +36,10 @@ namespace WorldExplorerEurope.App.ViewModels
             this.newUser = new UserRegister();
             DataForm = new SfDataForm();
             DataForm.DataObject = newUser;
+            test = false;
         }
+
+        public bool test;
 
         private UserRegister user;
         public UserRegister newUser
@@ -76,7 +79,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 var request = await _apiService.Post($"{WorldExplorerAPIService.BaseUrl}/users/register", JsonConvert.SerializeObject(createdUser));
                 //if (request == null) await App.Current.MainPage.DisplayAlert("Service not reachable!!", "Cannot connect to WorldExplorerService.\n\nCheck your wifi settings or try later to connect!!", "OK");
                 if (!request.IsSuccessStatusCode) newUser.ErrorMessage = await request.Content.ReadAsStringAsync();
-                else
+                else if(!test)
                 {
                     var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
                     LocalService userService = new LocalService();

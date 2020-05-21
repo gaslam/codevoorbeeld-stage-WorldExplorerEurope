@@ -9,6 +9,8 @@
   <ItemGroup>
     <PackageReference Include="FakeItEasy" Version="6.0.1" />
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="moq" Version="4.14.1" />
     <PackageReference Include="xunit" Version="2.4.0" />
@@ -17,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WorldExplorerEurope.API\WorldExplorerEurope.API.csproj" />
     <ProjectReference Include="..\WorldExplorerEurope.App\WorldExplorerEurope.App\WorldExplorerEurope.App.csproj" />
   </ItemGroup>
 
