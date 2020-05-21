@@ -22,7 +22,7 @@ namespace WorldExplorerEurope.App.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         private IAPIinterface _apiService;
-        public EditViewModel(User user)
+        public EditViewModel()
         {
             _apiService = new APIservice();
         }
@@ -38,6 +38,8 @@ namespace WorldExplorerEurope.App.ViewModels
             ActivityIndicator = false;
             base.Init(initData);
         }
+
+        public bool test = false;
 
         private User editUser;
 
@@ -100,7 +102,7 @@ namespace WorldExplorerEurope.App.ViewModels
                     EditedUser.ErrorMessage = await request.Content.ReadAsStringAsync();
                     ActivityIndicator = false;
                 }
-                else
+                else if(test ==false)
                 {
                     var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
                     UserService userService = new UserService();

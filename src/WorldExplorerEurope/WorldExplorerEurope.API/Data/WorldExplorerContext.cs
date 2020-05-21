@@ -207,11 +207,23 @@ namespace WorldExplorerEurope.API.Data
                 Nationality = "Belgium",
                 Role = "Admin"
             };
+
+            User user2 = new User
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000001"),
+                FirstName = "test",
+                LastName = "test",
+                BirthDate = Convert.ToDateTime("12/05/1998"),
+                Email = "test.test@student.howest.be",
+                Nationality = "Belgium",
+                Role = "Admin"
+            };
             user.Password = hasher.HashPassword(user, "t}F87)8GBaj<");
 
             modelBuilder.Entity<User>().ToTable("Users")
                 .HasData(
-                    user
+                    user,
+                    user2
                 );
 
         }
