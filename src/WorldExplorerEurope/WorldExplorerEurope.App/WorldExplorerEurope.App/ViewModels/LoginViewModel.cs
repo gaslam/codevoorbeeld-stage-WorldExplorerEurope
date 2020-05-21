@@ -81,6 +81,8 @@ namespace WorldExplorerEurope.App.ViewModels
             }
         }
 
+        //only for tests
+        public bool test = false;
 
         public ICommand LoginCommand => new Command(
 
@@ -102,7 +104,7 @@ namespace WorldExplorerEurope.App.ViewModels
                         newUser.ErrorMessage = await request.Content.ReadAsStringAsync();
                         ActivityIndicator = false;
                     }
-                    else
+                    if(!test)
                     {
                         var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
                         UserService userService = new UserService();

@@ -1,7 +1,10 @@
+using FakeItEasy;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.ViewModels;
+using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 using Xunit;
 
 namespace WorldExplorerEurope.Test
@@ -9,6 +12,12 @@ namespace WorldExplorerEurope.Test
     public class MainViewModelTests
     {
         private const string url = "https://localhost:5001/api/countries";
+
+        public MainViewModelTests()
+        {
+            var platformServicesFake = A.Fake<IPlatformServices>();
+            Device.PlatformServices = platformServicesFake;
+        }
 
         [Fact]
         public async void GetCountries_returns_NotNullList()
