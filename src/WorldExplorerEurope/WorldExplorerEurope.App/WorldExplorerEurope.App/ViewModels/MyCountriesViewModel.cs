@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.Domain.Models;
 using Xamarin.Forms;
@@ -38,6 +39,21 @@ namespace WorldExplorerEurope.App.ViewModels
             {
                 this.countries = value;
                 ChangeProperty(nameof(Countries));
+            }
+        }
+
+        //Deze variable is alleen geschreven voor te Unit testen. Verder doe ik niks hiermee
+        private User user;
+        public User User
+        {
+            get
+            {
+                return user;
+            }
+            set
+            {
+                this.user = value;
+                ChangeProperty(nameof(User));
             }
         }
 
@@ -82,7 +98,8 @@ namespace WorldExplorerEurope.App.ViewModels
         private void GetCountryByWishlist()
         {
             ActivityIndicator = true;
-            var user = localService.GetUser();
+            var user = User;
+            if (user == null) user = localService.GetUser();
             ObservableCollection<Country> wishlistCountries = new ObservableCollection<Country>();
             foreach (var country in _country)
             {
@@ -96,7 +113,8 @@ namespace WorldExplorerEurope.App.ViewModels
              () =>
              {
                  ActivityIndicator = true;
-                 var user = localService.GetUser();
+                 var user = User;
+                 if (user == null) user = localService.GetUser();
                  ObservableCollection<Country> favouritesCountries = new ObservableCollection<Country>();
                  foreach (var country in _country)
                  {
