@@ -13,12 +13,20 @@ namespace WorldExplorerEurope.App.Domain.Services
 {
     public class APIservice : IAPIinterface
     {
+
+        public static HttpClient Client;
+
+        public void SetTestClient(HttpClient client)
+        {
+            Client = client;
+        }
         public async Task<string> Get(string url)
         {
             try
             {
-                using (var webClient = new HttpClient())
+                using (var webClient = Client)
                 {
+                    if (Client.DefaultRequestHeaders.Authorization != null) Client.DefaultRequestHeaders.Authorization = null;
                     var download = webClient.GetStringAsync(url).Result;
                     return download.ToString();
                 }
@@ -33,7 +41,7 @@ namespace WorldExplorerEurope.App.Domain.Services
         {
             try
             {
-                using (var httpClient = new HttpClient())
+                using (var httpClient = Client)
                 {
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
                     HttpResponseMessage responseMessage = await httpClient.PostAsync(url, content);
@@ -50,7 +58,7 @@ namespace WorldExplorerEurope.App.Domain.Services
         {
             try
             {
-                using (var httpClient = new HttpClient())
+                using (var httpClient = Client)
                 {
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                     HttpResponseMessage responseMessage = await httpClient.DeleteAsync(url);
@@ -66,7 +74,7 @@ namespace WorldExplorerEurope.App.Domain.Services
         {
             try
             {
-                using (var httpClient = new HttpClient())
+                using (var httpClient = Client)
                 {
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -74,7 +82,7 @@ namespace WorldExplorerEurope.App.Domain.Services
                     return responseMessage;
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 return null;
             }

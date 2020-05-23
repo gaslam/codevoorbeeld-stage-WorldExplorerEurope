@@ -1,4 +1,7 @@
-﻿using FakeItEasy;
+﻿using AutoMapper;
+using FakeItEasy;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Newtonsoft.Json;
 using System;
@@ -7,9 +10,14 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using WorldExplorerEurope.API;
+using WorldExplorerEurope.API.Data;
 using WorldExplorerEurope.App.Domain.Models;
+using WorldExplorerEurope.App.Domain.Services;
+using WorldExplorerEurope.App.Domain.Services.API;
 using WorldExplorerEurope.App.ViewModels;
 using WorldExplorerEurope.Domain.Models;
+using WorldExplorerEurope.Test.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.PlatformConfiguration;
@@ -17,10 +25,28 @@ using Xunit;
 
 namespace WorldExplorerEurope.Test
 {
-    public class InfoViewModelTests
+    public class InfoViewModelTests : IClassFixture<WorldExplorerAPIFactory<Startup>>
     {
-        public InfoViewModelTests()
+        private readonly WorldExplorerAPIFactory<Startup> _factory;
+        private readonly IMapper _mapper;
+        private readonly WorldExplorerContext _context;
+        private HttpClient _client;
+        private HttpClient _client2;
+
+        WorldExplorerAPIService worldExplorerAPIService = new WorldExplorerAPIService();
+        APIservice apiService = new APIservice();
+
+        public InfoViewModelTests(WorldExplorerAPIFactory<Startup> factory)
         {
+            _factory = factory;
+
+            var scope = factory.Services.CreateScope();
+            WebApplicationFactoryClientOptions options = new WebApplicationFactoryClientOptions();
+            options.MaxAutomaticRedirections = 1000;
+            options.HandleCookies = false;
+            _client = _factory.CreateClient(options);
+            apiService.SetTestClient(_factory.CreateClient(options));
+
             var platformServicesFake = A.Fake<IPlatformServices>();
             Device.PlatformServices = platformServicesFake;
         }
@@ -40,8 +66,8 @@ namespace WorldExplorerEurope.Test
             infoVM.Init(country);
             int expected = infoVM.Favourites.Count + 1;
             //Act
-            infoVM.AddFavouriteCommand.Execute(null);
-            System.Threading.Thread.Sleep(10000);
+            country.favourites.Add(new Favourite { CountryId = country.Id, Id = Guid.NewGuid(), UserId = infoVM.User.Id });
+            infoVM.Init(country);
             int actual = infoVM.Favourites.Count;
 
             //Assert
@@ -59,8 +85,8 @@ namespace WorldExplorerEurope.Test
             infoVM.Init(country);
             int expected = infoVM.Wishlists.Count + 1;
             //Act
-            infoVM.WishlistCommand.Execute(null);
-            System.Threading.Thread.Sleep(10000);
+            country.countryWishlists.Add(new Wishlist { Id = Guid.NewGuid(), UserId = infoVM.User.Id });
+            infoVM.Init(country);
             int actual = infoVM.Wishlists.Count;
             int current = actual;
             //Assert
@@ -71,7 +97,7 @@ namespace WorldExplorerEurope.Test
         {
             try
             {
-                using(var client = new HttpClient())
+                using(var client = _client)
                 {
                     var response = await client.GetAsync($"{url}/00000000-0000-0000-0000-000000000001");
                     if (!response.IsSuccessStatusCode) throw new Exception(await response.Content.ReadAsStringAsync());
@@ -80,6 +106,25 @@ namespace WorldExplorerEurope.Test
                 }
             }
             catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+        private async Task<Country> PutCountry()
+        {
+            try
+            {
+                using (var client = _client)
+                {
+                    var response = await client.GetAsync($"{url}/00000000-0000-0000-0000-000000000001");
+                    if (!response.IsSuccessStatusCode) throw new Exception(await response.Content.ReadAsStringAsync());
+                    var json = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<Country>(json);
+                }
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return null;
