@@ -45,11 +45,15 @@ namespace WorldExplorerEurope.API.Controllers
             {
                 return NotFound("User not found, enter valid credentials!!!");
             }
+            if(string.IsNullOrEmpty(userLoginDto.Password) || string.IsNullOrWhiteSpace(userLoginDto.Password))
+            {
+                return BadRequest("Password Incorrect!!! Enter a valid password!!");
+            }
             var passwordHasher = new PasswordHasher<UserDto>();
             var verify = passwordHasher.VerifyHashedPassword(user, user.Password, userLoginDto.Password);
             if (verify.Equals(PasswordVerificationResult.Failed))
             {
-                return BadRequest("Password Incorrect!!");
+                return BadRequest("Password Incorrect!!! Enter a valid password!!");
             }
             user.Token = _userService.GenerateToken(user);
             return Ok(user);
