@@ -65,7 +65,7 @@ namespace WorldExplorerEurope.App.ViewModels
 
         }
 
-        public Country selectedCountry;
+        private static Country selectedCountry;
 
         public void setSelectedCountry(Country country)
         {
