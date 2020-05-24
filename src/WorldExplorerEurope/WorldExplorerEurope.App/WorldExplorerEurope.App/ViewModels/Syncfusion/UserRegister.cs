@@ -131,9 +131,9 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
         {
             var list = new List<string>();
 
-            if (propertyName.Equals(nameof(FirstName)) || propertyName.Equals(nameof(LastName)))
+            if (propertyName.Equals(nameof(FirstName)))
             {
-                if (string.IsNullOrEmpty(FirstName) || string.IsNullOrWhiteSpace(LastName))
+                if (string.IsNullOrEmpty(FirstName) || string.IsNullOrWhiteSpace(FirstName))
                     list.Add("Please, enter a valid name");
             }
 
