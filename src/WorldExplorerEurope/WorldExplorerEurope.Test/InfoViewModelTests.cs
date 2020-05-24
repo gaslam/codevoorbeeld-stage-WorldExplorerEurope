@@ -45,7 +45,6 @@ namespace WorldExplorerEurope.Test
             options.MaxAutomaticRedirections = 1000;
             options.HandleCookies = false;
             _client = _factory.CreateClient(options);
-            apiService.SetTestClient(_factory.CreateClient(options));
 
             var platformServicesFake = A.Fake<IPlatformServices>();
             Device.PlatformServices = platformServicesFake;
