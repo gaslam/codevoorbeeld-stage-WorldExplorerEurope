@@ -26,6 +26,7 @@ namespace WorldExplorerEurope.App.Pages
         {
             InitializeComponent();
             this.HeightRequest = 600;
+            this.BarBackgroundColor = Color.FromHex("#fe5f55");
             player = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
         }
 

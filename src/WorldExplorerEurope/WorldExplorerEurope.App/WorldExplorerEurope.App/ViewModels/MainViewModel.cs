@@ -125,6 +125,7 @@ namespace WorldExplorerEurope.App.ViewModels
                     if (location == null) throw new Exception();
                     setSelectedCountry(location);
                     await CoreMethods.PushPageModel<InfoViewModel>(selectedCountry, false, true);
+                    ActivityIndicator = false;
                 }
                 catch
                 {
