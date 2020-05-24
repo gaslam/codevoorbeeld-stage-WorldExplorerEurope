@@ -17,15 +17,16 @@ namespace WorldExplorerEurope.App.ViewModels
     public class MyCountriesViewModel : FreshBasePageModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private ObservableCollection<Country> _country;
+        public ObservableCollection<Country> countryList;
         LocalService localService = new LocalService();
+        public bool test = false;
 
         public async override void Init(object initData)
         {
             base.Init(initData);
-            _country = await GetCountries();
+            if(test == false)countryList = await GetCountries();
             ActivityIndicator = false;
-            GetCountryByWishlist();
+            if(test == false)GetCountryByWishlist();
         }
 
         private ObservableCollection<Country> countries;
@@ -101,7 +102,7 @@ namespace WorldExplorerEurope.App.ViewModels
             var user = User;
             if (user == null) user = localService.GetUser();
             ObservableCollection<Country> wishlistCountries = new ObservableCollection<Country>();
-            foreach (var country in _country)
+            foreach (var country in countryList)
             {
                 var wishlist = country.countryWishlists.FirstOrDefault(m => m.UserId == user.Id);
                 if (wishlist != null) wishlistCountries.Add(country);
@@ -116,7 +117,7 @@ namespace WorldExplorerEurope.App.ViewModels
                  var user = User;
                  if (user == null) user = localService.GetUser();
                  ObservableCollection<Country> favouritesCountries = new ObservableCollection<Country>();
-                 foreach (var country in _country)
+                 foreach (var country in countryList)
                  {
                      var wishlist = country.favourites.FirstOrDefault(m => m.UserId == user.Id);
                      if (wishlist != null) favouritesCountries.Add(country);

@@ -32,6 +32,7 @@ namespace WorldExplorerEurope.App.ViewModels
 
         public async override void Init(object initData)
         {
+            test = true;
             base.Init(initData);
             this.newUser = new UserRegister();
             DataForm = new SfDataForm();

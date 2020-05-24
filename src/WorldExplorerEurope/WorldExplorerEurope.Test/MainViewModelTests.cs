@@ -1,20 +1,41 @@
 using FakeItEasy;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Syncfusion.DataSource.Extensions;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Net.Http;
+using System.Threading.Tasks;
+using WorldExplorerEurope.API;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.ViewModels;
+using WorldExplorerEurope.Domain.Models;
+using WorldExplorerEurope.Test.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xunit;
 
 namespace WorldExplorerEurope.Test
 {
-    public class MainViewModelTests
+    public class MainViewModelTests : IClassFixture<WorldExplorerAPIFactory<Startup>>
     {
         private const string url = "https://localhost:5001/api/countries";
 
-        public MainViewModelTests()
+        private readonly WorldExplorerAPIFactory<Startup> _factory;
+        private HttpClient _client;
+
+        public MainViewModelTests(WorldExplorerAPIFactory<Startup> factory)
         {
+            _factory = factory;
+
+            var scope = factory.Services.CreateScope();
+            WebApplicationFactoryClientOptions options = new WebApplicationFactoryClientOptions();
+            options.MaxAutomaticRedirections = 1000;
+            options.HandleCookies = false;
+            _client = _factory.CreateClient(options);
+
             var platformServicesFake = A.Fake<IPlatformServices>();
             Device.PlatformServices = platformServicesFake;
         }
@@ -27,10 +48,11 @@ namespace WorldExplorerEurope.Test
 
             //Act
 
-            var countries = await mainViewModel.GetCountries();
+            var countries = await Countries();
+            mainViewModel.Countries = countries;
 
             //Assert
-            Assert.NotNull(countries);
+            Assert.NotNull(mainViewModel.Countries);
         }
 
         [Fact]
@@ -38,7 +60,8 @@ namespace WorldExplorerEurope.Test
         {
             //Arrange
             var mainViewModel = new MainViewModel();
-            await mainViewModel.GetCountries();
+            var countries = await Countries();
+            mainViewModel.Countries = countries;
 
             //Act
             var actual = mainViewModel.Filter("Hamburger");
@@ -56,11 +79,32 @@ namespace WorldExplorerEurope.Test
             double lat = 50.882540;
             string expected = "Belgium";
 
+            var countries = await Countries();
+
             //Act
-            var actual = await openCageService.GetCountry(lng, lat);
+            var actual = await openCageService.GetCountry(lng, lat, countries);
 
             //Assert
             Assert.Equal(expected, actual.Name);
+        }
+
+        private async Task<ObservableCollection<Country>> Countries()
+        {
+            try
+            {
+                using (var client = _client)
+                {
+                    var response = await client.GetAsync($"{url}");
+                    if (!response.IsSuccessStatusCode) throw new Exception(await response.Content.ReadAsStringAsync());
+                    var json = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<ObservableCollection<Country>>(json);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
     }
 }

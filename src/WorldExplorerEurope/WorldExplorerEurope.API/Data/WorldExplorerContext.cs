@@ -208,6 +208,8 @@ namespace WorldExplorerEurope.API.Data
                 Role = "Admin"
             };
 
+            user.Password = hasher.HashPassword(user, "t}F87)8GBaj<");
+
             User user2 = new User
             {
                 Id = Guid.Parse("00000000-0000-0000-0000-000000000001"),
@@ -218,7 +220,8 @@ namespace WorldExplorerEurope.API.Data
                 Nationality = "Belgium",
                 Role = "Admin"
             };
-            user.Password = hasher.HashPassword(user, "t}F87)8GBaj<");
+
+            user2.Password = hasher.HashPassword(user2, "9xE6ALJfQ6$k");
 
             modelBuilder.Entity<User>().ToTable("Users")
                 .HasData(

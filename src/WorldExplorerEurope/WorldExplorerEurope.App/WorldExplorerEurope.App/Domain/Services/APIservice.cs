@@ -14,7 +14,7 @@ namespace WorldExplorerEurope.App.Domain.Services
     public class APIservice : IAPIinterface
     {
 
-        public static HttpClient Client;
+        public static HttpClient Client = new HttpClient();
 
         public void SetTestClient(HttpClient client)
         {

@@ -1,12 +1,20 @@
 ﻿using FakeItEasy;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Moq;
+using Newtonsoft.Json;
 using Syncfusion.DataSource.Extensions;
 using Syncfusion.XForms.DataForm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using WorldExplorerEurope.API;
+using WorldExplorerEurope.API.Domain.DTO;
+using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.ViewModels;
+using WorldExplorerEurope.Test.Services;
 using WorldExplorerEurope.ViewModels.Syncfusion;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -14,20 +22,28 @@ using Xunit;
 
 namespace WorldExplorerEurope.Test
 {
-    public class RegisterViewModelTests
+    public class RegisterViewModelTests : IClassFixture<WorldExplorerAPIFactory<Startup>>
     {
-        private const string url = "https://localhost:5001/api/countries";
+        private const string url = "https://localhost:5001/api/countries/Users";
+        private HttpClient _client;
+        private readonly WorldExplorerAPIFactory<Startup> _factory;
 
 
         //Used to mock the platform
-        public RegisterViewModelTests()
+        public RegisterViewModelTests(WorldExplorerAPIFactory<Startup> factory)
         {
+            _factory = factory;
+            WebApplicationFactoryClientOptions options = new WebApplicationFactoryClientOptions();
+            options.MaxAutomaticRedirections = 1000;
+            options.HandleCookies = false;
+            _client = _factory.CreateClient(options);
+
             var platformServicesFake = A.Fake<IPlatformServices>();
             Device.PlatformServices = platformServicesFake;
         }
 
         [Fact]
-        public void RegisterCommand_returns_NoErrorMessage()
+        public async void RegisterCommand_returns_NoErrorMessage()
         {
             //Arrange
             try
@@ -38,7 +54,9 @@ namespace WorldExplorerEurope.Test
                 register.test = true;
                 register.newUser = new UserRegister() { FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@test.howest.be", Password = "t}F87)8GBaj<" };
                 //Act
-                register.RegisterCommand.Execute(null);
+                var response = await GetUser(register.newUser);
+
+                if (!response.IsSuccessStatusCode) register.newUser.ErrorMessage = await response.Content.ReadAsStringAsync();
 
                 //Assert
                 Assert.Null(register.newUser.ErrorMessage);
@@ -61,8 +79,11 @@ namespace WorldExplorerEurope.Test
 
                 //Act
                 register.Init(moq.Object);
-                register.test = true;
-                register.RegisterCommand.Execute(null);
+
+                while(register.test == true)
+                {
+
+                }
 
                 //Assert
                 Assert.IsType<UserRegister>(register.newUser);
@@ -71,6 +92,26 @@ namespace WorldExplorerEurope.Test
             catch (Exception ex)
             {
                 Assert.True(false, ex.Message);
+            }
+        }
+
+        private async Task<HttpResponseMessage> GetUser(UserRegister userRegister)
+        {
+            try
+            {
+                using (var client = _client)
+                {
+                    var user = new UserDto { FirstName = userRegister.FirstName , LastName = userRegister.LastName, BirthDate = userRegister.BirthDate.Date, Nationality = userRegister.Nationality, Email = userRegister.Email, Password = userRegister.Password };
+                    var json = JsonConvert.SerializeObject(user);
+                    StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+                    var response = await client.PostAsync($"{url}/users/register", stringContent);
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
             }
         }
 
