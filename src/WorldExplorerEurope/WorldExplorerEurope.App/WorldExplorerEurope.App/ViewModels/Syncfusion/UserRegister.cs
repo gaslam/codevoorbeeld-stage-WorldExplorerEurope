@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Java.Sql;
+using Newtonsoft.Json;
 using Syncfusion.XForms.DataForm;
 using System;
 using System.Collections;
@@ -18,6 +19,11 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        public UserRegister()
+        {
+            BirthDate = DateTime.Now.AddYears(-12).Date;
+        }
 
         private string firstname;
         public string FirstName
@@ -74,7 +80,11 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
             }
             set
             {
+                //To prevent wrong date on initialisation I decided to add an if statement.
+                //If you remove the statement it will always set te value to the current date in syncfusion I believe.
                 birthdate = value;
+
+                if (birthdate.Date != DateTime.Now.Date || birthdate.Year != 1900) birthdate = DateTime.Now.AddYears(-12).Date;
                 RaisePropertyChanged(nameof(BirthDate));
             }
         }
@@ -182,6 +192,9 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
                     return list;
                 }
                 if (BirthDate.Date.AddYears(12) > currentDate.Date)
+                    list.Add("You must be 12 years or older");
+
+                if (BirthDate.Date == DateTime.Now.Date)
                     list.Add("You must be 12 years or older");
             }
 
