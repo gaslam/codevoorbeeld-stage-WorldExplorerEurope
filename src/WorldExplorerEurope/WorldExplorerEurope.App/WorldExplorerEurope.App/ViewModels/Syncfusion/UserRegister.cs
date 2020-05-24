@@ -165,9 +165,6 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
                     list.Add("Password must contain at least 1 Upper/lower case letter and a digit.");
                 if (Password != null && Password.Length < 10)
                     list.Add("Password must at least have 10 characters.");
-
-                if (PasswordRepeat != Password && PasswordRepeat != null)
-                    list.Add("Passwords do not match.");
             }
 
             if (propertyName.Equals("PasswordRepeat"))
