@@ -191,7 +191,7 @@ namespace WorldExplorerEurope.API.Data
                 new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[49], PlaylistId = "3BeBGfOciz2pHhmMYGF7Qq" }, //Sweden
                 new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[50], PlaylistId = "7KCEnXSAo8e4aHkC3Barql" }, //Switzerland
                 new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[51], PlaylistId = "5S1GVxkVbKXxoTV8DwBKGi" }, //Ukraine
-                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = guids[52], PlaylistId = "1y7E5GXSac77FzesM2ASjx" } //United Kingdom
+                new SpotifyPlaylist { Id = Guid.NewGuid(), CountryId = Guid.Parse("00000000-0000-0000-0000-000000000001"), PlaylistId = "1y7E5GXSac77FzesM2ASjx" } //United Kingdom
                 );
             #endregion
 

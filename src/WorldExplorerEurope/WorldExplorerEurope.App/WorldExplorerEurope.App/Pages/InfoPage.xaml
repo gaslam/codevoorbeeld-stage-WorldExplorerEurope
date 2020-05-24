@@ -95,10 +95,10 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                             </Label.FontFamily>
                         </Label>
                     </Grid>
-                    <Grid WidthRequest="600" HorizontalOptions="Center" HeightRequest="100">
+                    <Grid HorizontalOptions="Center" HeightRequest="100">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="170"></ColumnDefinition>
+                            <ColumnDefinition Width="170"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
@@ -120,10 +120,10 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                                 </OnPlatform>
                             </Button.FontFamily>
                         </Button>
-                        <Label Text="{Binding AddedInFavourites}" Grid.Column="0" Grid.Row="1"></Label>
-                        <Label Text="{Binding AddedInWishlist}" Grid.Column="1" Grid.Row="1"></Label>
+                        <Label Text="{Binding AddedInFavourites}" Grid.Column="0" Grid.Row="1" Margin="10,0,0,0"></Label>
+                        <Label Text="{Binding AddedInWishlist}" Grid.Column="1" Grid.Row="1" Margin="10,0,0,0"></Label>
                     </Grid>
-                    <Grid WidthRequest="600" HeightRequest="300">
+                    <Grid WidthRequest="600" HeightRequest="450">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
@@ -160,8 +160,8 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
             <StackLayout>
                 <Grid WidthRequest="600" HorizontalOptions="Center">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="200"></ColumnDefinition>
+                        <ColumnDefinition Width="175"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"></RowDefinition>
@@ -239,8 +239,8 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
             <StackLayout>
                 <Grid WidthRequest="600" HorizontalOptions="Center" HeightRequest="40">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="200"></ColumnDefinition>
+                        <ColumnDefinition Width="175"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"></RowDefinition>
