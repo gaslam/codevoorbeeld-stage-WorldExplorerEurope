@@ -316,6 +316,8 @@ namespace WorldExplorerEurope.App.ViewModels
             }
         }
 
+        private Uri playlistLink;
+
         public async Task<ObservableCollection<BasicPlaylist>> GetCountryPlaylist()
         {
             try
@@ -335,6 +337,7 @@ namespace WorldExplorerEurope.App.ViewModels
                     newBasicPlaylist.Add(basicPlaylist);
 
                 }
+                playlistLink = playlist.Url;
                 return newBasicPlaylist;
             }
             catch
