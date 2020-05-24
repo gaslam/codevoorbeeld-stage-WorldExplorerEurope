@@ -133,7 +133,13 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
 
             if (propertyName.Equals(nameof(FirstName)) || propertyName.Equals(nameof(LastName)))
             {
-                if ((string.IsNullOrEmpty(FirstName) || string.IsNullOrWhiteSpace(LastName)))
+                if (string.IsNullOrEmpty(FirstName) || string.IsNullOrWhiteSpace(LastName))
+                    list.Add("Please, enter a valid name");
+            }
+
+            if (propertyName.Equals(nameof(LastName)))
+            {
+                if(string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(LastName))
                     list.Add("Please, enter a valid name");
             }
 
