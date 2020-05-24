@@ -109,7 +109,7 @@ namespace WorldExplorerEurope.App.ViewModels
                         var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
                         UserService userService = new UserService();
                         userService.SetUser(user);
-                        await CoreMethods.PushPageModel<MyCountriesViewModel>(user, false, true);
+                        await CoreMethods.PushPageModel<MyCountriesViewModel>(user, true, true);
 
                         ActivityIndicator = false;
                     }
