@@ -11,7 +11,7 @@
     <ContentPage.Content>
         <AbsoluteLayout AbsoluteLayout.LayoutFlags="All"
                         AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <ScrollView VerticalScrollBarVisibility="Always" HeightRequest="500">
+            <ScrollView VerticalScrollBarVisibility="Always" HeightRequest="700">
                 <StackLayout>
                     <Grid Margin="0,75,0,140">
                         <Grid.RowDefinitions>
