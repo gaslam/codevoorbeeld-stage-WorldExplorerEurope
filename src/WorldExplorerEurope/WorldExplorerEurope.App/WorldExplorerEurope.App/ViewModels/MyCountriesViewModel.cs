@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.Domain.Models;
 using Xamarin.Forms;
@@ -16,15 +17,16 @@ namespace WorldExplorerEurope.App.ViewModels
     public class MyCountriesViewModel : FreshBasePageModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private ObservableCollection<Country> _country;
+        public ObservableCollection<Country> countryList;
         LocalService localService = new LocalService();
+        public bool test = false;
 
         public async override void Init(object initData)
         {
             base.Init(initData);
-            _country = await GetCountries();
+            if(test == false)countryList = await GetCountries();
             ActivityIndicator = false;
-            GetCountryByWishlist();
+            if(test == false)GetCountryByWishlist();
         }
 
         private ObservableCollection<Country> countries;
@@ -38,6 +40,21 @@ namespace WorldExplorerEurope.App.ViewModels
             {
                 this.countries = value;
                 ChangeProperty(nameof(Countries));
+            }
+        }
+
+        //Deze variable is alleen geschreven voor te Unit testen. Verder doe ik niks hiermee
+        private User user;
+        public User User
+        {
+            get
+            {
+                return user;
+            }
+            set
+            {
+                this.user = value;
+                ChangeProperty(nameof(User));
             }
         }
 
@@ -82,9 +99,10 @@ namespace WorldExplorerEurope.App.ViewModels
         private void GetCountryByWishlist()
         {
             ActivityIndicator = true;
-            var user = localService.GetUser();
+            var user = User;
+            if (user == null) user = localService.GetUser();
             ObservableCollection<Country> wishlistCountries = new ObservableCollection<Country>();
-            foreach (var country in _country)
+            foreach (var country in countryList)
             {
                 var wishlist = country.countryWishlists.FirstOrDefault(m => m.UserId == user.Id);
                 if (wishlist != null) wishlistCountries.Add(country);
@@ -96,9 +114,10 @@ namespace WorldExplorerEurope.App.ViewModels
              () =>
              {
                  ActivityIndicator = true;
-                 var user = localService.GetUser();
+                 var user = User;
+                 if (user == null) user = localService.GetUser();
                  ObservableCollection<Country> favouritesCountries = new ObservableCollection<Country>();
-                 foreach (var country in _country)
+                 foreach (var country in countryList)
                  {
                      var wishlist = country.favourites.FirstOrDefault(m => m.UserId == user.Id);
                      if (wishlist != null) favouritesCountries.Add(country);

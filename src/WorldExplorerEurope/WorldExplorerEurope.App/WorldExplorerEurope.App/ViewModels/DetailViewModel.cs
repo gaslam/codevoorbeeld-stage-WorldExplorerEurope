@@ -84,6 +84,12 @@ namespace WorldExplorerEurope.App.ViewModels
             }
         }
 
+        //This is only written for the test
+        public User GetUser()
+        {
+            return currentUser;
+        }
+
         public ICommand EditCommand => new Command(async () =>
         {
             await CoreMethods.PushPageModel<EditViewModel>(currentUser, true, true);

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorldExplorerEurope.API.Data;
 
 namespace WorldExplorerEurope.API.Migrations
 {
     [DbContext(typeof(WorldExplorerContext))]
-    partial class WorldExplorerContextModelSnapshot : ModelSnapshot
+    [Migration("20200523112329_UpdateTestUserPassword")]
+    partial class UpdateTestUserPassword
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

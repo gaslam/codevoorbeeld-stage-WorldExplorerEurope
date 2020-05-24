@@ -17,6 +17,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Plugin.MediaManager" Version="0.9.7" />
     <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
+    <PackageReference Include="Refractored.MvvmHelpers" Version="1.3.0" />
     <PackageReference Include="Syncfusion.Xamarin.SfDataForm" Version="18.1.0.44" />
     <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="18.1.0.44" />
     <PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer" Version="18.1.0.44" />

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -223,18 +224,16 @@ namespace WorldExplorerEurope.App.Domain.Services
             public float lng { get; set; }
         }
 
-        public async Task<Country> GetCountry(double lng, double lat)
+        public async Task<Country> GetCountry(double lng, double lat, ObservableCollection<Country> countries)
         {
             try
             {
                 using (var webclient = new WebClient())
                 {
-                    string ApiUrl = $"https://api.opencagedata.com/geocode/v1/json?q={lat}+{lng}&key=(PLACE_KEY_HERE!!!)";
+                    string ApiUrl = $"https://api.opencagedata.com/geocode/v1/json?q={lat}+{lng}&key=d41c893d59b24581ac5b1596decc612b";
                     string rawJSON = webclient.DownloadString(ApiUrl);
                     var deviceCountry = JsonConvert.DeserializeObject<Rootobject>(rawJSON);
-                    LocalService localService = new LocalService();
-                    var countriesList = await localService.GetCountriesAsync();
-                    var currentCountry = countriesList.FirstOrDefault(m => m.Name.Contains(deviceCountry.results[0].components.country));
+                    var currentCountry = countries.FirstOrDefault(m => m.Name.Contains(deviceCountry.results[0].components.country));
                     if (currentCountry == null) throw new Exception();
                     return currentCountry;
                 }

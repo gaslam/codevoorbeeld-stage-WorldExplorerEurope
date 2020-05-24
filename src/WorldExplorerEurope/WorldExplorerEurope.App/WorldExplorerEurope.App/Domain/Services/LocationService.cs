@@ -16,7 +16,9 @@ namespace WorldExplorerEurope.App.Domain.Services
                 var geoRequest = new GeolocationRequest(GeolocationAccuracy.Medium);
                 var location = await Geolocation.GetLocationAsync(geoRequest);
                 OpenCageService openCageService = new OpenCageService();
-                var country = await openCageService.GetCountry(location.Longitude, location.Latitude);
+                LocalService localService = new LocalService();
+                var countries = await localService.GetCountriesAsync();
+                var country = await openCageService.GetCountry(location.Longitude, location.Latitude, countries);
                 return country;
             }
             catch (FeatureNotSupportedException fnsEx)

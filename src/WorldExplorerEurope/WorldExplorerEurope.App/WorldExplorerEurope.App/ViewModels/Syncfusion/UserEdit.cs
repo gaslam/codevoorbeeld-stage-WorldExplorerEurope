@@ -74,7 +74,6 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
             }
             set
             {
-                value = DateTime.Now.Date.AddYears(-12);
                 birthdate = value;
                 RaisePropertyChanged(nameof(BirthDate));
             }
@@ -134,7 +133,7 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
 
             if (propertyName.Equals(nameof(FirstName)) || propertyName.Equals(nameof(LastName)))
             {
-                if ((string.IsNullOrEmpty(FirstName) || string.IsNullOrWhiteSpace(FirstName)))
+                if ((string.IsNullOrEmpty(FirstName) || string.IsNullOrWhiteSpace(LastName)))
                     list.Add("Please, enter a valid name");
             }
 

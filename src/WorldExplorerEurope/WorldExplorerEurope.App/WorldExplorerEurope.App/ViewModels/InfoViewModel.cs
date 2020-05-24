@@ -49,17 +49,18 @@ namespace WorldExplorerEurope.App.ViewModels
             explorerHubViewModel = new ExplorerHubViewModel();
         }
 
+        public bool test = false;
+
         public async override void Init(object initData)
         {
             var country = initData as Country;
-            this._country = mainViewModel.GetCountry();
+            this._country = country;
             this.countryPlaylist = GetCountryPlaylist().Result;
             UserMemories = await GetUserMemories();
             ActivityIndicator = false;
             ChangePageContentBasedOnUser();
             AddedInFavourites = $"Times added: {_country.favourites.Count}";
             AddedInWishlist = $"Times added: {_country.countryWishlists.Count}";
-            await explorerHubViewModel.Connect();
             if (explorerHubViewModel.IsConnected == true)
             {
                 connection = getHubConnection();
@@ -67,6 +68,21 @@ namespace WorldExplorerEurope.App.ViewModels
             }
             base.Init(initData);
 
+        }
+
+        //Deze variable is alleen geschreven voor te Unit testen. Verder doe ik niks hiermee
+        private User user;
+        public User User
+        {
+            get
+            {
+                return user;
+            }
+            set
+            {
+                this.user = value;
+                ChangeProperty(nameof(User));
+            }
         }
 
         private void addConnectionEventHandler()
@@ -80,7 +96,8 @@ namespace WorldExplorerEurope.App.ViewModels
         
         private void ChangePageContentBasedOnUser()
         {
-            var user = _localService.GetUser();
+            var user = User;
+            if (user == null) user = _localService.GetUser();
             int count = 0;
             int count2 = 0;
             if (user != null) count = _country.favourites.Where(m => m.UserId == user.Id).Count();
@@ -260,7 +277,8 @@ namespace WorldExplorerEurope.App.ViewModels
 
         private async Task<ObservableCollection<PhotoMemoryDto>> GetUserMemories()
         {
-            var user = _localService.GetUser();
+            var user = User;
+            if (user == null) user = _localService.GetUser();
             if (user == null)
             {
                 return new ObservableCollection<PhotoMemoryDto>();
@@ -298,7 +316,7 @@ namespace WorldExplorerEurope.App.ViewModels
             }
         }
 
-        private async Task<ObservableCollection<BasicPlaylist>> GetCountryPlaylist()
+        public async Task<ObservableCollection<BasicPlaylist>> GetCountryPlaylist()
         {
             try
             {
@@ -321,7 +339,7 @@ namespace WorldExplorerEurope.App.ViewModels
             }
             catch
             {
-                return null;
+                return new ObservableCollection<BasicPlaylist>();
             }
         }
 
@@ -330,8 +348,9 @@ namespace WorldExplorerEurope.App.ViewModels
             {
                 string action = await App.Current.MainPage.DisplayActionSheet("What do you want to do?", "Cancel", null, "Take a picture", "Get a picture");
                 ActivityIndicator = true;
-                LocalService localService = new LocalService();
-                if (localService.GetUser() == null)
+                var user = User;
+                if (user == null) _localService.GetUser();
+                if (user == null)
                 {
                     await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before you upload.", "Ok");
                     await CoreMethods.PushPageModel<LoginViewModel>(true);
@@ -463,10 +482,11 @@ namespace WorldExplorerEurope.App.ViewModels
             }
         }
 
-        ICommand AddFavouriteCommand => new Command(
+        public ICommand AddFavouriteCommand => new Command(
             async () =>
             {
-                var user = _localService.GetUser();
+                var user = User;
+                if (user == null) user = _localService.GetUser();
                 if (user != null)
                 {
                     await Add($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/favourites");
@@ -475,14 +495,18 @@ namespace WorldExplorerEurope.App.ViewModels
                     updateFavouriteAndWishlistCount(updatedCountry);
                     return;
                 }
-                await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
-                await CoreMethods.PushPageModel<LoginViewModel>(true);
+                if(test == false)
+                {
+                    await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
+                    await CoreMethods.PushPageModel<LoginViewModel>(true);
+                }
             });
 
         ICommand RemoveFavouriteCommand => new Command(
             async () =>
             {
-                var user = _localService.GetUser();
+                var user = User;
+                if (user == null) user = _localService.GetUser();
                 var favourite = _country.favourites.FirstOrDefault(m => m.UserId == user.Id);
                 await Remove($"{WorldExplorerAPIService.BaseUrl}/favourites/remove/{_country.Id}/{favourite.Id}", user.Token);
                 var countries = await _localService.GetCountriesAsync();
@@ -493,7 +517,8 @@ namespace WorldExplorerEurope.App.ViewModels
         ICommand AddWishlistCommand => new Command(
             async () =>
             {
-                var user = _localService.GetUser();
+                var user = User;
+                if (user == null) user = _localService.GetUser();
                 if (user != null)
                 {
                     await Add($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/wishlist");
@@ -502,8 +527,11 @@ namespace WorldExplorerEurope.App.ViewModels
                     updateFavouriteAndWishlistCount(updatedCountry).Wait();
                     return;
                 }
-                await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
-                await CoreMethods.PushPageModel<LoginViewModel>(true);
+                if(test == false)
+                {
+                    await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
+                    await CoreMethods.PushPageModel<LoginViewModel>(true);
+                }
             });
 
         private async Task updateFavouriteAndWishlistCount(Country country)
@@ -517,7 +545,8 @@ namespace WorldExplorerEurope.App.ViewModels
         ICommand RemoveWishlistCommand => new Command(
             async () =>
             {
-                var user = _localService.GetUser();
+                var user = User;
+                if (user == null) user = _localService.GetUser();
                 var wishlist = _country.countryWishlists.SingleOrDefault(m => m.UserId == user.Id);
                 await Remove($"{WorldExplorerAPIService.BaseUrl}/wishlists/remove/{_country.Id}/{wishlist.Id}", user.Token);
                 var countries = await _localService.GetCountriesAsync();
@@ -527,7 +556,8 @@ namespace WorldExplorerEurope.App.ViewModels
 
         private async Task Add(string url)
         {
-            var user = _localService.GetUser();
+            var user = User;
+            if (user == null) user = _localService.GetUser();
             string rawJSON = JsonConvert.SerializeObject(_country);
             var response = await _apiService.Put(url, rawJSON, user.Token);
             if (!response.IsSuccessStatusCode) await App.Current.MainPage.DisplayAlert("Error", "Cannot perform action.", "OK");

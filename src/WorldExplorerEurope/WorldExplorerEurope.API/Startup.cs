@@ -44,7 +44,7 @@ namespace WorldExplorerEurope.API
             services.AddDbContext<WorldExplorerContext>(options => options
                 .UseSqlServer(Configuration.GetConnectionString("WorldExplorerService")));
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<IRepository<User>, UserRepository>();
             services.AddScoped<IMappingRepository<UserDto>, UserRepository>();
