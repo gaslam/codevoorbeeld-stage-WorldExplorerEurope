@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Org.Apache.Http.Protocol;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -13,20 +14,13 @@ namespace WorldExplorerEurope.App.Domain.Services
 {
     public class APIservice : IAPIinterface
     {
-
-        public static HttpClient Client = new HttpClient();
-
-        public void SetTestClient(HttpClient client)
-        {
-            Client = client;
-        }
         public async Task<string> Get(string url)
         {
             try
             {
-                using (var webClient = Client)
+                using (var webClient = new HttpClient())
                 {
-                    if (Client.DefaultRequestHeaders.Authorization != null) Client.DefaultRequestHeaders.Authorization = null;
+                    if (webClient.DefaultRequestHeaders.Authorization != null) webClient.DefaultRequestHeaders.Authorization = null;
                     var download = webClient.GetStringAsync(url).Result;
                     return download.ToString();
                 }
@@ -41,7 +35,7 @@ namespace WorldExplorerEurope.App.Domain.Services
         {
             try
             {
-                using (var httpClient = Client)
+                using (var httpClient = new HttpClient())
                 {
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
                     HttpResponseMessage responseMessage = await httpClient.PostAsync(url, content);
@@ -58,7 +52,7 @@ namespace WorldExplorerEurope.App.Domain.Services
         {
             try
             {
-                using (var httpClient = Client)
+                using (var httpClient = new HttpClient())
                 {
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                     HttpResponseMessage responseMessage = await httpClient.DeleteAsync(url);
@@ -74,7 +68,7 @@ namespace WorldExplorerEurope.App.Domain.Services
         {
             try
             {
-                using (var httpClient = Client)
+                using (var httpClient = new HttpClient())
                 {
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
