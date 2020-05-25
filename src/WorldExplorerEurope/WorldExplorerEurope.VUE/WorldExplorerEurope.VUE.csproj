@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WorldExplorerEurope.API.Domain\WorldExplorerEurope.API.Domain.csproj" />
+    <ProjectReference Include="..\WorldExplorerEurope.App\WorldExplorerEurope.App\WorldExplorerEurope.App.csproj" />
   </ItemGroup>
 
 </Project>
