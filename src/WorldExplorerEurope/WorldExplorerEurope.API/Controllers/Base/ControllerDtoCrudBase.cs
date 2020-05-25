@@ -59,6 +59,7 @@ namespace WorldExplorerEurope.API.Controllers.Base
             return CreatedAtAction("Get", new { id = dto.Id},addedEntity);
         }
 
+        [Authorize]
         [HttpPut("update/{id}")]
         public virtual async Task<IActionResult> Update([FromRoute]string id, [FromBody]Dto dto)
         {

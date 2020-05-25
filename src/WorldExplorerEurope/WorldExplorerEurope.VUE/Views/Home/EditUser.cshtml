@@ -158,7 +158,12 @@
                     if (user.isAdmin.length == true) self.IsAdmin = true;
                     else user.isAdmin = false;
 
-                    axios.put(`${baseUrl}/users/update/${self.Id}`, user)
+                    var token = sessionStorage.getItem('token');
+                    const config = {
+                        headers: { Authorization: `Bearer ${token}` }
+                    };
+
+                    axios.put(`${baseUrl}/users/update/${self.Id}`, user, config)
                         .then(function (response) {
                             alert("User has been updated succesfully");
                             window.location.href = window.location.origin + '/NotAllowed';
