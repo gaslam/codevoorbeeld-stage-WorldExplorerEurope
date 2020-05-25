@@ -61,6 +61,11 @@
             <label><input class="uk-radio" type="radio" value="Admin" v-model="IsAdmin">Admin</label>
         </div>
     </div>
+    <div class="uk-margin">
+        <div class="uk-form-controls">
+            <label><input class="uk-radio" type="radio" value="Spotify" v-model="IsSpotifyDj">Spotify DJ</label>
+        </div>
+    </div>
 </form>
 
 <div class="uk-button-group">
@@ -82,7 +87,8 @@
                 Password: "",
                 PasswordRepeat: "",
                 IsAdmin: "",
-                CheckData:"",
+                CheckData: "",
+                IsSpotifyDj:"",
                 Errors: []
             },
 
@@ -150,8 +156,10 @@
                         birthDate: self.BirthDate,
                         password: self.Password,
                         isAdmin: false,
+                        isSpotifyDj: false
                     };
                     if (self.IsAdmin.length > 0) user.isAdmin = true;
+                    if (self.IsSpotifyDj.length > 0) user.isSpotifyDj = true;
 
                     axios.post(`${baseUrl}/users/register`, user)
                         .then(function (response) {
