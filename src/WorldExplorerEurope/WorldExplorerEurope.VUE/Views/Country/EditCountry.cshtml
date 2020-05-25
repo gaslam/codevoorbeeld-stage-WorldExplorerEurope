@@ -177,7 +177,11 @@
                         isEUMember: false,
                     };
                     if (country.isEUMember.length > 0) country.isEUMember = true;
-                    axios.put(`${baseUrl}/update/${self.Id}`, country)
+                    var token = sessionStorage.getItem('token');
+                    const config = {
+                        headers: { Authorization: `Bearer ${token}` }
+                    };
+                    axios.put(`${baseUrl}/update/${self.Id}`, country, config)
                         .then(function (response) {
                             alert("Country has been updated succesfully");
                             window.location.href = window.location.origin + '/Country';

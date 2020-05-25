@@ -75,7 +75,11 @@
                 },
                 DeleteData: function (id) {
                     var self = this;
-                    axios.delete(`${baseUrl}/delete/${id}`)
+                    var token = sessionStorage.getItem('token');
+                    const config = {
+                        headers: { Authorization: `Bearer ${token}` }
+                    };
+                    axios.delete(`${baseUrl}/delete/${id}`, config)
                         .then((response) => {
                             alert("Country has been deleted successfully");
                             self.GetData();

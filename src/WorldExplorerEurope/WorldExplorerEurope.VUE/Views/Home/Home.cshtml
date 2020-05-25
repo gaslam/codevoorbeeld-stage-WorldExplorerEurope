@@ -76,7 +76,11 @@
                 },
                 DeleteData: function (id) {
                     var self = this;
-                    axios.delete(`${baseUrl}/users/delete/${id}`)
+                    var token = sessionStorage.getItem('token');
+                    const config = {
+                        headers: { Authorization: `Bearer ${token}` }
+                    };
+                    axios.delete(`${baseUrl}/users/delete/${id}`, config)
                         .then((response) => {
                             alert("User has been deleted successfully");
                             self.GetData();                          
