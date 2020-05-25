@@ -51,7 +51,7 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
                                 </OnPlatform>
                             </Label.FontFamily>
                         </Label>
-                        <Label Text="{Binding newUser.ErrorMessage}" TextColor="#fe5f55" Grid.Row="5" Grid.Column="1" Margin="0,5,0,5">
+                        <Label Text="{Binding newUser.ErrorMessage}" TextColor="#fe5f55">
                             <Label.FontFamily>
                                 <OnPlatform x:TypeArguments="x:String">
                                     <On Platform="Android">Raleway-Regular.ttf#Raleway</On>
@@ -59,7 +59,7 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
                                 </OnPlatform>
                             </Label.FontFamily>
                         </Label>
-                        <Button  Text="Login" Padding="5" Margin="10,0,0,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="6" Grid.Column="1" Command="{Binding LoginCommand}">
+                        <Button  Text="Login" Padding="5" Margin="10,0,0,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="5" Grid.Column="1" Command="{Binding LoginCommand}">
                             <Button.FontFamily>
                                 <OnPlatform x:TypeArguments="x:String">
                                     <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
