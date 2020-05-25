@@ -18,5 +18,6 @@ namespace WorldExplorerEurope.API.Domain.DTO
         public string Password { get; set; }
         public string Token { get; set; }
         public string Role { get; set; }
+        public bool IsSpotifyDj { get; set; }
     }
 }

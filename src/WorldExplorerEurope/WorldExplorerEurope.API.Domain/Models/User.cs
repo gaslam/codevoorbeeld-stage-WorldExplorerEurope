@@ -13,6 +13,7 @@ namespace WorldExplorerEurope.API.Domain.Models
         public DateTime BirthDate { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
+        public bool IsSpotifyDj { get; set; }
 
     }
 }

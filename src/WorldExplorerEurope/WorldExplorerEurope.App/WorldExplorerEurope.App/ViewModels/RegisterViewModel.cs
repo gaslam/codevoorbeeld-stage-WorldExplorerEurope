@@ -73,7 +73,8 @@ namespace WorldExplorerEurope.App.ViewModels
                 BirthDate = newUser.BirthDate,
                 Nationality = newUser.Nationality,
                 Password = newUser.Password,
-                Role = "Visitor"
+                Role = "Visitor",
+                IsSpotifyDj = false
             };
             if (DataForm.Validate() == true)
             {

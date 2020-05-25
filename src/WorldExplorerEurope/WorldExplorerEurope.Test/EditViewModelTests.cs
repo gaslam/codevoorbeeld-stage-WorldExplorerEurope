@@ -58,7 +58,7 @@ namespace WorldExplorerEurope.Test
         public async void EditUser_validUser_returns_NoErrorMessage()
         {
             //Arrange
-            var user = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token, Role = "Admin" };
+            var user = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token, Role = "Admin", IsSpotifyDj = false };
             var editViewModel = new EditViewModel();
             editViewModel.Init(user);
             editViewModel.test = true;
