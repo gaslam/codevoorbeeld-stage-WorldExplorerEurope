@@ -6,12 +6,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="clr-namespace:WorldExplorerEurope.App.Views"
              mc:Ignorable="d"
-             x:Class="WorldExplorerEurope.App.Pages.RegisterPage">
+             x:Class="WorldExplorerEurope.App.Pages.RegisterPage"
+             Title="Register">
     <ContentPage.Content>
-        <AbsoluteLayout>
-            <StackLayout>
-                <ScrollView VerticalScrollBarVisibility="Always">
-                    <Grid Margin="0,75,0,0">
+        <AbsoluteLayout AbsoluteLayout.LayoutFlags="All"
+                        AbsoluteLayout.LayoutBounds="0,0,1,1">
+            <ScrollView VerticalScrollBarVisibility="Always" HeightRequest="500">
+                <StackLayout>
+                    <Grid Margin="0,75,0,140">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
@@ -40,7 +42,7 @@
                                 </OnPlatform>
                             </Label.FontFamily>
                         </Label>
-                        <dataform:SfDataForm x:Name="dataForm" ContainerType="Outlined" ValidationMode="LostFocus" LayoutOptions="TextInputLayout" LabelPosition="Top" AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" DataObject="{Binding newUser}">
+                        <dataform:SfDataForm x:Name="dataForm" ValidationMode="LostFocus" LayoutOptions="TextInputLayout" LabelPosition="Top" AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" DataObject="{Binding newUser}">
                         </dataform:SfDataForm>
                         <Button x:Name="btnRegister" Text="Register" Grid.Column="1" Grid.Row="3" Padding="5" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" Command="{Binding RegisterCommand}">
                             <Button.FontFamily>
@@ -59,11 +61,12 @@
                             </Button.FontFamily>
                         </Button>
                     </Grid>
-                </ScrollView>
-            </StackLayout>
+                </StackLayout>
+            </ScrollView>
             <StackLayout AbsoluteLayout.LayoutFlags="All"
                         AbsoluteLayout.LayoutBounds="0,0,1,1"
-                         VerticalOptions="EndAndExpand">
+                         VerticalOptions="EndAndExpand"
+                         >
                 <views:FooterView />
             </StackLayout>
         </AbsoluteLayout>

@@ -8,6 +8,6 @@ namespace WorldExplorerEurope.API.Domain.Services
 {
     public interface IMemoryPhotoService
     {
-        public Task<Uri> CreateImage(IFormFile file, Guid fileId);
+        public Task<Uri> CreateImage(IFormFile file, Guid fileId, string foldername);
     }
 }

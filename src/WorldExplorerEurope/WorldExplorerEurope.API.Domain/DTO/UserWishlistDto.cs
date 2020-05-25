@@ -9,6 +9,9 @@ namespace WorldExplorerEurope.API.Domain.DTO
     public class UserWishlistDto : EntityBase
     {
         public Guid UserId { get; set; }
+
+        public Guid CountryId { get; set; }
+
         public ICollection<WishlistDto> Wishlists { get; set; }
     }
 }

@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewData["Title"] = "Popular";
+    Layout = "_Layout";
+}
+
+<h1 class="uk-heading-divider">Popular</h1>
+<div class="uk-grid-margin-small">
+    <input name="search" class="uk-search uk-search-field uk-grid-width-small-1-3" placeholder="Search.." v-model="Searchterm" v-on:input="filter()" />
+    <a class="uk-button-primary uk-grid-width-large-1-1" style="padding:10px" v-on:click="filter()">Search</a>
+    <a class="uk-button-primary uk-grid-width-large-1-1" style="padding:10px" asp-controller="Country" asp-action="AddCountry">Add</a>
+</div>
+<table class="uk-table uk-table-expand uk-table-hover uk-table-striped">
+    <caption>Countries</caption>
+    <thead>
+        <tr>
+            <th>Name:</th>
+            <th>Flag:</th>
+            <th>Capital:</th>
+            <th>Population:</th>
+            <th>Times Added:</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr v-for="country in filtereditems">
+            <td>{{country.name}}</td>
+            <td><a v-bind:href="`${country.flagUrl}`">Flag</a></td>
+            <td>{{country.capital}}</td>
+            <td>{{country.population}}</td>
+            <td>{{country.favourites.length}}</td>
+            <td>
+                <a class="uk-button-primary" style="padding:10px" v-bind:href="`../CountryDetails/${country.id}`">Edit</a>
+                <a class="uk-button-danger" style="padding:10px" v-on:click="DeleteData(`${country.id}`)">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        var baseUrl = 'https://localhost:5001/api/countries';
+        var app = new Vue({
+            el: '#app',
+            data: {
+                countries: [],
+                Searchterm: "",
+                filtereditems: [],
+            },
+
+            created: function () {
+                var token = sessionStorage.getItem('token');
+                if (token != null) {
+                    var self = this;
+                    self.GetData();
+                }
+                else {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
+            },
+
+            methods: {
+                GetData: function () {
+                    var self = this;
+                    axios.get(`${baseUrl}`)
+                        .then((response) => {
+                            self.countries = response.data;
+                            self.filtereditems = self.countries.sort(function (a, b){ return b.favourites.length - a.favourites.length });
+                            self.countries.forEach(value => {
+                                value.link
+                            })
+                        }
+                        )
+                        .catch(function (error) {
+                            self.Error = error.data
+                        });
+                },
+                DeleteData: function (id) {
+                    var self = this;
+                    axios.delete(`${baseUrl}/delete/${id}`)
+                        .then((response) => {
+                            alert("Country has been deleted successfully");
+                            self.GetData();
+                        }
+                        )
+                        .catch(function (error) {
+                            alert(error.data);
+                        });
+                },
+                Navigate: function (id) {
+                    var url = $`${window.current.location}/CountryDetails/${id}`;
+                    window.location.href(url)
+                },
+
+                filter: async function () {
+                    var self = this;
+                    var newFiltereditems = new Array();
+                    self.filtereditems = self.countries;
+                    if (self.Searchterm.length > 0 && self.countries != null) {
+                        self.countries.forEach(item => {
+                            if (item.name.toLowerCase().includes(self.Searchterm.toLowerCase())) {
+                                newFiltereditems.push(item);
+                                return;
+                            }
+                            if (item.capital.toLowerCase().includes(self.Searchterm.toLowerCase())) {
+                                newFiltereditems.push(item);
+                                return;
+                            }
+                        });
+                        self.filtereditems = newFiltereditems;
+                    }
+                }
+            }
+        });
+    </script>
+}
+

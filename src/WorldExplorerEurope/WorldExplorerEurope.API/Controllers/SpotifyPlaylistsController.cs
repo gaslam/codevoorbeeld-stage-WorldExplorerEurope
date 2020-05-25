@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -15,6 +16,7 @@ using WorldExplorerEurope.API.Services;
 
 namespace WorldExplorerEurope.API.Controllers
 {
+    [Authorize]
     [Route("api/countries/[controller]")]
     [ApiController]
     public class SpotifyPlaylistsController : ControllerDtoCrudBase<SpotifyPlaylistDto, IMappingRepository<SpotifyPlaylistDto>>
@@ -35,6 +37,7 @@ namespace WorldExplorerEurope.API.Controllers
             For more info, rightclick on CheckClientCredentials and click on Go To Definition.
             </Summary>
         */
+        [AllowAnonymous]
         [HttpGet("check")]
         public async Task<IActionResult> CheckToken()
         {
@@ -46,6 +49,7 @@ namespace WorldExplorerEurope.API.Controllers
             return Ok();
         }
 
+        [Authorize (Roles = "Admin")]
         [HttpGet("playlists")]
         public async Task<IActionResult> GetBasicSpotifyPlaylists()
         {
@@ -80,6 +84,7 @@ namespace WorldExplorerEurope.API.Controllers
             return Ok(spotifyBasicDtos);
         }
 
+        [AllowAnonymous]
         [HttpGet("playlists/{id}")]
         public async Task<IActionResult> GetBasicSpotifyPlaylist([FromRoute]Guid id)
         {
@@ -115,6 +120,7 @@ namespace WorldExplorerEurope.API.Controllers
             return Ok(spotifyBasicDto);
         }
 
+        [AllowAnonymous]
         [HttpGet("playlists/Country/{id}")]
         public async Task<IActionResult> GetCountryPlaylist([FromRoute]Guid id)
         {

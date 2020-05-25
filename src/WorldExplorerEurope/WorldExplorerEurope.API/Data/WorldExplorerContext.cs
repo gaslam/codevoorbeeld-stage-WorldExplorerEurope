@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,6 +26,8 @@ namespace WorldExplorerEurope.API.Data
         public DbSet<Wishlist> Wishlists { get; set; }
 
         public DbSet<CountryPhotoMemories> CountryPhotoMemories { get; set; }
+        public DbSet<CountryFavourites> CountryFavourites { get; set; }
+        public DbSet<CountryWishlists> CountryWishlists { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,28 +44,31 @@ namespace WorldExplorerEurope.API.Data
                 .WithMany(g => g.Memories)
                 .HasForeignKey(ag => ag.MemoryId);
 
-            modelBuilder.Entity<CountryFavourites>().ToTable("UserFavourites")
-                .HasKey(m => new { m.CountryId, m.FavouriteId });
+            modelBuilder.Entity<CountryFavourites>().ToTable("CountryFavourites")
+                .HasKey(ag => new { ag.CountryId, ag.FavouriteId });
 
             modelBuilder.Entity<CountryFavourites>()
-                .HasOne(m => m.Country)
-                .WithMany(m => m.Favourites)
-                .HasForeignKey(m => m.CountryId);
+                .HasOne(ag => ag.Country)
+                .WithMany(g => g.Favourites)
+                .HasForeignKey(ag => ag.CountryId);
 
             modelBuilder.Entity<CountryFavourites>()
-                .HasOne(m => m.Favourite)
+                .HasOne(ag => ag.Favourite)
                 .WithMany(m => m.Favourites)
-                .HasForeignKey(m => m.FavouriteId);
+                .HasForeignKey(ag => ag.FavouriteId);
+
+            modelBuilder.Entity<CountryWishlists>().ToTable("CountryWishlists")
+                .HasKey(ag => new { ag.CountryId, ag.WishlistId });
 
             modelBuilder.Entity<CountryWishlists>()
-                .HasOne(m => m.Country)
+                .HasOne(ag => ag.Country)
                 .WithMany(m => m.CountryWishlists)
-                .HasForeignKey(m => m.CountryId);
+                .HasForeignKey(ag => ag.CountryId);
 
             modelBuilder.Entity<CountryWishlists>()
-                .HasOne(m => m.Wishlist)
+                .HasOne(ag => ag.Wishlist)
                 .WithMany(m => m.Wishlists)
-                .HasForeignKey(m => m.WishlistId);
+                .HasForeignKey(ag => ag.WishlistId);
 
 
             var countries = _restcountriesService.GetCountryData();
@@ -201,7 +205,7 @@ namespace WorldExplorerEurope.API.Data
                 BirthDate = Convert.ToDateTime("12/05/1998"),
                 Email = "gaspard.lammertyn@student.howest.be",
                 Nationality = "Belgium",
-                IsAdmin = true
+                Role = "Admin"
             };
             user.Password = hasher.HashPassword(user, "t}F87)8GBaj<");
 

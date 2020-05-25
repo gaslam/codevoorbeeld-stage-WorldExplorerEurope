@@ -1,0 +1,65 @@
+﻿@model CountryViewModel
+@{
+    ViewData["Title"] = "UserDetails";
+}
+
+<h1>UserDetails</h1>
+
+<form method="post" class="uk-form-stacked">
+    <div class="uk-margin uk-grid-small uk-form-">
+        <label class="uk-form-label">Name:</label>
+        <div class="uk-form-controls uk-margin">
+            <input class="uk-input" type="text" asp-for="@Model.Name" disabled />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">Capital:</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" type="text" asp-for="@Model.Capital" disabled />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">Population:</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" type="number" asp-for="@Model.Population" disabled />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">Description:</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" type="text" asp-for="@Model.Currency" disabled />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">Flag</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" type="file" asp-for="@Model.Flag" disabled />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <div class="uk-form-controls">
+            <label>        @Html.RadioButtonFor(model => model.IsEUMember, Model.IsEUMember, new { @Class = "uk-radio" })Admin</label>
+        </div>
+    </div>
+</form>
+
+<div class="uk-button-group">
+    <a class="uk-button-primary" style="padding:10px;margin:10px" asp-controller="Country" asp-action="EditCountry" asp-route-id="@Model.Id">Edit</a>
+    <a class="uk-button-danger" style="padding:10px;margin:10px" asp-controller="Country" asp-action="Index">Go back</a>
+</div>
+
+@section Scripts{
+    <script>
+        var app = new Vue({
+            el: '#app',
+            created: function () {
+                var token = sessionStorage.getItem('token');
+                if (token == null) {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
+            },
+        }
+        );
+
+    </script>
+}

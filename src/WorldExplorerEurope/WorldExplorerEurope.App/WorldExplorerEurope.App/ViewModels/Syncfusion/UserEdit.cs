@@ -80,6 +80,28 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
             }
         }
 
+        private string token;
+        [Display(AutoGenerateField = false)]
+        public string Token
+        {
+            get { return token; }
+            set
+            {
+                this.token = value;
+            }
+        }
+
+        private string role;
+        [Display(AutoGenerateField = false)]
+        public string Role
+        {
+            get { return role; }
+            set
+            {
+                this.role = value;
+            }
+        }
+
         private void RaisePropertyChanged(string property)
         {
             if (PropertyChanged != null)
