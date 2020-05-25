@@ -104,7 +104,7 @@ namespace WorldExplorerEurope.App.ViewModels
                         newUser.ErrorMessage = await request.Content.ReadAsStringAsync();
                         ActivityIndicator = false;
                     }
-                    if(!test)
+                    else if(!test)
                     {
                         var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
                         UserService userService = new UserService();
