@@ -205,7 +205,8 @@ namespace WorldExplorerEurope.API.Data
                 BirthDate = Convert.ToDateTime("12/05/1998"),
                 Email = "gaspard.lammertyn@student.howest.be",
                 Nationality = "Belgium",
-                Role = "Admin"
+                Role = "Admin",
+                IsSpotifyDj = false
             };
 
             user.Password = hasher.HashPassword(user, "t}F87)8GBaj<");
@@ -218,7 +219,8 @@ namespace WorldExplorerEurope.API.Data
                 BirthDate = Convert.ToDateTime("12/05/1998"),
                 Email = "test.test@student.howest.be",
                 Nationality = "Belgium",
-                Role = "Admin"
+                Role = "Admin",
+                IsSpotifyDj = true
             };
 
             user2.Password = hasher.HashPassword(user2, "9xE6ALJfQ6$k");

@@ -52,7 +52,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Nationality = user.Nationality,
-                Token = user.Token
+                Token = user.Token,
             };
             return userEdit;
         }

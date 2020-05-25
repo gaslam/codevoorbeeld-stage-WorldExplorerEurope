@@ -38,7 +38,7 @@ namespace WorldExplorerEurope.Test
         public void Init_CreatesUser_compares_Date()
         {
             //Arrange
-            var user = new User() { FirstName = "test", LastName = "test", Nationality = "testland", Email = "test@student.howest.be", BirthDate = DateTime.Now.AddYears(-12).Date, Password="", Role="", Token="" };
+            var user = new User() { FirstName = "test", LastName = "test", Nationality = "testland", Email = "test@student.howest.be", BirthDate = DateTime.Now.AddYears(-12).Date, Password="", Role="", Token="", IsSpotifyDj = false };
             string expected = user.BirthDate.ToShortDateString();
             var detailViewModel = new DetailViewModel();
             detailViewModel.Init(user);

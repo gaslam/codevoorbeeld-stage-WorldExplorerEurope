@@ -15,5 +15,6 @@ namespace WorldExplorerEurope.App.Domain.Models
         public string Password { get; set; }
         public string Role { get; set; }
         public string  Token { get; set; }
+        public bool IsSpotifyDj { get; set; }
     }
 }
