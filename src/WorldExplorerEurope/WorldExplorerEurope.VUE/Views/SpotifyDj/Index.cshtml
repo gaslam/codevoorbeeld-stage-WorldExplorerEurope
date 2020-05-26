@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_SpotifyDjLayout";
+}
+
+<h1 class="uk-heading-divider">Home</h1>
+<div class="uk-grid-margin-small">
+    <input name="search" class="uk-search uk-search-field uk-grid-width-small-1-3" placeholder="Search.." v-model="Searchterm" v-on:input="filter()" />
+    <a class="uk-button-primary uk-grid-width-large-1-1" style="padding:10px" v-on:click="filter()">Search</a>
+    <a class="uk-button-primary uk-grid-width-large-1-1" style="padding:10px" asp-controller="Spotify" asp-action="AddPlaylist">Add</a>
+</div>
+<table class="uk-table uk-table-expand uk-table-hover uk-table-striped">
+    <caption>playlists</caption>
+    <thead>
+        <tr>
+            <th>CountryName:</th>
+            <th>Url:</th>
+            <th>PlaylistId:</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr v-for="playlist in filtereditems">
+            <td>{{playlist.countryName}}</td>
+            <td><a v-bind:href="`${playlist.url}`">url</a></td>
+            <td>{{playlist.playlistId}}</td>
+            <td>
+                <a class="uk-button-primary" style="padding:10px" v-bind:href="`../Edit/${playlist.playlistId}`">Edit</a>
+                <a class="uk-button-danger" style="padding:10px" v-on:click="DeleteData(`${playlist.playlistId}`)">Delete</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        var baseUrl = 'https://localhost:5001/api/countries/spotifyplaylists/basic';
+        var app = new Vue({
+            el: '#app',
+            data: {
+                playlists: [],
+                Searchterm: "",
+                filtereditems: [],
+            },
+
+            created: function () {
+                var token = sessionStorage.getItem('token');
+                if (token != null) {
+                    var self = this;
+                    self.GetData();
+                }
+                else {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
+            },
+
+            methods: {
+                GetData: function () {
+                    var self = this;
+                    axios.get(`${baseUrl}`)
+                        .then((response) => {
+                            self.playlists = response.data;
+                            self.filtereditems = self.playlists;
+                            self.playlists.forEach(value => {
+                                value.link
+                            })
+                        }
+                        )
+                        .catch(function (error) {
+                            self.Error = error.data
+                        });
+                },
+                DeleteData: function (id) {
+                    var self = this;
+                    var token = sessionStorage.getItem('token');
+                    const config = {
+                        headers: { Authorization: `Bearer ${token}` }
+                    };
+                    axios.delete(`${baseUrl}/${id}`, config)
+                        .then((response) => {
+                            alert("Playlist has been deleted successfully");
+                            self.GetData();
+                        }
+                        )
+                        .catch(function (error) {
+                            alert(error.data);
+                        });
+                },
+                Navigate: function (id) {
+                    var url = $`${window.current.location}/Edit/${id}`;
+                    window.location.href(url)
+                },
+
+                filter: async function () {
+                    var self = this;
+                    var newFiltereditems = new Array();
+                    self.filtereditems = self.playlists;
+                    if (self.Searchterm.length > 0 && self.playlists != null) {
+                        self.playlists.forEach(item => {
+                            if (item.countryName.toLowerCase().includes(self.Searchterm.toLowerCase())) {
+                                newFiltereditems.push(item);
+                                return;
+                            }
+                            if (item.playlistId.toLowerCase().includes(self.Searchterm.toLowerCase())) {
+                                newFiltereditems.push(item);
+                                return;
+                            }
+                        });
+                        self.filtereditems = newFiltereditems;
+                    }
+                }
+            }
+        });
+    </script>
+}
