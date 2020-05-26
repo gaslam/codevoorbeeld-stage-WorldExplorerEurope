@@ -27,33 +27,12 @@ namespace WorldExplorerEurope.VUE.Controllers
             return View();
         }
 
-        [Route("AddUser")]
-        public IActionResult AddUser()
+        [Route("edit/{playlist}")]
+        public IActionResult EditPlaylist(string playlist)
         {
-            return View();
-        }
-
-        [Route("UserDetails/{id}")]
-        public async Task<IActionResult> UserDetails(Guid id)
-        {
-            var userDetails = await _apiService.Get($"{baseUrl}/users/{id}");
-            var user = JsonConvert.DeserializeObject<SpotifyViewModel>(userDetails);
-            if (user == null)
-            {
-                return Content("User not found");
-            }
-            return View(user);
-        }
-
-        [Route("EditUser/{id}")]
-        public IActionResult EditUser(Guid id)
-        {
-            return View(id);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            PlaylistId playlistId = new PlaylistId();
+            playlistId.id = playlist;
+            return View(playlistId);
         }
     }
 }

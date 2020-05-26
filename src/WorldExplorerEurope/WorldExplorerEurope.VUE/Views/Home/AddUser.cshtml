@@ -155,10 +155,10 @@
                         nationality: self.Nationality,
                         birthDate: self.BirthDate,
                         password: self.Password,
-                        isAdmin: false,
+                        role: "Visitor",
                         isSpotifyDj: false
                     };
-                    if (self.IsAdmin.length > 0) user.isAdmin = true;
+                    if (self.IsAdmin.length > 0) user.role = "Admin";
                     if (self.IsSpotifyDj.length > 0) user.isSpotifyDj = true;
 
                     axios.post(`${baseUrl}/users/register`, user)
