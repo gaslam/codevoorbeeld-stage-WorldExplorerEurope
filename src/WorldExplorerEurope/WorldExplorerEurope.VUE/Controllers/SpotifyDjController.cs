@@ -22,12 +22,14 @@ namespace WorldExplorerEurope.VUE.Controllers
             _logger = logger;
             _apiService = new ApiService();
         }
+        [Route("SpotifyDj")]
+        [Route("SpotifyDj/index")]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Route("edit/{playlist}")]
+        [Route("editPlaylist/{playlist}")]
         public IActionResult EditPlaylist(string playlist)
         {
             PlaylistId playlistId = new PlaylistId();

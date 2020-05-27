@@ -26,7 +26,7 @@
             <td><a v-bind:href="`${playlist.url}`">url</a></td>
             <td>{{playlist.playlistId}}</td>
             <td>
-                <a class="uk-button-primary" style="padding:10px" v-bind:href="`../Edit/${playlist.playlistId}`">Edit</a>
+                <a class="uk-button-primary" style="padding:10px" v-bind:href="`../editPlaylist/${playlist.playlistId}`">Edit</a>
                 <a class="uk-button-danger" style="padding:10px" v-on:click="DeleteData(`${playlist.playlistId}`)">Delete</a>
             </td>
         </tr>
