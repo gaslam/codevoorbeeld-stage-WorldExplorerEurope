@@ -42,43 +42,31 @@ namespace WorldExplorerEurope.API.Controllers
         public async Task<IActionResult> CheckToken()
         {
             bool check = _spotify.CheckClientCredentials().Result;
-            if(check == false)
+            if (check == false)
             {
                 return BadRequest("Credentials not valid!!");
             }
             return Ok();
         }
 
-        [Authorize (Roles = "Admin")]
-        [HttpGet("playlists")]
+        [AllowAnonymous]
+        [HttpGet("basic")]
         public async Task<IActionResult> GetBasicSpotifyPlaylists()
         {
             var playlists = _mappingRepository.GetAll();
+            var countries = _worldExplorerContext.Countries.ToList();
             List<SpotifyBasicDto> spotifyBasicDtos = new List<SpotifyBasicDto>();
-            foreach(var playlist in playlists)
+            foreach (var playlist in playlists)
             {
-                var country = getCountry(playlist.CountryId);
-                var newPlaylist = await _spotify.GetFullPlaylist(playlist.PlaylistId);
-                var tracks = await _spotify.GetFirst5Tracks(newPlaylist);
+                var country = countries.FirstOrDefault(m => m.Id == playlist.CountryId);
                 SpotifyBasicDto spotifyBasicDto = new SpotifyBasicDto()
                 {
                     CountryId = country.Id,
                     CountryName = country.Name,
                     PlaylistId = playlist.PlaylistId,
-                    Url = new Uri($"https://open.spotify.com/playlist/{playlist.PlaylistId}")
+                    Url = new Uri($"https://open.spotify.com/playlist/{playlist.PlaylistId}"),
+                    Playlist = new List<SpotifyBasicTracksDto>()
                 };
-                spotifyBasicDto.Playlist = new List<SpotifyBasicTracksDto>();
-                foreach(var track in tracks)
-                {
-                    spotifyBasicDto.Playlist.Add(
-                        new SpotifyBasicTracksDto
-                        {
-                            Artists = track.Artists,
-                            Number = track.Number,
-                            Name = track.Name,
-                            PreviewUrl = track.PreviewUrl
-                        });
-                }
                 spotifyBasicDtos.Add(spotifyBasicDto);
             }
             return Ok(spotifyBasicDtos);
@@ -86,7 +74,7 @@ namespace WorldExplorerEurope.API.Controllers
 
         [AllowAnonymous]
         [HttpGet("playlists/{id}")]
-        public async Task<IActionResult> GetBasicSpotifyPlaylist([FromRoute]Guid id)
+        public async Task<IActionResult> GetBasicSpotifyPlaylist([FromRoute] Guid id)
         {
             var playlist = await _mappingRepository.GetById(id);
             if (playlist == null)
@@ -122,10 +110,10 @@ namespace WorldExplorerEurope.API.Controllers
 
         [AllowAnonymous]
         [HttpGet("playlists/Country/{id}")]
-        public async Task<IActionResult> GetCountryPlaylist([FromRoute]Guid id)
+        public async Task<IActionResult> GetCountryPlaylist([FromRoute] Guid id)
         {
             bool check = _spotify.CheckClientCredentials().Result;
-            if(check == true)
+            if (check == true)
             {
                 var playlist = _mappingRepository.GetAll().FirstOrDefault(m => m.CountryId == id);
                 if (playlist == null)
@@ -145,7 +133,7 @@ namespace WorldExplorerEurope.API.Controllers
                     Url = new Uri($"https://open.spotify.com/playlist/{playlist.PlaylistId}")
                 };
                 spotifyBasicDto.Playlist = new List<SpotifyBasicTracksDto>();
-                if(tracks != null)
+                if (tracks != null)
                 {
                     foreach (var track in tracks)
                     {
@@ -162,6 +150,62 @@ namespace WorldExplorerEurope.API.Controllers
                 return Ok(spotifyBasicDto);
             }
             return BadRequest("Service not availible");
+        }
+        [AllowAnonymous]
+        [HttpGet("basic/{id}")]
+        public IActionResult GetPlaylistByPlaylistId([FromRoute] string id)
+        {
+            var playlist = _mappingRepository.GetAll().SingleOrDefault(m => m.PlaylistId == id);
+            if (playlist == null)
+            {
+                return NotFound($"Playlist with id: {id} is not valid.");
+            }
+            var countryname = _worldExplorerContext.Countries.FirstOrDefault(m => m.Id == playlist.CountryId).Name;
+            SpotifyBasicDto entity = new SpotifyBasicDto();
+            entity.Playlist = new List<SpotifyBasicTracksDto>();
+            entity.PlaylistId = playlist.PlaylistId;
+            entity.CountryId = playlist.CountryId;
+            entity.CountryName = countryname;
+            entity.Url = new Uri($"https://open.spotify.com/playlist/{playlist.PlaylistId}");
+            return Ok(entity);
+        }
+
+
+        [Authorize]
+        [HttpDelete("basic/{id}")]
+        public IActionResult DeletePlaylistByPlaylistId([FromRoute] string id)
+        {
+            var playlist = _mappingRepository.GetAll().SingleOrDefault( m => m.PlaylistId == id);
+            if (playlist == null)
+            {
+                return NotFound($"Playlist with id: {id} is not valid.");
+            }
+            var entity = _mappingRepository.Delete(playlist);
+            if (entity == null)
+            {
+                return NotFound($"Playlist with id: {id} could not be deleted.");
+            }
+            return Ok(entity);
+        }
+
+        [Authorize]
+        [HttpPut("basic/{id}")]
+        public async Task<IActionResult> UpdatePlaylistByPlaylistId([FromRoute] string id, [FromBody] SpotifyBasicDto dto)
+        {
+            var playlist = _mappingRepository.GetAll().SingleOrDefault(m => m.PlaylistId == id);
+            if (playlist == null)
+            {
+                return NotFound($"Playlist with id: {id} is not valid.");
+            }
+
+            playlist.PlaylistId = dto.PlaylistId;
+            var entity = await _mappingRepository.Update(playlist);
+            if (entity == null)
+            {
+                return NotFound($"Playlist with id: {id} could not be deleted.");
+            }
+            //return Ok(entity);
+            return Ok();
         }
 
         private CountryDto getCountry(Guid countryId)

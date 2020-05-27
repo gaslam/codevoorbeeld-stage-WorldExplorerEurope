@@ -21,30 +21,35 @@
     <div class="uk-margin">
         <label class="uk-form-label">Lastname:</label>
         <div class="uk-form-controls">
-            <input class="uk-input" type="text" placeholder="Enter lastname" v-model="LastName"  />
+            <input class="uk-input" type="text" placeholder="Enter lastname" v-model="LastName" />
         </div>
     </div>
     <div class="uk-margin">
         <label class="uk-form-label">E-mail:</label>
         <div class="uk-form-controls">
-            <input class="uk-input" type="email" placeholder="Enter your Email" v-model="Email"  />
+            <input class="uk-input" type="email" placeholder="Enter your Email" v-model="Email" />
         </div>
     </div>
     <div class="uk-margin">
         <label class="uk-form-label">Nationality</label>
         <div class="uk-form-controls">
-            <input class="uk-input" type="text" placeholder="Enter Nationality" v-model="Nationality"  />
+            <input class="uk-input" type="text" placeholder="Enter Nationality" v-model="Nationality" />
         </div>
     </div>
     <div class="uk-margin">
         <label class="uk-form-label">Date of birth</label>
         <div class="uk-form-controls">
-            <input class="uk-datepicker" type="date" v-model="BirthDate"  />
+            <input class="uk-datepicker" type="date" v-model="BirthDate" />
         </div>
     </div>
     <div class="uk-margin">
         <div class="uk-form-controls">
             <label><input class="uk-radio" type="radio" value="Admin" v-model="IsAdmin">Admin</label>
+        </div>
+    </div>
+    <div class="uk-margin">
+        <div class="uk-form-controls">
+            <label><input class="uk-radio" type="radio" value="Spotify" v-model="IsSpotifyDj">Spotify DJ</label>
         </div>
     </div>
 </form>
@@ -67,13 +72,15 @@
                 BirthDate: new Date(),
                 Email: "",
                 IsAdmin: "",
+                IsSpotifyDj: "",
                 CheckData:"",
                 Errors: []
             },
 
             created: function () {
                 var token = sessionStorage.getItem('token');
-                if (token != null) {
+                var jwt = JSON.parse(atob(token.split('.')[1]));
+                if (jwt != null && jwt.role == "Admin") {
                     var self = this;
                     self.GetUser();
                 }
@@ -153,6 +160,7 @@
                         birthDate: self.BirthDate,
                         password: self.Password,
                         isAdmin: self.IsAdmin,
+                        isSpotifyDj: self.IsSpotifyDj
                     };
 
                     if (user.isAdmin.length == true) self.IsAdmin = true;

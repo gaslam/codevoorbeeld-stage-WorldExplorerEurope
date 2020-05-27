@@ -1,0 +1,125 @@
+﻿@model PlaylistId
+@{
+    ViewData["Title"] = "Edit Playlist";
+    Layout = "_SpotifyDjLayout";
+}
+
+<h1>Edit Playlist</h1>
+
+<form method="post" class="uk-form-stacked">
+
+    <p v-if="Errors.length">
+        <b>Please correct the following error(s):</b>
+        <ul>
+            <li class="uk-form-danger" v-for="error in Errors">{{ error }}</li>
+        </ul>
+    </p>
+    <div class="uk-margin uk-grid-small">
+        <label class="uk-form-label">CountryId:</label>
+        <div class="uk-form-controls uk-margin">
+            <input class="uk-input" type="text" v-model="CountryId" disabled />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">Country:</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" type="text" v-model="CountryName" disabled />
+        </div>
+    </div>
+    <div class="uk-margin">
+        <label class="uk-form-label">PlaylistId:</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" type="text" placeholder="Enter id" v-model="PlaylistId" />
+        </div>
+    </div>
+</form>
+
+<div class="uk-button-group">
+    <a class="uk-button-primary" style="padding:10px;margin:10px" v-on:click="check()">Save</a>
+    <a class="uk-button-danger" style="padding:10px;margin:10px" asp-controller="Spotify" asp-action="Index">Go back</a>
+</div>
+
+@section Scripts{
+    <script>
+        var baseUrl = 'https://localhost:5001/api/countries/spotifyplaylists/basic';
+        var app = new Vue({
+            el: '#app',
+            data: {
+                CountryId: "",
+                CountryName: "",
+                PlaylistId: "",
+                Url: "",
+                OldId: "",
+                Playlist: [],
+                Errors: []
+            },
+
+            created: function () {
+                var token = sessionStorage.getItem('token');
+                if (token != null) {
+                    var self = this;
+                    self.GetPlaylist();
+                }
+                else {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
+
+            },
+
+            methods: {
+                check: function () {
+                    var self = this;
+                    self.CheckData = true;
+                    self.Errors = new Array();
+                    if (self.PlaylistId.length == 0) {
+                        self.CheckData = false;
+                        self.Errors.push("Enter a id");
+                    }
+                    if (self.CheckData == true) {
+                        self.UpdatePlaylist()
+                    }
+                },
+
+                GetPlaylist: function() {
+                    var self = this;
+
+                    axios.get(`${baseUrl}/@Model.id`)
+                        .then(function (response) {
+                            self.CountryId = response.data.countryId;
+                            self.CountryName = response.data.countryName;
+                            self.PlaylistId = response.data.playlistId;
+                            self.OldId = response.data.playlistId;
+                            self.Url = response.data.url;
+                        })
+                        .catch(function (error) {
+                            self.Errors.push(error.response.data);
+                        });
+                },
+
+                UpdatePlaylist: function () {
+                    var self = this;
+                    var playlist = {
+                        countryId: self.CountryId,
+                        countryName: self.CountryName,
+                        playlistId: self.PlaylistId,
+                        playlist: self.Playlist
+
+                    };
+                    var token = sessionStorage.getItem('token');
+                    const config = {
+                        headers: { Authorization: `Bearer ${token}` }
+                    };
+                    axios.put(`${baseUrl}/${self.OldId}`, playlist, config)
+                        .then(function (response) {
+                            alert("Playlist has been updated succesfully");
+                            window.location.href = window.location.origin + '/Spotify';
+                        })
+                        .catch(function (error) {
+                            self.Errors.push(error.response.data);
+                        });
+                }
+            }
+        });
+    </script>
+}
+
