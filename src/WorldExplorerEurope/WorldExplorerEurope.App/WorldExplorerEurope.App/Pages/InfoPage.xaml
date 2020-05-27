@@ -175,7 +175,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                             </OnPlatform>
                         </Label.FontFamily>
                     </Label>
-                    <Button  Text="Open in Spotify" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="1">
+                    <Button  Text="Open in Spotify" Command="{Binding OpenPlaylistInBrowser}" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="1">
                         <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>

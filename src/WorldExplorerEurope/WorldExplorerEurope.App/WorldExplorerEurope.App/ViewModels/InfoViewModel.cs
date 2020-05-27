@@ -1,4 +1,5 @@
-﻿using FreshMvvm;
+﻿using Android.Provider;
+using FreshMvvm;
 using Microsoft.AspNetCore.SignalR.Client;
 using Newtonsoft.Json;
 using Plugin.Media;
@@ -26,6 +27,7 @@ using WorldExplorerEurope.App.ViewModels.Syncfusion;
 using WorldExplorerEurope.App.Views;
 using WorldExplorerEurope.Domain.Models;
 using WorldExplorerEurope.ViewModels;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WorldExplorerEurope.App.ViewModels
@@ -318,6 +320,15 @@ namespace WorldExplorerEurope.App.ViewModels
 
         private Uri playlistLink;
 
+        public ICommand OpenPlaylistInBrowser => new Command(
+            async () =>
+            {
+                if (playlistLink != null)
+                    await Launcher.OpenAsync(playlistLink);
+                else
+                    await Application.Current.MainPage.DisplayAlert("Cannot open link!!", "This country does not have a playlist yet.\nPlease, suggest us some songs if you want😀", "ok😁");
+            });
+
         public async Task<ObservableCollection<BasicPlaylist>> GetCountryPlaylist()
         {
             try
@@ -373,14 +384,14 @@ namespace WorldExplorerEurope.App.ViewModels
         //This is code I wanted to implement, but for some reason it does not work
         private async Task<bool> CheckAndroidCameraPermissions()
         {
-            PermissionStatus status = await CrossPermissions.Current.CheckPermissionStatusAsync<CalendarPermission>();
-            if (status != PermissionStatus.Granted)
+            Plugin.Permissions.Abstractions.PermissionStatus status = await CrossPermissions.Current.CheckPermissionStatusAsync<CalendarPermission>();
+            if (status != Plugin.Permissions.Abstractions.PermissionStatus.Granted)
             {
                 status = await CrossPermissions.Current.RequestPermissionAsync<CameraPermission>();
                 return true;
             }
 
-            if (status == PermissionStatus.Granted)
+            if (status == Plugin.Permissions.Abstractions.PermissionStatus.Granted)
             {
                 return true;
             }
