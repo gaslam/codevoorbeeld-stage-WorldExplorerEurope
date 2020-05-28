@@ -24,7 +24,9 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
+                    <!-- Dit is niet de beste layout, maar het moest wel af-->
                     <Button  Text="Favourites" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="0" Command="{Binding FavouritesCommand}">
                         <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
@@ -41,7 +43,15 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                             </OnPlatform>
                         </Button.FontFamily>
                     </Button>
-                    <Button  Text="Logout" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="2" Command="{Binding LogoutCommand}">
+                    <Button  Text="Edit" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="80" Grid.Row="0" Grid.Column="2" Command="{Binding EditCommand}">
+                        <Button.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
+                                <On Platform="UWP">/Assets/Fonts/RobotoMono-Bold.ttf#Roboto Mono</On>
+                            </OnPlatform>
+                        </Button.FontFamily>
+                    </Button>
+                    <Button  Text="Logout" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="3" Command="{Binding LogoutCommand}">
                         <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>

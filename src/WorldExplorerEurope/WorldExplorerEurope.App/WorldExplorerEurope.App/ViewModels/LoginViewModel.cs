@@ -109,7 +109,10 @@ namespace WorldExplorerEurope.App.ViewModels
                         var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
                         UserService userService = new UserService();
                         userService.SetUser(user);
-                        await CoreMethods.PushPageModel<MyCountriesViewModel>(user, true, true);
+                        App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MyCountriesViewModel>())
+                        {
+                            BarBackgroundColor = Color.FromHex(ToolBarBackgroundcolor.backgroundColor)
+                        };
 
                         ActivityIndicator = false;
                     }
