@@ -27,6 +27,9 @@ namespace WorldExplorerEurope.App.ViewModels
             if(test == false)countryList = await GetCountries();
             ActivityIndicator = false;
             if(test == false)GetCountryByWishlist();
+            var user = User;
+            if (user == null) user = localService.GetUser();
+            this.CurrentPage.Title = user.FirstName;
         }
 
         private ObservableCollection<Country> countries;
@@ -125,6 +128,14 @@ namespace WorldExplorerEurope.App.ViewModels
                  Countries = favouritesCountries;
                  ActivityIndicator = false;
              });
+
+        public ICommand EditCommand => new Command(
+            async () =>
+            {
+                LocalService localService = new LocalService();
+                var user = localService.GetUser();
+                await CoreMethods.PushPageModel<DetailViewModel>(user, false, true);
+            });
 
         public ICommand WishlistsCommand => new Command(
              () =>

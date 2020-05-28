@@ -175,7 +175,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                             </OnPlatform>
                         </Label.FontFamily>
                     </Label>
-                    <Button  Text="Open in Spotify" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="1">
+                    <Button  Text="Open in Spotify" Command="{Binding OpenPlaylistInBrowser}" Padding="5" Margin="0,0,10,0" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" WidthRequest="100" Grid.Row="0" Grid.Column="1">
                         <Button.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="Android">RobotoMono-Bold.ttf#Roboto Mono</On>
@@ -184,10 +184,10 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                         </Button.FontFamily>
                     </Button>
                 </Grid>
-                <listview:SfListView x:Name="lsvSpotify" ItemsSource="{Binding CountryPlaylist}" IsScrollingEnabled="True" HeightRequest="350" ItemTapped="lsvSpotify_ItemTapped">
+                <listview:SfListView x:Name="lsvSpotify" ItemsSource="{Binding CountryPlaylist}" IsScrollingEnabled="True" HeightRequest="470" ItemTapped="lsvSpotify_ItemTapped">
                     <listview:SfListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid  x:Name="lsvGrid" HorizontalOptions="CenterAndExpand" HeightRequest="350">
+                            <Grid  x:Name="lsvGrid" HorizontalOptions="CenterAndExpand" HeightRequest="470">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="40"></ColumnDefinition>
                                     <ColumnDefinition Width="160"></ColumnDefinition>

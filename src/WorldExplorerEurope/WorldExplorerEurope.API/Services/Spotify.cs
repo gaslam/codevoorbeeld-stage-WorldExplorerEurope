@@ -82,7 +82,7 @@ namespace WorldExplorerEurope.API.Services
                 await AccessAPI();
             }
 
-            var tracks = await _spotify.GetPlaylistTracksAsync(playlist.Id, "", 5, 1, "BE");
+            var tracks = await _spotify.GetPlaylistTracksAsync(playlist.Id, "", 100, 1, "BE");
             List<SpotifyBasicTracksDto> spotifyBasicTracks = new List<SpotifyBasicTracksDto>();
             if (tracks.Items == null) return null;
             for (int i = 0; i < tracks.Items.Count; i++)

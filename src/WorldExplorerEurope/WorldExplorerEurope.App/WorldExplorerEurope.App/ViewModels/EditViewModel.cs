@@ -107,7 +107,8 @@ namespace WorldExplorerEurope.App.ViewModels
                     var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
                     UserService userService = new UserService();
                     userService.SetUser(user);
-                    await CoreMethods.PushPageModel<DetailViewModel>(user, false, true);
+                    await CoreMethods.PopToRoot(true);
+                    await Application.Current.MainPage.DisplayAlert("Update Successfull.", "You just updated your profile succesfully", "OK");
                     ActivityIndicator = false;
                 }
             }

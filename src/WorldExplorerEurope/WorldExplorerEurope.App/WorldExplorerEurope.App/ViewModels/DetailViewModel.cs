@@ -92,7 +92,7 @@ namespace WorldExplorerEurope.App.ViewModels
 
         public ICommand EditCommand => new Command(async () =>
         {
-            await CoreMethods.PushPageModel<EditViewModel>(currentUser, true, true);
+            await CoreMethods.PushPageModel<EditViewModel>(currentUser, false, true);
         });
 
         public ICommand CancelCommand => new Command(
