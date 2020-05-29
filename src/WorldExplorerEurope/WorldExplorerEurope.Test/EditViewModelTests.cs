@@ -21,6 +21,7 @@ using WorldExplorerEurope.API.Domain.DTO;
 using WorldExplorerEurope.API.Domain.Helpers;
 using WorldExplorerEurope.API.Domain.Interfaces;
 using WorldExplorerEurope.API.Services;
+using WorldExplorerEurope.API.Services.Interface;
 using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.ViewModels;
 using WorldExplorerEurope.Test.Services;
@@ -39,6 +40,8 @@ namespace WorldExplorerEurope.Test
 
         private HttpClient _client;
         private readonly WorldExplorerAPIFactory<Startup> _factory;
+
+        private readonly IAPIinterface apiService;
 
         //Used to mock the platform
         public EditViewModelTests(WorldExplorerAPIFactory<Startup> factory)
@@ -59,7 +62,7 @@ namespace WorldExplorerEurope.Test
         {
             //Arrange
             var user = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token, Role = "Admin", IsSpotifyDj = false };
-            var editViewModel = new EditViewModel();
+            var editViewModel = new EditViewModel(apiService);
             editViewModel.Init(user);
             editViewModel.test = true;
 
@@ -84,7 +87,7 @@ namespace WorldExplorerEurope.Test
             try
             {
                 var user = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token };
-                var register = new EditViewModel();
+                var register = new EditViewModel(apiService);
 
                 //Act
                 register.Init(user);
@@ -106,7 +109,7 @@ namespace WorldExplorerEurope.Test
             try
             {
                 var user = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token };
-                var register = new EditViewModel();
+                var register = new EditViewModel(apiService);
 
                 //Act
                 register.Init(user);
@@ -169,7 +172,7 @@ namespace WorldExplorerEurope.Test
             try
             {
                 var user = new User { FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token, Role = "Admin" };
-                var editViewModel = new EditViewModel();
+                var editViewModel = new EditViewModel(apiService);
                 editViewModel.Init(user);
                 editViewModel.EditedUser = new UserEdit() { FirstName = firstname, LastName = lastname, Nationality = nationality, Email = mail };
                 editViewModel.EditedUser.BirthDate = dateOfBirth;

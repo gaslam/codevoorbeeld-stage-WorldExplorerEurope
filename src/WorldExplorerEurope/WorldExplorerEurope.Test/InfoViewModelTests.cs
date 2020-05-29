@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WorldExplorerEurope.API;
 using WorldExplorerEurope.API.Data;
+using WorldExplorerEurope.API.Services.Interface;
 using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Domain.Services.API;
@@ -32,6 +33,7 @@ namespace WorldExplorerEurope.Test
         private readonly WorldExplorerContext _context;
         private HttpClient _client;
         private HttpClient _client2;
+        private IAPIinterface _apiService;
 
         WorldExplorerAPIService worldExplorerAPIService = new WorldExplorerAPIService();
         APIservice apiService = new APIservice();
@@ -59,7 +61,7 @@ namespace WorldExplorerEurope.Test
         {
             //Arrange
 
-            var infoVM = new InfoViewModel();
+            var infoVM = new InfoViewModel(_apiService);
             infoVM.User = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token, Role = "Admin"};
             var country = GetCountry().Result;
             infoVM.Init(country);
@@ -78,7 +80,7 @@ namespace WorldExplorerEurope.Test
         {
             //Arrange
 
-            var infoVM = new InfoViewModel();
+            var infoVM = new InfoViewModel(_apiService);
             infoVM.User = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token, Role = "Admin" };
             var country = GetCountry().Result;
             infoVM.Init(country);
@@ -135,7 +137,7 @@ namespace WorldExplorerEurope.Test
         {
             //Arrange
 
-            var infoVM = new InfoViewModel();
+            var infoVM = new InfoViewModel(_apiService);
             infoVM.User = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token, Role = "Admin" };
             var zeroLength = 0;
             var country = await GetCountry();
@@ -151,7 +153,7 @@ namespace WorldExplorerEurope.Test
         {
             //Arrange
 
-            var infoVM = new InfoViewModel();
+            var infoVM = new InfoViewModel(_apiService);
             infoVM.User = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token, Role = "Admin" };
             var zeroLength = 0;
             var country = await GetCountry();
@@ -167,7 +169,7 @@ namespace WorldExplorerEurope.Test
         {
             //Arrange
 
-            var infoVM = new InfoViewModel();
+            var infoVM = new InfoViewModel(_apiService);
             infoVM.User = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token, Role = "Admin" };
             var zeroLength = 0;
             var country = await GetCountry();
@@ -183,7 +185,7 @@ namespace WorldExplorerEurope.Test
         {
             //Arrange
 
-            var infoVM = new InfoViewModel();
+            var infoVM = new InfoViewModel(_apiService);
             infoVM.User = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token, Role = "Admin" };
             var noPop = 0;
             var country = await GetCountry();
@@ -199,7 +201,7 @@ namespace WorldExplorerEurope.Test
         {
             //Arrange
 
-            var infoVM = new InfoViewModel();
+            var infoVM = new InfoViewModel(_apiService);
             infoVM.User = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token, Role = "Admin" };
             var zeroLength = 0;
             var country = await GetCountry();
@@ -215,7 +217,7 @@ namespace WorldExplorerEurope.Test
         {
             //Arrange
 
-            var infoVM = new InfoViewModel();
+            var infoVM = new InfoViewModel(_apiService);
             infoVM.User = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token, Role = "Admin" };
             var zeroLength = 0;
             var country = await GetCountry();
@@ -231,7 +233,7 @@ namespace WorldExplorerEurope.Test
         {
             //Arrange
 
-            var infoVM = new InfoViewModel();
+            var infoVM = new InfoViewModel(_apiService);
             infoVM.User = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token, Role = "Admin" };
             var zeroLength = 0;
             var country = await GetCountry();

@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WorldExplorerEurope.API;
+using WorldExplorerEurope.API.Services.Interface;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.ViewModels;
 using WorldExplorerEurope.Domain.Models;
@@ -25,7 +26,7 @@ namespace WorldExplorerEurope.Test
 
         private readonly WorldExplorerAPIFactory<Startup> _factory;
         private HttpClient _client;
-
+        private IAPIinterface aPIinterface;
         public MainViewModelTests(WorldExplorerAPIFactory<Startup> factory)
         {
             _factory = factory;
@@ -44,7 +45,7 @@ namespace WorldExplorerEurope.Test
         public async void GetCountries_returns_NotNullList()
         {
             //Arrange
-            var mainViewModel = new MainViewModel();
+            var mainViewModel = new MainViewModel(aPIinterface);
 
             //Act
 
@@ -59,7 +60,7 @@ namespace WorldExplorerEurope.Test
         public async void Filter_returns_NotNull()
         {
             //Arrange
-            var mainViewModel = new MainViewModel();
+            var mainViewModel = new MainViewModel(aPIinterface);
             var countries = await Countries();
             mainViewModel.Countries = countries;
 

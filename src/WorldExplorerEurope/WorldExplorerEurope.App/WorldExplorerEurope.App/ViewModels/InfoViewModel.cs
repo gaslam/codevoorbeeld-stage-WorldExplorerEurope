@@ -39,14 +39,13 @@ namespace WorldExplorerEurope.App.ViewModels
         private Country _country;
 
         private IAPIinterface _apiService;
-        private MainViewModel mainViewModel = new MainViewModel();
         private LocalService _localService;
         private ExplorerHubViewModel explorerHubViewModel;
         private HubConnection connection;
 
-        public InfoViewModel()
+        public InfoViewModel(IAPIinterface _apiService)
         {
-            this._apiService = new APIservice();
+            this._apiService = _apiService;
             _localService = new LocalService();
             explorerHubViewModel = new ExplorerHubViewModel();
         }

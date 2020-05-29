@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WorldExplorerEurope.API;
 using WorldExplorerEurope.API.Domain.DTO;
+using WorldExplorerEurope.API.Services.Interface;
 using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.ViewModels;
 using WorldExplorerEurope.Test.Services;
@@ -27,6 +28,8 @@ namespace WorldExplorerEurope.Test
         private const string url = "https://localhost:5001/api/countries/Users";
         private HttpClient _client;
         private readonly WorldExplorerAPIFactory<Startup> _factory;
+
+        private readonly IAPIinterface apiService;
 
 
         //Used to mock the platform
@@ -49,7 +52,7 @@ namespace WorldExplorerEurope.Test
             try
             {
                 var moq = new Mock<RegisterViewModel>();
-                var register = new RegisterViewModel();
+                var register = new RegisterViewModel(apiService);
                 register.Init(moq.Object);
                 register.test = true;
                 register.newUser = new UserRegister() { FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@test.howest.be", Password = "t}F87)8GBaj<" };
@@ -75,7 +78,7 @@ namespace WorldExplorerEurope.Test
             try
             {
                 var moq = new Mock<RegisterViewModel>();
-                var register = new RegisterViewModel();
+                var register = new RegisterViewModel(apiService);
 
                 //Act
                 register.Init(moq.Object);
@@ -151,7 +154,7 @@ namespace WorldExplorerEurope.Test
             try
             {
                 var moq = new Mock<RegisterViewModel>();
-                var loginViewModel = new RegisterViewModel();
+                var loginViewModel = new RegisterViewModel(apiService);
                 loginViewModel.Init(moq.Object);
                 loginViewModel.newUser = new UserRegister() { FirstName = firstname, LastName = lastname, Nationality = nationality, Email = mail, Password = password, PasswordRepeat = passwordRepeat };
                 loginViewModel.newUser.BirthDate = dateOfBirth;
