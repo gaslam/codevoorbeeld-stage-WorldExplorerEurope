@@ -25,9 +25,9 @@ namespace WorldExplorerEurope.App.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         private IAPIinterface _apiService;
-        public RegisterViewModel()
+        public RegisterViewModel(IAPIinterface apiService)
         {
-            _apiService = new APIservice();
+            _apiService = apiService;
         }
 
         public async override void Init(object initData)

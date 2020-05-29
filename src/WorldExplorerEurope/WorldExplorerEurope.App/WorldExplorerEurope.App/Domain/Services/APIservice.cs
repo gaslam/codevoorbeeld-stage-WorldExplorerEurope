@@ -14,6 +14,10 @@ namespace WorldExplorerEurope.App.Domain.Services
 {
     public class APIservice : IAPIinterface
     {
+        public APIservice()
+        {
+
+        }
         public async Task<string> Get(string url)
         {
             try

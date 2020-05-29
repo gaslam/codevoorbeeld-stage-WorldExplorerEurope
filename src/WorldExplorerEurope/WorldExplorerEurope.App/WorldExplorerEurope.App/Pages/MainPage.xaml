@@ -44,7 +44,7 @@ xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfL
                     </Button>
                 </Grid>
                 <Grid>
-                    <listview:SfListView x:Name="SfListViewCountries" ItemSize="50" ItemTapped="SfListViewCountries_ItemTapped" TapCommand="{Binding ItemTappedCommand}" Margin="0,0,0,75">
+                    <listview:SfListView x:Name="SfListViewCountries" ItemSize="50" ItemTapped="SfListViewCountries_ItemTapped" ItemsSource="{Binding Countries}" TapCommand="{Binding ItemTappedCommand}" Margin="0,0,0,75">
                         <listview:SfListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid VerticalOptions="End" x:Name="lsvGrid">

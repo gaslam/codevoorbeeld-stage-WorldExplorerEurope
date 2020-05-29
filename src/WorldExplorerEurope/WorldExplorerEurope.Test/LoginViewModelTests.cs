@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using WorldExplorerEurope.API;
 using WorldExplorerEurope.API.Data;
 using WorldExplorerEurope.API.Domain.DTO;
+using WorldExplorerEurope.API.Services.Interface;
 using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.ViewModels;
 using WorldExplorerEurope.Test.Services;
@@ -32,6 +33,8 @@ namespace WorldExplorerEurope.Test
         private const string token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImE1MzExMjE0LTU2NGYtNDgyNC1iYTY1LWI1NzA0MjM0OWU0OSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTU5MDA4MzE5MywiZXhwIjoxNTkwNjg3OTkyLCJpYXQiOjE1OTAwODMxOTN9.kB_B1ILsx3Mqyb8iL3qQZglqxXXcJ_oyTBXPmcrxT2I";
         private HttpClient _client;
         private readonly WorldExplorerAPIFactory<Startup> _factory;
+
+        private readonly IAPIinterface _apiService;
 
 
         //Used to mock the platform
@@ -57,7 +60,7 @@ namespace WorldExplorerEurope.Test
             try
             {
                 var moq = new Mock<LoginViewModel>();
-                var loginViewModel = new LoginViewModel();
+                var loginViewModel = new LoginViewModel(_apiService);
                 loginViewModel.Init(moq.Object);
                 loginViewModel.test = true;
                 loginViewModel.newUser = new UserLogin() { Email = "test2.test2@student.howest.be", Password = "9xE6ALJfQ6$k" };
@@ -82,7 +85,7 @@ namespace WorldExplorerEurope.Test
             try
             {
                 var moq = new Mock<LoginViewModel>();
-                var loginViewModel = new LoginViewModel();
+                var loginViewModel = new LoginViewModel(_apiService);
                 loginViewModel.Init(moq.Object);
                 loginViewModel.test = true;
 
@@ -126,7 +129,7 @@ namespace WorldExplorerEurope.Test
             try
             {
                 var moq = new Mock<LoginViewModel>();
-                var loginViewModel = new LoginViewModel();
+                var loginViewModel = new LoginViewModel(_apiService);
 
                 //Act
                 loginViewModel.Init(moq.Object);
@@ -155,7 +158,7 @@ namespace WorldExplorerEurope.Test
             try
             {
                 var moq = new Mock<LoginViewModel>();
-                var loginViewModel = new LoginViewModel();
+                var loginViewModel = new LoginViewModel(_apiService);
                 loginViewModel.Init(moq.Object);
                 loginViewModel.DataForm.ValidationMode = ValidationMode.PropertyChanged;
                 loginViewModel.newUser = new UserLogin() { Email = mail, Password = password };

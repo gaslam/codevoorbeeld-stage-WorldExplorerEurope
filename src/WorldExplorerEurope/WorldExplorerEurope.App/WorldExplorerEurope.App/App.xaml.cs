@@ -1,6 +1,7 @@
 ﻿using FreshMvvm;
 using MediaManager;
 using System;
+using WorldExplorerEurope.API.Services.Interface;
 using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Pages;
 using WorldExplorerEurope.App.ViewModels;
@@ -15,7 +16,7 @@ namespace WorldExplorerEurope.App
         public App()
         {
             InitializeComponent();
-
+            FreshIOC.Container.Register<IAPIinterface>(new APIservice());
             MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>())
             {
                 BarBackgroundColor = Color.FromHex(ToolBarBackgroundcolor.backgroundColor)

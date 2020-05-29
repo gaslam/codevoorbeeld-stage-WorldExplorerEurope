@@ -30,9 +30,9 @@ namespace WorldExplorerEurope.App.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public LoginViewModel()
+        public LoginViewModel(IAPIinterface apiService)
         {
-            _apiService = new APIservice();
+            _apiService = apiService;
         }
 
         public async override void Init(object initData)
