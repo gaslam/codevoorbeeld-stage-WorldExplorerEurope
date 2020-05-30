@@ -11,30 +11,32 @@
     <a class="uk-button-primary uk-grid-width-large-1-1" style="padding:10px" v-on:click="filter()">Search</a>
     <a class="uk-button-primary uk-grid-width-large-1-1" style="padding:10px" asp-controller="Home" asp-action="AddUser">Add</a>
 </div>
-<table class="uk-table uk-table-expand uk-table-hover uk-table-striped">
-    <caption>Users</caption>
-    <thead>
-        <tr>
-            <th>Name:</th>
-            <th>Nationality:</th>
-            <th>Email:</th>
-            <th>Date of birth:</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr v-for="user in filtereditems">
-            <td>{{user.firstName}} {{user.lastName}}</td>
-            <td>{{user.nationality}}</td>
-            <td>{{user.email}}</td>
-            <td>{{user.birthDate}}</td>
-            <td>
-                <a class="uk-button-primary" style="padding:10px" v-bind:href="`../UserDetails/${user.id}`">Edit</a>
-                <a class="uk-button-danger" style="padding:10px" v-on:click="DeleteData(`${user.id}`)" >Delete</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="uk-overflow-auto">
+    <table class="uk-table uk-table-hover uk-table-striped uk-table-">
+        <caption>Users</caption>
+        <thead>
+            <tr>
+                <th>Name:</th>
+                <th>Nationality:</th>
+                <th>Email:</th>
+                <th>Date of birth:</th>
+                <th class="uk-text-nowrap"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="user in filtereditems">
+                <td>{{user.firstName}} {{user.lastName}}</td>
+                <td>{{user.nationality}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.birthDate}}</td>
+                <td class="uk-text-nowrap">
+                    <a class="uk-button-primary uk-preserve-width" style="padding:10px;" v-bind:href="`../UserDetails/${user.id}`">Edit</a>
+                    <a class="uk-button-danger uk-preserve-width" style="padding:10px;" v-on:click="DeleteData(`${user.id}`)">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 @section Scripts{
     <script>
@@ -65,10 +67,17 @@
                     axios.get(`${baseUrl}/users`)
                         .then((response) => {
                             self.users = response.data;
+                            for (var i = 0; i < self.users.length; i++) {
+                                var date = new Date(self.users[i].birthDate);
+                                var dateInt = date.getDate();
+                                var dateString = `${dateInt}`;
+                                var monthInt = date.getMonth();
+                                var monthString = `${monthInt}`;
+                                if (dateInt < 10) dateString = `0${dateString}`;
+                                if (monthInt < 10) monthString = `0${monthString}`;
+                                self.users[i].birthDate = `${dateString}/${monthString}/${date.getFullYear()}`;
+                            }
                             self.filtereditems = self.users;
-                            self.users.forEach(value => {
-                                value.link
-                            })
                         }
                         )
                         .catch(function (error) {
