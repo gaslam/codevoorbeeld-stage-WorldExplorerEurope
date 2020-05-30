@@ -62,6 +62,7 @@ namespace WorldExplorerEurope.App.ViewModels
             ChangePageContentBasedOnUser();
             AddedInFavourites = $"Times added: {_country.favourites.Count}";
             AddedInWishlist = $"Times added: {_country.countryWishlists.Count}";
+            await explorerHubViewModel.Connect();
             if (explorerHubViewModel.IsConnected == true)
             {
                 connection = getHubConnection();
