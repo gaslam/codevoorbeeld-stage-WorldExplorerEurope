@@ -230,7 +230,7 @@ namespace WorldExplorerEurope.API.Controllers
             }
         }
 
-        [HttpPost("/{countryName}flag")]
+        [HttpPost("{countryName}/flag")]
         public async Task<IActionResult> UploadFlag([FromRoute] string countryName, IFormFile flag)
         {
             var existingCountry = _countryMapperRepo.GetAll().FirstOrDefault(m => m.Name.ToLower() == countryName.ToLower());

@@ -69,8 +69,8 @@
 </form>
 
 <div class="uk-button-group">
-    <a class="uk-button-primary" style="padding:10px;margin:10px" v-on:click="login()">Add</a>
-    <a class="uk-button-danger" style="padding:10px;margin:10px" asp-controller="Home" asp-action="Home">Go back</a>
+    <a class="uk-button-primary explorer-button-margin" v-on:click="login()">Add</a>
+    <a class="uk-button-danger explorer-button-margin" asp-controller="Home" asp-action="Home">Go back</a>
 </div>
 
 @section Scripts{
@@ -112,11 +112,11 @@
                     self.Errors = new Array();
                     if (self.FirstName.length == 0) {
                         self.CheckData = false;
-                        self.Errors.push("Enter a valid name");
+                        self.Errors.push("Enter a valid firstname");
                     }
                     if (self.LastName.length == 0) {
                         self.CheckData = false;
-                        self.Errors.push("Enter a valid name");
+                        self.Errors.push("Enter a valid lastname");
                     }
                     if (!regEmail.test(self.Email)) {
                         self.CheckData = false;

@@ -41,7 +41,7 @@
     <div class="uk-margin">
         <label class="uk-form-label">Flag:</label>
         <div class="uk-form-controls">
-            <input class="uk-input" type="file" id="image" name="image" placeholder="Select file" />
+            <input class="uk-input" type="file" id="image" name="image" placeholder="Select image. Only SVG's are accepted." />
         </div>
     </div>
     <div class="uk-margin">
@@ -58,8 +58,8 @@
 </form>
 
 <div class="uk-button-group">
-    <a class="uk-button-primary" style="padding:10px;margin:10px" v-on:click="check()">Add</a>
-    <a class="uk-button-danger" style="padding:10px;margin:10px" asp-controller="Country" asp-action="Index">Go back</a>
+    <a class="uk-button-primary explorer-button-margin" v-on:click="check()">Add</a>
+    <a class="uk-button-danger explorer-button-margin" asp-controller="Country" asp-action="Index">Go back</a>
 </div>
 
 @section Scripts{
@@ -119,7 +119,7 @@
                     }
                 },
 
-                AddCountry: function() {
+                AddCountry: function(token) {
                     var self = this;
                     var country = {
                         name: self.Name,
@@ -134,8 +134,12 @@
                         countryWishlists: new Array(),
                     };
                     if (self.IsEUMember.length > 0) country.isEUMember = true;
-
-                    axios.post(`${baseUrl}/add`, country)
+                    const config = {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    };
+                    axios.post(`${baseUrl}/add`, country, config)
                         .then(function (response) {
                             alert("Country has been added succesfully");
                             self.Name = "";
@@ -153,12 +157,19 @@
                 },
                 uploadFlag: function () {
                     var self = this;
+                    var token = sessionStorage.getItem('token');
                     formData = new FormData();
                     formData.append('flag', $('#image')[0].files[0]);
-                    axios.post(`${baseUrl}/${self.Name}/flag`, formData, {headers: {"Content-Type": "multipart/form-data"}} )
+                    const config = {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "multipart/form-data"
+                        }
+                    };
+                    axios.post(`${baseUrl}/${self.Name}/flag`, formData, config)
                         .then(function (response) {
                             self.FlagUrl = response.data;
-                            self.AddCountry()
+                            self.AddCountry(token)
                         })
                         .catch(function (error) {
                             self.Errors.push(error.response.data);
