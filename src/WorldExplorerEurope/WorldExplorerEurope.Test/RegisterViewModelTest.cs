@@ -51,11 +51,11 @@ namespace WorldExplorerEurope.Test
             //Arrange
             try
             {
-                var moq = new Mock<RegisterViewModel>();
-                var register = new RegisterViewModel(apiService);
-                register.Init(moq.Object);
+                var moq = new Mock<IAPIinterface>();
+                var register = new RegisterViewModel(moq.Object);
                 register.test = true;
-                register.newUser = new UserRegister() { FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@test.howest.be", Password = "t}F87)8GBaj<" };
+                register.Init(moq.Object);
+                register.newUser = new UserRegister() { FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test123.test123@test.howest.be", Password = "t}F87)8GBaj<"  };
                 //Act
                 var response = await GetUser(register.newUser);
 
@@ -75,27 +75,19 @@ namespace WorldExplorerEurope.Test
         public void RegisterCommand_returns_UserRegister()
         {
             //Arrange
-            try
+            var moq = new Mock<IAPIinterface>();
+            var register = new RegisterViewModel(moq.Object);
+
+            //Act
+            register.Init(moq.Object);
+
+            while (register.test == true)
             {
-                var moq = new Mock<RegisterViewModel>();
-                var register = new RegisterViewModel(apiService);
-
-                //Act
-                register.Init(moq.Object);
-
-                while(register.test == true)
-                {
-
-                }
-
-                //Assert
-                Assert.IsType<UserRegister>(register.newUser);
 
             }
-            catch (Exception ex)
-            {
-                Assert.True(false, ex.Message);
-            }
+
+            //Assert
+            Assert.IsType<UserRegister>(register.newUser);
         }
 
         private async Task<HttpResponseMessage> GetUser(UserRegister userRegister)
@@ -104,10 +96,10 @@ namespace WorldExplorerEurope.Test
             {
                 using (var client = _client)
                 {
-                    var user = new UserDto { FirstName = userRegister.FirstName , LastName = userRegister.LastName, BirthDate = userRegister.BirthDate.Date, Nationality = userRegister.Nationality, Email = userRegister.Email, Password = userRegister.Password };
+                    var user = new UserDto { FirstName = userRegister.FirstName, LastName = userRegister.LastName, BirthDate = userRegister.BirthDate.Date, Nationality = userRegister.Nationality, Email = userRegister.Email, Password = userRegister.Password, Role="Visitor", IsSpotifyDj = false };
                     var json = JsonConvert.SerializeObject(user);
                     StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-                    var response = await client.PostAsync($"{url}/users/register", stringContent);
+                    var response = await client.PostAsync($"{url}/register", stringContent);
                     return response;
                 }
             }
@@ -136,9 +128,9 @@ namespace WorldExplorerEurope.Test
             yield return new object[] { "test", "test", DateTime.Now.AddYears(-12).Date, "testland", "test.studenthowest.be", "t}F87)8GBaj<", "t}F87)8GBaj<", "Email" };
             yield return new object[] { "test", "test", DateTime.Now.AddYears(-12).Date, "testland", null, "t}F87)8GBaj<", "t}F87)8GBaj<", "Email" };
             //Invalid Passwords
-            yield return new object[] { "test", "test",DateTime.Now.AddYears(-12).Date, "testland", "gaspard.lammertyn@student.howest.be", null, "t}F87)8GBaj<", "Password" };
-            yield return new object[] { "test", "test",DateTime.Now.AddYears(-12).Date, "testland", "gaspard.lammertyn@student.howest.be", "", "t}F87)8GBaj<", "Password" };
-            yield return new object[] { "test", "test",DateTime.Now.AddYears(-12).Date, "testland", "gaspard.lammertyn@student.howest.be", "t}F88Baj<", "t}F87)8GBaj<", "Password" };
+            yield return new object[] { "test", "test", DateTime.Now.AddYears(-12).Date, "testland", "gaspard.lammertyn@student.howest.be", null, "t}F87)8GBaj<", "Password" };
+            yield return new object[] { "test", "test", DateTime.Now.AddYears(-12).Date, "testland", "gaspard.lammertyn@student.howest.be", "", "t}F87)8GBaj<", "Password" };
+            yield return new object[] { "test", "test", DateTime.Now.AddYears(-12).Date, "testland", "gaspard.lammertyn@student.howest.be", "t}F88Baj<", "t}F87)8GBaj<", "Password" };
             //Invalid Repeated Passwords
             yield return new object[] { "test", "test", DateTime.Now.AddYears(-12).Date, "testland", "gaspard.lammertyn@student.howest.be", "t}F87)8GBaj<", "", "PasswordRepeat" };
             yield return new object[] { "test", "test", DateTime.Now.AddYears(-12).Date, "testland", "gaspard.lammertyn@student.howest.be", "t}F87)8GBaj<", null, "PasswordRepeat" };
@@ -148,30 +140,22 @@ namespace WorldExplorerEurope.Test
 
         [Theory]
         [MemberData(nameof(RegisterData))]
-        public void GetErrors_ValidatesUser_returns_true(string firstname, string lastname, DateTime dateOfBirth , string nationality, string mail, string password, string passwordRepeat, string property)
+        public void GetErrors_ValidatesUser_returns_true(string firstname, string lastname, DateTime dateOfBirth, string nationality, string mail, string password, string passwordRepeat, string property)
         {
             //Arrange
-            try
-            {
-                var moq = new Mock<RegisterViewModel>();
-                var loginViewModel = new RegisterViewModel(apiService);
-                loginViewModel.Init(moq.Object);
-                loginViewModel.newUser = new UserRegister() { FirstName = firstname, LastName = lastname, Nationality = nationality, Email = mail, Password = password, PasswordRepeat = passwordRepeat };
-                loginViewModel.newUser.BirthDate = dateOfBirth;
+            var moq = new Mock<IAPIinterface>();
+            var loginViewModel = new RegisterViewModel(moq.Object);
+            loginViewModel.Init(moq.Object);
+            loginViewModel.newUser = new UserRegister() { FirstName = firstname, LastName = lastname, Nationality = nationality, Email = mail, Password = password, PasswordRepeat = passwordRepeat };
+            loginViewModel.newUser.BirthDate = dateOfBirth;
 
-                bool expected = true;
-                //Act
-                var errors = loginViewModel.newUser.GetErrors(property).ToList<string>();
-                var actual = errors.Any();
+            bool expected = true;
+            //Act
+            var errors = loginViewModel.newUser.GetErrors(property).ToList<string>();
+            var actual = errors.Any();
 
-                //Assert
-                Assert.Equal(expected, actual);
-
-            }
-            catch (Exception ex)
-            {
-                Assert.True(false, ex.Message);
-            }
+            //Assert
+            Assert.Equal(expected, actual);
         }
     }
 }

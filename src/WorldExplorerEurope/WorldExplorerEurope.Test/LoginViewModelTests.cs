@@ -34,7 +34,7 @@ namespace WorldExplorerEurope.Test
         private HttpClient _client;
         private readonly WorldExplorerAPIFactory<Startup> _factory;
 
-        private readonly IAPIinterface _apiService;
+        private readonly IAPIinterface apiService;
 
 
         //Used to mock the platform
@@ -57,50 +57,34 @@ namespace WorldExplorerEurope.Test
         public async void LoginCommand_returns_NoErrorMessage()
         {
             //Arrange
-            try
-            {
-                var moq = new Mock<LoginViewModel>();
-                var loginViewModel = new LoginViewModel(_apiService);
-                loginViewModel.Init(moq.Object);
-                loginViewModel.test = true;
-                loginViewModel.newUser = new UserLogin() { Email = "test2.test2@student.howest.be", Password = "9xE6ALJfQ6$k" };
-                //Act
-                var response = await GetUser(new UserLoginDto() { Email = loginViewModel.newUser.Email, Password = loginViewModel.newUser.Password });
-                if (!response.IsSuccessStatusCode) loginViewModel.newUser.ErrorMessage = await response.Content.ReadAsStringAsync();
+            var moq = new Mock<IAPIinterface>();
+            var loginViewModel = new LoginViewModel(moq.Object);
+            loginViewModel.test = true;
+            loginViewModel.Init(moq.Object);
+            loginViewModel.newUser = new UserLogin() { Email = "test123.test123@test.howest.be", Password = "t}F87)8GBaj<" };
+            //Act
+            var response = await GetUser(new UserLoginDto() { Email = loginViewModel.newUser.Email, Password = loginViewModel.newUser.Password });
+            if (!response.IsSuccessStatusCode) loginViewModel.newUser.ErrorMessage = await response.Content.ReadAsStringAsync();
 
-                //Assert
-                Assert.Null(loginViewModel.newUser.ErrorMessage);
-
-            }
-            catch(Exception ex)
-            {
-                Assert.True(false, ex.Message);
-            }
+            //Assert
+            Assert.Null(loginViewModel.newUser.ErrorMessage);
         }
 
         [Fact]
         public async void LoginCommand_returns_UserLogin()
         {
             //Arrange
-            try
-            {
-                var moq = new Mock<LoginViewModel>();
-                var loginViewModel = new LoginViewModel(_apiService);
-                loginViewModel.Init(moq.Object);
-                loginViewModel.test = true;
+            var moq = new Mock<IAPIinterface>();
+            var loginViewModel = new LoginViewModel(moq.Object); ;
+            loginViewModel.Init(moq.Object);
+            loginViewModel.test = true;
 
-                //Act
+            //Act
 
-                loginViewModel.newUser = new UserLogin() { Email = "test2.test2@student.howest.be", Password = "9xE6ALJfQ6$k" };
+            loginViewModel.newUser = new UserLogin() { Email = "test2.test2@student.howest.be", Password = "9xE6ALJfQ6$k" };
 
-                //Assert
-                Assert.IsType<UserLogin>(loginViewModel.newUser);
-
-            }
-            catch (Exception ex)
-            {
-                Assert.True(false, ex.Message);
-            }
+            //Assert
+            Assert.IsType<UserLogin>(loginViewModel.newUser);
         }
 
         private async Task<HttpResponseMessage> GetUser(UserLoginDto user)
@@ -126,23 +110,15 @@ namespace WorldExplorerEurope.Test
         public void Init_returns_UserLogin()
         {
             //Arrange
-            try
-            {
-                var moq = new Mock<LoginViewModel>();
-                var loginViewModel = new LoginViewModel(_apiService);
+            var moq = new Mock<IAPIinterface>();
+            var loginViewModel = new LoginViewModel(moq.Object);
 
-                //Act
-                loginViewModel.Init(moq.Object);
-                loginViewModel.test = true;
+            //Act
+            loginViewModel.Init(moq.Object);
+            loginViewModel.test = true;
 
-                //Assert
-                Assert.IsType<UserLogin>(loginViewModel.newUser);
-
-            }
-            catch (Exception ex)
-            {
-                Assert.True(false, ex.Message);
-            }
+            //Assert
+            Assert.IsType<UserLogin>(loginViewModel.newUser);
         }
 
         [Theory]
@@ -155,27 +131,19 @@ namespace WorldExplorerEurope.Test
         public void GetErrors_ValidatesUser_returns_true(string mail, string password, string property)
         {
             //Arrange
-            try
-            {
-                var moq = new Mock<LoginViewModel>();
-                var loginViewModel = new LoginViewModel(_apiService);
-                loginViewModel.Init(moq.Object);
-                loginViewModel.DataForm.ValidationMode = ValidationMode.PropertyChanged;
-                loginViewModel.newUser = new UserLogin() { Email = mail, Password = password };
+            var moq = new Mock<IAPIinterface>();
+            var loginViewModel = new LoginViewModel(moq.Object);
+            loginViewModel.Init(moq.Object);
+            loginViewModel.DataForm.ValidationMode = ValidationMode.PropertyChanged;
+            loginViewModel.newUser = new UserLogin() { Email = mail, Password = password };
 
-                bool expected = true;
-                //Act
-                var errors = loginViewModel.newUser.GetErrors(property).ToList<string>();
-                var actual = errors.Any<string>(m => m.Contains(property.ToLower()));
+            bool expected = true;
+            //Act
+            var errors = loginViewModel.newUser.GetErrors(property).ToList<string>();
+            var actual = errors.Any<string>(m => m.Contains(property.ToLower()));
 
-                //Assert
-                Assert.Equal(expected, actual);
-
-            }
-            catch (Exception ex)
-            {
-                Assert.True(false, ex.Message);
-            }
+            //Assert
+            Assert.Equal(expected, actual);
         }
     }
 }

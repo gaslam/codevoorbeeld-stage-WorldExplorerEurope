@@ -73,8 +73,8 @@ namespace WorldExplorerEurope.API.Controllers
             {
                 var hasher = new PasswordHasher<UserDto>();
                 user.Password = hasher.HashPassword(user, user.Password);
-                await _userMappingRepo.Add(user);
                 user.Token = _userService.GenerateToken(user);
+                await _userMappingRepo.Add(user);
                 return Ok(user);
             }
             catch

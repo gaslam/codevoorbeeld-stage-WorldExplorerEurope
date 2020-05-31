@@ -20,7 +20,6 @@ using WorldExplorerEurope.API;
 using WorldExplorerEurope.API.Domain.DTO;
 using WorldExplorerEurope.API.Domain.Helpers;
 using WorldExplorerEurope.API.Domain.Interfaces;
-using WorldExplorerEurope.API.Services;
 using WorldExplorerEurope.API.Services.Interface;
 using WorldExplorerEurope.App.Domain.Models;
 using WorldExplorerEurope.App.ViewModels;
@@ -34,14 +33,14 @@ namespace WorldExplorerEurope.Test
 {
     public class EditViewModelTests : IClassFixture<WorldExplorerAPIFactory<Startup>>
     {
-        private IUserService _userService;
-        private const string token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImE1MzExMjE0LTU2NGYtNDgyNC1iYTY1LWI1NzA0MjM0OWU0OSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTU5MDA4MzE5MywiZXhwIjoxNTkwNjg3OTkyLCJpYXQiOjE1OTAwODMxOTN9.kB_B1ILsx3Mqyb8iL3qQZglqxXXcJ_oyTBXPmcrxT2I";
+
         private const string url = "https://localhost:5001/api/countries";
 
         private HttpClient _client;
         private readonly WorldExplorerAPIFactory<Startup> _factory;
 
-        private readonly IAPIinterface apiService;
+        private Mock moqApiService;
+        private User user;
 
         //Used to mock the platform
         public EditViewModelTests(WorldExplorerAPIFactory<Startup> factory)
@@ -55,14 +54,19 @@ namespace WorldExplorerEurope.Test
 
             var platformServicesFake = A.Fake<IPlatformServices>();
             Device.PlatformServices = platformServicesFake;
+
+            var moq = new Mock<UserService>();
+
+            user = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Role = "Admin", IsSpotifyDj = false };
+            user.Token = moq.Object.GenerateToken(user);
         }
 
         [Fact]
         public async void EditUser_validUser_returns_NoErrorMessage()
         {
             //Arrange
-            var user = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token, Role = "Admin", IsSpotifyDj = false };
-            var editViewModel = new EditViewModel(apiService);
+            var moq = new Mock<IAPIinterface>();
+            var editViewModel = new EditViewModel(moq.Object);
             editViewModel.Init(user);
             editViewModel.test = true;
 
@@ -84,44 +88,28 @@ namespace WorldExplorerEurope.Test
         public void RegisterCommand_validUserEdit_returns_UserEdit()
         {
             //Arrange
-            try
-            {
-                var user = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token };
-                var register = new EditViewModel(apiService);
+            var moq = new Mock<IAPIinterface>();
+            var register = new EditViewModel(moq.Object);
 
-                //Act
-                register.Init(user);
+            //Act
+            register.Init(user);
 
-                //Assert
-                Assert.IsType<UserEdit>(register.EditedUser);
-
-            }
-            catch (Exception ex)
-            {
-                Assert.True(false, ex.Message);
-            }
+            //Assert
+            Assert.IsType<UserEdit>(register.EditedUser);
         }
 
         [Fact]
         public void RegisterCommand_validUserEdit_returns_NotNull()
         {
             //Arrange
-            try
-            {
-                var user = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token };
-                var register = new EditViewModel(apiService);
+            var moq = new Mock<IAPIinterface>();
+            var register = new EditViewModel(moq.Object);
 
-                //Act
-                register.Init(user);
+            //Act
+            register.Init(user);
 
-                //Assert
-                Assert.NotNull(register.EditedUser);
-
-            }
-            catch (Exception ex)
-            {
-                Assert.True(false, ex.Message);
-            }
+            //Assert
+            Assert.NotNull(register.EditedUser);
         }
 
         private async Task<HttpResponseMessage> GetUser(User user)
@@ -169,27 +157,19 @@ namespace WorldExplorerEurope.Test
         public void GetErrors_ValidatesUser_returns_true(string firstname, string lastname, DateTime dateOfBirth, string nationality, string mail, string property)
         {
             //Arrange
-            try
-            {
-                var user = new User { FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Token = token, Role = "Admin" };
-                var editViewModel = new EditViewModel(apiService);
-                editViewModel.Init(user);
-                editViewModel.EditedUser = new UserEdit() { FirstName = firstname, LastName = lastname, Nationality = nationality, Email = mail };
-                editViewModel.EditedUser.BirthDate = dateOfBirth;
+            var moq = new Mock<IAPIinterface>();
+            var editViewModel = new EditViewModel(moq.Object);
+            editViewModel.Init(user);
+            editViewModel.EditedUser = new UserEdit() { FirstName = firstname, LastName = lastname, Nationality = nationality, Email = mail };
+            editViewModel.EditedUser.BirthDate = dateOfBirth;
 
-                bool expected = true;
-                //Act
-                var errors = editViewModel.EditedUser.GetErrors(property).ToList<string>();
-                var actual = errors.Any();
+            bool expected = true;
+            //Act
+            var errors = editViewModel.EditedUser.GetErrors(property).ToList<string>();
+            var actual = errors.Any();
 
-                //Assert
-                Assert.Equal(expected, actual);
-
-            }
-            catch (Exception ex)
-            {
-                Assert.True(false, ex.Message);
-            }
+            //Assert
+            Assert.Equal(expected, actual);
         }
     }
 }

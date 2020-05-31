@@ -84,7 +84,7 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
                 //If you remove the statement it will always set te value to the current date in syncfusion I believe.
                 birthdate = value;
 
-                if (birthdate.Date != DateTime.Now.Date || birthdate.Year != 1900) birthdate = DateTime.Now.AddYears(-12).Date;
+                if (birthdate.Year == 1900) birthdate = DateTime.Now.AddYears(-12).Date;
                 RaisePropertyChanged(nameof(BirthDate));
             }
         }
