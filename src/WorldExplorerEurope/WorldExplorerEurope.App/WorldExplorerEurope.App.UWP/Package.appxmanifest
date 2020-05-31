@@ -55,6 +55,5 @@
     <Capability Name="internetClientServer"/>
     <Capability Name="privateNetworkClientServer"/>
     <DeviceCapability Name="location"/>
-    <uap3:Capability Name="backgroundMediaPlayback"/>
   </Capabilities>
 </Package>
