@@ -30,5 +30,10 @@ namespace WorldExplorerEurope.App.Pages
         private async void lsvSpotify_ItemTapped(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
         {
         }
+
+        protected override async void OnDisappearing()
+        {
+            base.OnDisappearing();
+        }
     }
 }
