@@ -30,8 +30,8 @@
             <td>{{country.population}}</td>
             <td>{{country.favourites.length}}</td>
             <td>
-                <a class="uk-button-primary" style="padding:10px" v-bind:href="`../CountryDetails/${country.id}`">Edit</a>
-                <a class="uk-button-danger" style="padding:10px" v-on:click="DeleteData(`${country.id}`)">Delete</a>
+                <a class="uk-button-primary explorer-button" v-bind:href="`../CountryDetails/${country.id}`">Edit</a>
+                <a class="uk-button-danger explorer-button" v-on:click="DeleteData(`${country.id}`)">Delete</a>
             </td>
         </tr>
     </tbody>
