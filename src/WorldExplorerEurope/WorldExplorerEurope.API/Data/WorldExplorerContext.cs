@@ -211,6 +211,8 @@ namespace WorldExplorerEurope.API.Data
 
             user.Password = hasher.HashPassword(user, "t}F87)8GBaj<");
 
+            hasher = new PasswordHasher<User>();
+
             User user2 = new User
             {
                 Id = Guid.Parse("00000000-0000-0000-0000-000000000001"),

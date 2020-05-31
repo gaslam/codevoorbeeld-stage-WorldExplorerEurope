@@ -29,7 +29,7 @@ namespace WorldExplorerEurope.App.ViewModels
             if(test == false)GetCountryByWishlist();
             var user = User;
             if (user == null) user = localService.GetUser();
-            this.CurrentPage.Title = user.FirstName;
+            if(test == false)this.CurrentPage.Title = user.FirstName;
         }
 
         private ObservableCollection<Country> countries;
