@@ -226,7 +226,7 @@ namespace WorldExplorerEurope.API.Data
                 IsSpotifyDj = true
             };
 
-            user2.PasswordHash = hasher.HashPassword(user2, "9xE6ALJfQ6$k");
+            user2.PasswordHash = hasher.HashPassword(user2, "tgF84)(8Gcaj<");
 
             base.OnModelCreating(modelBuilder);
 

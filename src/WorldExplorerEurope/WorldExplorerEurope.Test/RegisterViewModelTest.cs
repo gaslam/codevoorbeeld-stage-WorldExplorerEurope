@@ -55,7 +55,7 @@ namespace WorldExplorerEurope.Test
                 var register = new RegisterViewModel(moq.Object);
                 register.test = true;
                 register.Init(moq.Object);
-                register.newUser = new UserRegister() { FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test123.test123@test.howest.be", Password = "t}F87)8GBaj<"  };
+                register.newUser = new UserRegister() { FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test12345.test123@test.howest.be", Password = "t}F87)8GBaj<"  };
                 //Act
                 var response = await GetUser(register.newUser);
 

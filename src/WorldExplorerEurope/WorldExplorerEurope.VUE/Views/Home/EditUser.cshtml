@@ -159,13 +159,14 @@
                         nationality: self.Nationality,
                         birthDate: self.BirthDate,
                         password: self.Password,
+                        isAdmin: false,
+                        isSpotifyDj: false,
+                        token: ""
                     };
 
                     if (self.IsAdmin.length > 0) user.isAdmin = true;
-                    else user.isAdmin = false;
 
-                    if (self.IsSpotifyDj.length > 0) self.isSpotifyDj = true;
-                    else user.isSpotifyDj = false;
+                    if (self.IsSpotifyDj.length > 0) user.isSpotifyDj = true;
 
                     var token = sessionStorage.getItem('token');
                     const config = {
@@ -175,7 +176,6 @@
                     axios.put(`${baseUrl}/users/update/${self.Id}`, user, config)
                         .then(function (response) {
                             alert("User has been updated succesfully");
-                            window.location.href = window.location.origin + '/NotAllowed';
                         })
                         .catch(function (error) {
                             self.Errors.push(error.response.data);

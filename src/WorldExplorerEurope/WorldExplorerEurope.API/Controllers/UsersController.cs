@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -22,7 +23,7 @@ using WorldExplorerEurope.API.Helpers;
 
 namespace WorldExplorerEurope.API.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/countries/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -48,6 +49,19 @@ namespace WorldExplorerEurope.API.Controllers
                 usersWithoutPasswords.Add(new UserDto { BirthDate = user.BirthDate, Email = user.Email, FirstName = user.FirstName, Id = Guid.Parse(user.Id), IsSpotifyDj = user.IsSpotifyDj, LastName = user.LastName, Nationality = user.Nationality, Password = "", Role = user.Role, Token = "" });
             }
             return Ok(usersWithoutPasswords);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAll(Guid id)
+        {
+            var user = _context.Users.SingleOrDefault(m => m.Id == id.ToString());
+            if(user == null)
+            {
+                return NotFound($"Cannot find user with id:{id}");
+            }
+               var newUser = new UserDto { BirthDate = user.BirthDate, Email = user.Email, FirstName = user.FirstName, Id = Guid.Parse(user.Id), IsSpotifyDj = user.IsSpotifyDj, LastName = user.LastName, Nationality = user.Nationality, Password = "", Role = user.Role, Token = "" }; ;
+            return Ok(newUser);
         }
 
         [AllowAnonymous]
@@ -98,7 +112,8 @@ namespace WorldExplorerEurope.API.Controllers
                     BirthDate = userDto.BirthDate,
                     Role = userDto.Role,
                     IsSpotifyDj = userDto.IsSpotifyDj,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    PasswordHash = userDto.Password
                 };
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
@@ -111,7 +126,6 @@ namespace WorldExplorerEurope.API.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet("all")]
         public async Task<IActionResult> GetAllBasicUsers()
         {
@@ -133,9 +147,8 @@ namespace WorldExplorerEurope.API.Controllers
             return Ok(basicUsers);
         }
 
-        [Authorize]
         [HttpDelete("delete/{id}")]
-        public IActionResult UpdateUser([FromRoute] Guid id)
+        public async Task<IActionResult> UpdateUser([FromRoute]Guid id)
         {
             try
             {
@@ -149,6 +162,7 @@ namespace WorldExplorerEurope.API.Controllers
                 {
                     return BadRequest("Cannot delete user.");
                 }
+                await _context.SaveChangesAsync();
                 return Ok();
 
             }
@@ -159,17 +173,16 @@ namespace WorldExplorerEurope.API.Controllers
 
         }
 
-        [Authorize]
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> UpdateUser([FromBody] UserDto userDto, [FromRoute] Guid id)
+        public async Task<IActionResult> UpdateUser([FromBody]UserDto userDto, [FromRoute]string id)
         {
             try
             {
-                if (userDto.Id != id)
+                if (userDto.Id != Guid.Parse(id))
                 {
                     return BadRequest($"Id's are not the same. Dto id: {userDto.Id} & id: {id}");
                 }
-                var user = _context.Users.SingleOrDefault(m => m.Id == id.ToString());
+                var user = _context.Users.SingleOrDefault(m => m.Id == id);
                 if (user == null)
                 {
                     return NotFound("User not found.");
