@@ -8,6 +8,7 @@ using System.Text;
 using WorldExplorerEurope.API.Domain.DTO;
 using WorldExplorerEurope.API.Domain.Helpers;
 using WorldExplorerEurope.API.Domain.Interfaces;
+using WorldExplorerEurope.API.Domain.Models;
 
 namespace WorldExplorerEurope.API.Services
 {
@@ -20,7 +21,7 @@ namespace WorldExplorerEurope.API.Services
             _appSettings = appSettings.Value;
         }
         
-        public string GenerateToken(UserDto user)
+        public string GenerateToken(User user)
         {
             var jwtTokenHander = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ using WorldExplorerEurope.API.Domain.Services;
 
 namespace WorldExplorerEurope.API.Data
 {
-    public class WorldExplorerContext : DbContext
+    public class WorldExplorerContext : IdentityDbContext<User>
     {
         private readonly RestcountriesService _restcountriesService;
-        public WorldExplorerContext(DbContextOptions<WorldExplorerContext> options) : base(options)
+        public WorldExplorerContext(DbContextOptions options) : base(options)
         {
             _restcountriesService = new RestcountriesService();
         }
@@ -199,23 +200,23 @@ namespace WorldExplorerEurope.API.Data
 
             User user = new User
             {
-                Id = Guid.Parse("a5311214-564f-4824-ba65-b57042349e49"),
+                Id = "a5311214-564f-4824-ba65-b57042349e49",
                 FirstName = "Gaspard",
                 LastName = "Lammertyn",
                 BirthDate = Convert.ToDateTime("12/05/1998"),
                 Email = "gaspard.lammertyn@student.howest.be",
                 Nationality = "Belgium",
                 Role = "Admin",
-                IsSpotifyDj = false
+                IsSpotifyDj = false,
             };
 
-            user.Password = hasher.HashPassword(user, "t}F87)8GBaj<");
+            user.PasswordHash = hasher.HashPassword(user, "t}F87)8GBaj<");
 
             hasher = new PasswordHasher<User>();
 
             User user2 = new User
             {
-                Id = Guid.Parse("00000000-0000-0000-0000-000000000001"),
+                Id = "00000000-0000-0000-0000-000000000001",
                 FirstName = "test",
                 LastName = "test",
                 BirthDate = Convert.ToDateTime("12/05/1998"),
@@ -225,14 +226,15 @@ namespace WorldExplorerEurope.API.Data
                 IsSpotifyDj = true
             };
 
-            user2.Password = hasher.HashPassword(user2, "9xE6ALJfQ6$k");
+            user2.PasswordHash = hasher.HashPassword(user2, "9xE6ALJfQ6$k");
+
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>().ToTable("Users")
                 .HasData(
                     user,
                     user2
                 );
-
         }
     }
 }
