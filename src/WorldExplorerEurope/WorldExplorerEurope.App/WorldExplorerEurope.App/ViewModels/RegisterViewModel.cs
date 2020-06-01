@@ -74,7 +74,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 Nationality = newUser.Nationality,
                 Password = newUser.Password,
                 Role = "Visitor",
-                IsSpotifyDj = false
+                IsSpotifyDj = false,
             };
             if (DataForm.Validate() == true)
             {

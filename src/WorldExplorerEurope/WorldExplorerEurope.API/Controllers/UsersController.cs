@@ -126,7 +126,7 @@ namespace WorldExplorerEurope.API.Controllers
                 if (userDto.IsSpotifyDj == true) _context.UserClaims.Add(new IdentityUserClaim<string>() { UserId = user.Id, ClaimType = "isSpotifyDj", ClaimValue = "true" });
                 await _context.SaveChangesAsync();
                 userDto.Token = _userService.GenerateToken(user);
-                return Ok(user);
+                return Ok(userDto);
             }
             catch
             {
