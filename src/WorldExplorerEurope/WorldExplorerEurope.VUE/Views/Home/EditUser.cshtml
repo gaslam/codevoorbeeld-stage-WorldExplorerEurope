@@ -159,12 +159,13 @@
                         nationality: self.Nationality,
                         birthDate: self.BirthDate,
                         password: self.Password,
-                        isAdmin: self.IsAdmin,
-                        isSpotifyDj: self.IsSpotifyDj
                     };
 
-                    if (user.isAdmin.length == true) self.IsAdmin = true;
+                    if (self.IsAdmin.length > 0) user.isAdmin = true;
                     else user.isAdmin = false;
+
+                    if (self.IsSpotifyDj.length > 0) self.isSpotifyDj = true;
+                    else user.isSpotifyDj = false;
 
                     var token = sessionStorage.getItem('token');
                     const config = {
