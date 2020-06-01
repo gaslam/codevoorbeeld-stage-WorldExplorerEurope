@@ -78,7 +78,7 @@ namespace WorldExplorerEurope.Test
             //Act
             user.FirstName = "test";
             user.LastName = "test";
-            user.Email = "test12345.test123@test.howest.be";
+            user.Email = "test1234.test123@test.howest.be";
             var status = await GetUser(user);
             if (!status.IsSuccessStatusCode)
             {

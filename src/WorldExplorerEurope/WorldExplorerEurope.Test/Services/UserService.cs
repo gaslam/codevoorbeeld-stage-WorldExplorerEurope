@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -43,15 +44,27 @@ namespace WorldExplorerEurope.Test.Services
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, user.Role),
-                    new Claim("spotifydj", user.IsSpotifyDj.ToString().ToLower())
-                }),
+                Subject = new ClaimsIdentity(new Claim[0]),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
+            
+            if(user.Role == "Admin")
+            {
+                IdentityUserClaim<string> claim = new IdentityUserClaim<string>() { ClaimType = "role", ClaimValue = user.Role, UserId = user.Id.ToString() };
+                tokenDescriptor.Subject.AddClaim(new Claim(claim.ClaimType, claim.ClaimValue));
+            }
+            else
+            {
+                IdentityUserClaim<string> claim = new IdentityUserClaim<string>() { ClaimType = "role", ClaimValue = user.Role, UserId = user.Id.ToString() };
+                tokenDescriptor.Subject.AddClaim(new Claim(claim.ClaimType, claim.ClaimValue));
+            }
+
+            if(user.IsSpotifyDj == true)
+            {
+                IdentityUserClaim<string> claim = new IdentityUserClaim<string>() { ClaimType = "isSpotifyDJ", ClaimValue = "true", UserId = user.Id.ToString() };
+                tokenDescriptor.Subject.AddClaim(new Claim(claim.ClaimType, claim.ClaimValue));
+            }
 
             var token = jwtTokenHander.CreateToken(tokenDescriptor);
             return jwtTokenHander.WriteToken(token);

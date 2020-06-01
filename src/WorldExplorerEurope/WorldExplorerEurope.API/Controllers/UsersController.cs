@@ -39,7 +39,6 @@ namespace WorldExplorerEurope.API.Controllers
             _context = context;
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -54,7 +53,7 @@ namespace WorldExplorerEurope.API.Controllers
 
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAll(Guid id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var user = _context.Users.SingleOrDefault(m => m.Id == id.ToString());
             if(user == null)
@@ -158,6 +157,8 @@ namespace WorldExplorerEurope.API.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute]Guid id)
         {
+            var AdminRole = User.Claims.Any(m => m.Value == "Admin");
+            if (AdminRole == false) return StatusCode(403);
             try
             {
                 var user = _context.Users.SingleOrDefault(m => m.Id == id.ToString());
@@ -190,6 +191,8 @@ namespace WorldExplorerEurope.API.Controllers
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateUser([FromBody]UserDto userDto, [FromRoute]string id)
         {
+            var AdminRole = User.Claims.Any(m => m.Value == "Admin");
+            if (AdminRole == false) return StatusCode(403);
             try
             {
                 if (userDto.Id != Guid.Parse(id))
@@ -220,6 +223,7 @@ namespace WorldExplorerEurope.API.Controllers
                 if (userDto.IsSpotifyDj == true) _context.UserClaims.Add(new IdentityUserClaim<string>() { UserId = user.Id, ClaimType = "isSpotifyDj", ClaimValue = "true" });
                 if (userDto.Role == "Admin") _context.UserClaims.Add(new IdentityUserClaim<string>() { UserId = user.Id, ClaimType = "role", ClaimValue = userDto.Role });
                 else _context.UserClaims.Add(new IdentityUserClaim<string>() { UserId = user.Id, ClaimType = "role", ClaimValue = userDto.Role });
+                await _context.SaveChangesAsync();
                 return Ok(userDto);
 
             }
