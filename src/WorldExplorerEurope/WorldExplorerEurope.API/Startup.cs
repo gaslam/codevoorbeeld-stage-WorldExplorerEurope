@@ -26,6 +26,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using WorldExplorerEurope.API.Hubs;
+using Microsoft.AspNetCore.Identity;
 
 namespace WorldExplorerEurope.API
 {
@@ -44,21 +45,10 @@ namespace WorldExplorerEurope.API
             services.AddDbContext<WorldExplorerContext>(options => options
                 .UseSqlServer(Configuration.GetConnectionString("WorldExplorerService")));
 
-            services.AddAutoMapper(typeof(Startup));
+            var settings = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(settings);
 
-            services.AddScoped<IRepository<User>, UserRepository>();
-            services.AddScoped<IMappingRepository<UserDto>, UserRepository>();
-            services.AddScoped<IRepository<Country>, CountryRepository>();
-            services.AddScoped<IMappingRepository<CountryDto>, CountryRepository>();
-            services.AddScoped<IRepository<SpotifyPlaylist>, SpotifyRepository>();
-            services.AddScoped<IMappingRepository<SpotifyPlaylistDto>, SpotifyRepository>();
-            services.AddScoped<IMemoryPhotoService, MemoryService<Country>>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-            var appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
-
-            var appSettings = appSettingsSection.Get<AppSettings>();
+            var appSettings = settings.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
             {
@@ -78,6 +68,19 @@ namespace WorldExplorerEurope.API
                 };
             });
 
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<WorldExplorerContext>()
+    .AddDefaultTokenProviders();
+
+            services.AddScoped<IRepository<Country>, CountryRepository>();
+            services.AddScoped<IMappingRepository<CountryDto>, CountryRepository>();
+            services.AddScoped<IRepository<SpotifyPlaylist>, SpotifyRepository>();
+            services.AddScoped<IMappingRepository<SpotifyPlaylistDto>, SpotifyRepository>();
+            services.AddScoped<IMemoryPhotoService, MemoryService<Country>>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 
             services.AddScoped<IUserService, UserService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -89,6 +92,11 @@ namespace WorldExplorerEurope.API
             });
             services.AddCors();
             services.AddSignalR();
+
+            services.AddAuthorization(options => options.AddPolicy("Admin", policy =>
+                                {
+                                    policy.RequireClaim("role", "Admin");
+                                }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

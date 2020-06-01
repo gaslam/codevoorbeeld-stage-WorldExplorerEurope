@@ -52,7 +52,7 @@ namespace WorldExplorerEurope.Test
             var platformServicesFake = A.Fake<IPlatformServices>();
             Device.PlatformServices = platformServicesFake;
         }
-
+        
         [Fact]
         public async void LoginCommand_returns_NoErrorMessage()
         {
@@ -61,7 +61,7 @@ namespace WorldExplorerEurope.Test
             var loginViewModel = new LoginViewModel(moq.Object);
             loginViewModel.test = true;
             loginViewModel.Init(moq.Object);
-            loginViewModel.newUser = new UserLogin() { Email = "test123.test123@test.howest.be", Password = "t}F87)8GBaj<" };
+            loginViewModel.newUser = new UserLogin() { Email = "test12345.test123@test.howest.be", Password = "t}F87)8GBaj<" };
             //Act
             var response = await GetUser(new UserLoginDto() { Email = loginViewModel.newUser.Email, Password = loginViewModel.newUser.Password });
             if (!response.IsSuccessStatusCode) loginViewModel.newUser.ErrorMessage = await response.Content.ReadAsStringAsync();
@@ -81,7 +81,7 @@ namespace WorldExplorerEurope.Test
 
             //Act
 
-            loginViewModel.newUser = new UserLogin() { Email = "test2.test2@student.howest.be", Password = "9xE6ALJfQ6$k" };
+            loginViewModel.newUser = new UserLogin() { Email = "test2.test2@student.howest.be", Password = "tgF84)(8Gcaj<" };
 
             //Assert
             Assert.IsType<UserLogin>(loginViewModel.newUser);
@@ -123,8 +123,8 @@ namespace WorldExplorerEurope.Test
 
         [Theory]
         //InValid emails
-        [InlineData("gaspard.lammertynstudent.howest.be", "t}F87)8GBaj<", "Email")]
-        [InlineData(null, "t}F87)8GBaj<", "Email")]
+        [InlineData("gaspard.lammertynstudent.howest.be", "ta}Fe8)ZGBag<", "Email")]
+        [InlineData(null, "ta}Fe8)ZGBag<", "Email")]
         //Invalid passwords
         [InlineData("gaspard.lammertyn@student.howest.be", null, "Password")]
         [InlineData("gaspard.lammertyn@student.howest.be", "", "Password")]

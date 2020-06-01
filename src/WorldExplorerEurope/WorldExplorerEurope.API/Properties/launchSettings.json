@@ -20,7 +20,7 @@
     "WorldExplorerEurope.API": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchUrl": "api/countries",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

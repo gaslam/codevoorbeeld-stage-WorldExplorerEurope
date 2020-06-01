@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ using WorldExplorerEurope.API.Services;
 
 namespace WorldExplorerEurope.API.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/countries/[controller]")]
     [ApiController]
     public class SpotifyPlaylistsController : ControllerDtoCrudBase<SpotifyPlaylistDto, IMappingRepository<SpotifyPlaylistDto>>
@@ -171,7 +172,6 @@ namespace WorldExplorerEurope.API.Controllers
         }
 
 
-        [Authorize]
         [HttpDelete("basic/{id}")]
         public IActionResult DeletePlaylistByPlaylistId([FromRoute] string id)
         {
@@ -188,7 +188,6 @@ namespace WorldExplorerEurope.API.Controllers
             return Ok(entity);
         }
 
-        [Authorize]
         [HttpPut("basic/{id}")]
         public async Task<IActionResult> UpdatePlaylistByPlaylistId([FromRoute] string id, [FromBody] SpotifyBasicDto dto)
         {

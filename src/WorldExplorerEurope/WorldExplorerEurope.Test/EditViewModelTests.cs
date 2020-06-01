@@ -1,4 +1,6 @@
 ﻿using FakeItEasy;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.CodeAnalysis.Options;
@@ -35,6 +37,7 @@ namespace WorldExplorerEurope.Test
     {
 
         private const string url = "https://localhost:5001/api/countries";
+        private protected string token = "";
 
         private HttpClient _client;
         private readonly WorldExplorerAPIFactory<Startup> _factory;
@@ -57,10 +60,12 @@ namespace WorldExplorerEurope.Test
 
             var moq = new Mock<UserService>();
 
-            user = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Password = "t}F87)8GBaj<", Role = "Admin", IsSpotifyDj = false };
-            user.Token = moq.Object.GenerateToken(user);
+            user = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test12345.test123@test.howest.be", Role = "Admin", IsSpotifyDj = false };
+            var hasher = new PasswordHasher<User>();
+            user.Password = hasher.HashPassword(user, "t}F87)8GBaj<");
+            token = moq.Object.GenerateTokenApp(user);
         }
-
+        
         [Fact]
         public async void EditUser_validUser_returns_NoErrorMessage()
         {
@@ -71,9 +76,9 @@ namespace WorldExplorerEurope.Test
             editViewModel.test = true;
 
             //Act
-            user.FirstName = "test2";
-            user.LastName = "test2";
-            user.Email = "test2.test2@student.howest.be";
+            user.FirstName = "test";
+            user.LastName = "test";
+            user.Email = "test1234.test123@test.howest.be";
             var status = await GetUser(user);
             if (!status.IsSuccessStatusCode)
             {
@@ -118,7 +123,7 @@ namespace WorldExplorerEurope.Test
             {
                 using (var client = _client)
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                     string json = JsonConvert.SerializeObject(user);
                     StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
                     var response = await client.PutAsync($"{url}/users/update/{user.Id}", content);
