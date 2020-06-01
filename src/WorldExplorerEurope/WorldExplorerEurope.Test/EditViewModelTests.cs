@@ -60,9 +60,9 @@ namespace WorldExplorerEurope.Test
 
             var moq = new Mock<UserService>();
 
-            user = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test.test@student.howest.be", Role = "Admin", IsSpotifyDj = false };
+            user = new User { Id = Guid.Parse("00000000-0000-0000-0000-000000000001"), FirstName = "test", LastName = "test", BirthDate = DateTime.Now.AddYears(-18).Date, Nationality = "testland", Email = "test12345.test123@test.howest.be", Role = "Admin", IsSpotifyDj = false };
             var hasher = new PasswordHasher<User>();
-            user.Password = hasher.HashPassword(user, "tgF84)(8Gcaj<");
+            user.Password = hasher.HashPassword(user, "t}F87)8GBaj<");
             token = moq.Object.GenerateTokenApp(user);
         }
         

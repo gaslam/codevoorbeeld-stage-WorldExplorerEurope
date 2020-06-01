@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -101,7 +102,7 @@ namespace WorldExplorerEurope.API.Controllers
 
             try
             {
-                var hasher = new PasswordHasher<UserDto>();
+                var hasher = new PasswordHasher<User>();
                 var user = new User()
                 {
                     Id = Guid.NewGuid().ToString(),
@@ -113,8 +114,9 @@ namespace WorldExplorerEurope.API.Controllers
                     Role = userDto.Role,
                     IsSpotifyDj = userDto.IsSpotifyDj,
                     EmailConfirmed = true,
-                    PasswordHash = userDto.Password
                 };
+
+                user.PasswordHash = hasher.HashPassword(user, userDto.Password);
                 await _context.Users.AddAsync(user);
                 await _context.SaveChangesAsync();
                 userDto.Token = _userService.GenerateToken(user);

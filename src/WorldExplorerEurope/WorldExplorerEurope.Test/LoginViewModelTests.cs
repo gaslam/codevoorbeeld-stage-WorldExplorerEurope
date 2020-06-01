@@ -52,7 +52,7 @@ namespace WorldExplorerEurope.Test
             var platformServicesFake = A.Fake<IPlatformServices>();
             Device.PlatformServices = platformServicesFake;
         }
-        /*
+        
         [Fact]
         public async void LoginCommand_returns_NoErrorMessage()
         {
@@ -68,7 +68,7 @@ namespace WorldExplorerEurope.Test
 
             //Assert
             Assert.Null(loginViewModel.newUser.ErrorMessage);
-        }*/
+        }
 
         [Fact]
         public async void LoginCommand_returns_UserLogin()
