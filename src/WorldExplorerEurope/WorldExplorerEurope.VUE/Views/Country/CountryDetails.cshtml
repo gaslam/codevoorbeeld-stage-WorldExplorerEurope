@@ -55,7 +55,7 @@
             created: function () {
                 var token = sessionStorage.getItem('token');
                 var jwt = JSON.parse(atob(token.split('.')[1]));
-                if (jwt != null || jwt.role != "Admin") {
+                if (jwt == null || jwt.role != "Admin") {
                     window.location.href = window.location.origin + '/NotAllowed';
                 }
             },

@@ -8,7 +8,6 @@
 <div class="uk-grid-margin-small">
     <input name="search" class="uk-search uk-search-field uk-grid-width-small-1-3" placeholder="Search.." v-model="Searchterm" v-on:input="filter()" />
     <a class="uk-button-primary uk-grid-width-large-1-1 explorer-button" v-on:click="filter()">Search</a>
-    <a class="uk-button-primary uk-grid-width-large-1-1 explorer-button" asp-controller="Spotify" asp-action="AddPlaylist">Add</a>
 </div>
 <div class="uk-overflow-auto">
     <table class="uk-table uk-table-expand uk-table-hover uk-table-striped">

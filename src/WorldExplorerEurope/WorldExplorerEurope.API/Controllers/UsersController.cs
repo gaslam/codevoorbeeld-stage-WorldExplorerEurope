@@ -60,7 +60,8 @@ namespace WorldExplorerEurope.API.Controllers
             {
                 return NotFound($"Cannot find user with id:{id}");
             }
-               var newUser = new UserDto { BirthDate = user.BirthDate, Email = user.Email, FirstName = user.FirstName, Id = Guid.Parse(user.Id), LastName = user.LastName, Nationality = user.Nationality, Password = "", Token = "" }; ;
+               var newUser = new UserDto { BirthDate = user.BirthDate, Email = user.Email, FirstName = user.FirstName, Id = Guid.Parse(user.Id), LastName = user.LastName, Nationality = user.Nationality, Password = "", Token = "" };
+            newUser.Token = _userService.GenerateToken(user);
             return Ok(newUser);
         }
 
@@ -222,7 +223,7 @@ namespace WorldExplorerEurope.API.Controllers
                 await _context.SaveChangesAsync();
                 if (userDto.IsSpotifyDj == true) _context.UserClaims.Add(new IdentityUserClaim<string>() { UserId = user.Id, ClaimType = "isSpotifyDj", ClaimValue = "true" });
                 if (userDto.Role == "Admin") _context.UserClaims.Add(new IdentityUserClaim<string>() { UserId = user.Id, ClaimType = "role", ClaimValue = userDto.Role });
-                else _context.UserClaims.Add(new IdentityUserClaim<string>() { UserId = user.Id, ClaimType = "role", ClaimValue = userDto.Role });
+                else _context.UserClaims.Add(new IdentityUserClaim<string>() { UserId = user.Id, ClaimType = "role", ClaimValue = "Visitor" });
                 await _context.SaveChangesAsync();
                 return Ok(userDto);
 
