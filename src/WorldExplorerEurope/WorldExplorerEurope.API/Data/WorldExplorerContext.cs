@@ -206,8 +206,6 @@ namespace WorldExplorerEurope.API.Data
                 BirthDate = Convert.ToDateTime("12/05/1998"),
                 Email = "gaspard.lammertyn@student.howest.be",
                 Nationality = "Belgium",
-                Role = "Admin",
-                IsSpotifyDj = false,
             };
 
             user.PasswordHash = hasher.HashPassword(user, "t}F87)8GBaj<");
@@ -222,8 +220,6 @@ namespace WorldExplorerEurope.API.Data
                 BirthDate = Convert.ToDateTime("12/05/1998"),
                 Email = "test.test@student.howest.be",
                 Nationality = "Belgium",
-                Role = "Admin",
-                IsSpotifyDj = true
             };
 
             user2.PasswordHash = hasher.HashPassword(user2, "tgF84)(8Gcaj<");
@@ -235,6 +231,10 @@ namespace WorldExplorerEurope.API.Data
                     user,
                     user2
                 );
+
+            modelBuilder.Entity<IdentityUserClaim<string>>().HasData(
+                new IdentityUserClaim<string> { Id = 1, UserId = "a5311214-564f-4824-ba65-b57042349e49", ClaimType = "role", ClaimValue = "Admin" },
+                new IdentityUserClaim<string> { Id = 2, UserId = "00000000-0000-0000-0000-000000000001", ClaimType = "isSpotifyDj", ClaimValue = "true"});
         }
     }
 }

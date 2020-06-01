@@ -92,6 +92,11 @@ namespace WorldExplorerEurope.API
             });
             services.AddCors();
             services.AddSignalR();
+
+            services.AddAuthorization(options => options.AddPolicy("Admin", policy =>
+                                {
+                                    policy.RequireClaim("role", "Admin");
+                                }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

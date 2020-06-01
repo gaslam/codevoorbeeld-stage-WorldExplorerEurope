@@ -47,7 +47,7 @@ namespace WorldExplorerEurope.API.Controllers
             var usersWithoutPasswords = new List<UserDto>();
             foreach (var user in users)
             {
-                usersWithoutPasswords.Add(new UserDto { BirthDate = user.BirthDate, Email = user.Email, FirstName = user.FirstName, Id = Guid.Parse(user.Id), IsSpotifyDj = user.IsSpotifyDj, LastName = user.LastName, Nationality = user.Nationality, Password = "", Role = user.Role, Token = "" });
+                usersWithoutPasswords.Add(new UserDto { BirthDate = user.BirthDate, Email = user.Email, FirstName = user.FirstName, Id = Guid.Parse(user.Id), LastName = user.LastName, Nationality = user.Nationality, Password = "", Token = "" });
             }
             return Ok(usersWithoutPasswords);
         }
@@ -61,7 +61,7 @@ namespace WorldExplorerEurope.API.Controllers
             {
                 return NotFound($"Cannot find user with id:{id}");
             }
-               var newUser = new UserDto { BirthDate = user.BirthDate, Email = user.Email, FirstName = user.FirstName, Id = Guid.Parse(user.Id), IsSpotifyDj = user.IsSpotifyDj, LastName = user.LastName, Nationality = user.Nationality, Password = "", Role = user.Role, Token = "" }; ;
+               var newUser = new UserDto { BirthDate = user.BirthDate, Email = user.Email, FirstName = user.FirstName, Id = Guid.Parse(user.Id), LastName = user.LastName, Nationality = user.Nationality, Password = "", Token = "" }; ;
             return Ok(newUser);
         }
 
@@ -85,8 +85,14 @@ namespace WorldExplorerEurope.API.Controllers
             {
                 return BadRequest("Password Incorrect!!! Enter a valid password!!");
             }
-            var userDto = new UserDto() { Id = Guid.Parse(user.Id), BirthDate = user.BirthDate, IsSpotifyDj = user.IsSpotifyDj, Email = user.Email, FirstName = user.FirstName, LastName = user.LastName, Nationality = user.Nationality, Password = "", Role = user.Role };
+            var userDto = new UserDto() { Id = Guid.Parse(user.Id), BirthDate = user.BirthDate, Email = user.Email, FirstName = user.FirstName, LastName = user.LastName, Nationality = user.Nationality, Password = ""};
             userDto.Token = _userService.GenerateToken(user);
+
+            var AdminRole = _context.UserClaims.Any(m => m.UserId == user.Id && m.ClaimValue == "Admin");
+            if (AdminRole == true) userDto.Role = "Admin";
+            var dj = _context.UserClaims.Any(m => m.UserId == user.Id && m.ClaimType == "isSpotifyDj");
+            if (dj == true) userDto.IsSpotifyDj = dj;
+
             return Ok(userDto);
         }
 
@@ -111,13 +117,13 @@ namespace WorldExplorerEurope.API.Controllers
                     Nationality = userDto.Nationality,
                     Email = userDto.Email,
                     BirthDate = userDto.BirthDate,
-                    Role = userDto.Role,
-                    IsSpotifyDj = userDto.IsSpotifyDj,
                     EmailConfirmed = true,
                 };
-
                 user.PasswordHash = hasher.HashPassword(user, userDto.Password);
                 await _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync();
+                _context.UserClaims.Add(new IdentityUserClaim<string>() { UserId = user.Id, ClaimType = "role", ClaimValue = "Visitor" });
+                if (userDto.IsSpotifyDj == true) _context.UserClaims.Add(new IdentityUserClaim<string>() { UserId = user.Id, ClaimType = "isSpotifyDj", ClaimValue = "true" });
                 await _context.SaveChangesAsync();
                 userDto.Token = _userService.GenerateToken(user);
                 return Ok(user);
@@ -150,7 +156,7 @@ namespace WorldExplorerEurope.API.Controllers
         }
 
         [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> UpdateUser([FromRoute]Guid id)
+        public async Task<IActionResult> DeleteUser([FromRoute]Guid id)
         {
             try
             {
@@ -163,6 +169,12 @@ namespace WorldExplorerEurope.API.Controllers
                 if (entity == null)
                 {
                     return BadRequest("Cannot delete user.");
+                }
+                await _context.SaveChangesAsync();
+                var claims = _context.UserClaims.Where(m => m.UserId == id.ToString());
+                foreach(var claim in claims)
+                {
+                    _context.UserClaims.Remove(claim);
                 }
                 await _context.SaveChangesAsync();
                 return Ok();
@@ -192,15 +204,22 @@ namespace WorldExplorerEurope.API.Controllers
                 user.FirstName = userDto.FirstName;
                 user.LastName = userDto.LastName;
                 user.Nationality = userDto.Nationality;
-                user.BirthDate = user.BirthDate;
-                user.Role = user.Role;
-                user.IsSpotifyDj = user.IsSpotifyDj;
+                user.BirthDate = userDto.BirthDate;
                 var newUser = _context.Update(user);
                 if (newUser == null)
                 {
                     return BadRequest("Cannot update user.");
                 }
                 await _context.SaveChangesAsync();
+                var claims = _context.UserClaims.Where(m => m.UserId == id.ToString());
+                foreach (var claim in claims)
+                {
+                    _context.UserClaims.Remove(claim);
+                }
+                await _context.SaveChangesAsync();
+                if (userDto.IsSpotifyDj == true) _context.UserClaims.Add(new IdentityUserClaim<string>() { UserId = user.Id, ClaimType = "isSpotifyDj", ClaimValue = "true" });
+                if (userDto.Role == "Admin") _context.UserClaims.Add(new IdentityUserClaim<string>() { UserId = user.Id, ClaimType = "role", ClaimValue = userDto.Role });
+                else _context.UserClaims.Add(new IdentityUserClaim<string>() { UserId = user.Id, ClaimType = "role", ClaimValue = userDto.Role });
                 return Ok(userDto);
 
             }

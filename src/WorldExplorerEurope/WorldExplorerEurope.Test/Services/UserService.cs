@@ -25,8 +25,8 @@ namespace WorldExplorerEurope.Test.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, user.Role),
-                    new Claim("spotifydj", user.IsSpotifyDj.ToString().ToLower())
+                    new Claim(ClaimTypes.Role, "Admin"),
+                    new Claim("spotifydj", "true")
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
