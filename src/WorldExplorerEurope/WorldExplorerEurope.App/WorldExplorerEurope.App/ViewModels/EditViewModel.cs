@@ -126,7 +126,7 @@ namespace WorldExplorerEurope.App.ViewModels
         public ICommand CancelCommand => new Command(
             async () =>
             {
-                await CoreMethods.PopPageModel(true);
+                await CoreMethods.PopToRoot(true);
             });
 
         public void DataForm_AutoGeneratingDataFormItem(object sender, AutoGeneratingDataFormItemEventArgs e)

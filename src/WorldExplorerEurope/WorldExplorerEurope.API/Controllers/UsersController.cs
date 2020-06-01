@@ -192,8 +192,6 @@ namespace WorldExplorerEurope.API.Controllers
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateUser([FromBody]UserDto userDto, [FromRoute]string id)
         {
-            var AdminRole = User.Claims.Any(m => m.Value == "Admin");
-            if (AdminRole == false) return StatusCode(403);
             try
             {
                 if (userDto.Id != Guid.Parse(id))

@@ -363,7 +363,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 string action = await App.Current.MainPage.DisplayActionSheet("What do you want to do?", "Cancel", null, "Take a picture", "Get a picture");
                 ActivityIndicator = true;
                 var user = User;
-                if (user == null) _localService.GetUser();
+                if (user == null) user = _localService.GetUser();
                 if (user == null)
                 {
                     await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before you upload.", "Ok");
@@ -380,23 +380,6 @@ namespace WorldExplorerEurope.App.ViewModels
                     await PickPicture();
                 }
             });
-
-        //This is code I wanted to implement, but for some reason it does not work
-        private async Task<bool> CheckAndroidCameraPermissions()
-        {
-            Plugin.Permissions.Abstractions.PermissionStatus status = await CrossPermissions.Current.CheckPermissionStatusAsync<CalendarPermission>();
-            if (status != Plugin.Permissions.Abstractions.PermissionStatus.Granted)
-            {
-                status = await CrossPermissions.Current.RequestPermissionAsync<CameraPermission>();
-                return true;
-            }
-
-            if (status == Plugin.Permissions.Abstractions.PermissionStatus.Granted)
-            {
-                return true;
-            }
-            return false;
-        }
 
         private async Task TakePicture()
         {
@@ -444,6 +427,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 string responseContent = await upload.Content.ReadAsStringAsync();
                 var country = JsonConvert.DeserializeObject<Country>(responseContent);
                 _country = country;
+                UserMemories = await GetUserMemories();
                 ActivityIndicator = false;
             }
         }
