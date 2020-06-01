@@ -221,6 +221,7 @@ namespace WorldExplorerEurope.API.Data
                 Email = "test.test@student.howest.be",
                 Nationality = "Belgium",
             };
+            hasher = new PasswordHasher<User>();
 
             user2.PasswordHash = hasher.HashPassword(user2, "tgF84)(8Gcaj<");
 

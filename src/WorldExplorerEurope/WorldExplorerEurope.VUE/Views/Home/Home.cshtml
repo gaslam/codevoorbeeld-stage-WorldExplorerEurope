@@ -64,7 +64,11 @@
             methods: {
                 GetData: function () {
                     var self = this;
-                    axios.get(`${baseUrl}/users`)
+                    var token = sessionStorage.getItem('token');
+                    const config = {
+                        headers: { Authorization: `Bearer ${token}` }
+                    };
+                    axios.get(`${baseUrl}/users`, config)
                         .then((response) => {
                             self.users = response.data;
                             for (var i = 0; i < self.users.length; i++) {

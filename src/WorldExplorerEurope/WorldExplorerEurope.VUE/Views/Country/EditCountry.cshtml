@@ -150,14 +150,20 @@
                     var self = this;
                     formData = new FormData();
                     formData.append('flag', $('#image')[0].files[0]);
-                    axios.put(`${baseUrl}/${self.Name}/flag/update`, formData, { headers: { "Content-Type": "multipart/form-data" } })
-                        .then(function (response) {
-                            self.FlagUrl = response.data;
-                            self.UpdateCountry();
-                        })
-                        .catch(function (error) {
-                            self.Errors.push(error.response.data);
-                        });
+                    if (formData.files != null) {
+                        var config = { headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` } };
+                        axios.put(`${baseUrl}/${self.Name}/flag/update`, formData, config)
+                            .then(function (response) {
+                                self.FlagUrl = response.data;
+                                self.UpdateCountry();
+                            })
+                            .catch(function (error) {
+                                self.Errors.push(error.response.data);
+                            });
+                    }
+                    else {
+                        self.UpdateCountry();
+                    }
                 },
 
                 UpdateCountry: function () {
