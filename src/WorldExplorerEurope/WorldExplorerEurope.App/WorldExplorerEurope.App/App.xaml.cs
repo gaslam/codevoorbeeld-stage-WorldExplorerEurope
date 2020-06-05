@@ -15,6 +15,7 @@ namespace WorldExplorerEurope.App
     {
         public App()
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjY3OTEyQDMxMzgyZTMxMmUzMFdGZnBaK0ovemlWK0tqU2lMTDdaYk5mTmZQM25INGdRNG1oTTBqWXlnRFU9");
             InitializeComponent();
             FreshIOC.Container.Register<IAPIinterface>(new APIservice());
             MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MainViewModel>())
