@@ -1,7 +1,7 @@
 # World Explorer Europe
 
 ## Project
-World Explorer: Europe is een applicatie die info geeft over alle landen van Europa. Ik heb Europa eerst gekozen omdat ik tijdens de werkperiode tijd moet besteden aan de applicatie en alles erond. De app haalt zijn info via het internet van zowel een eigen database en andere bronnen. Die info bestaat uit het volgende:
+World Explorer: Europe is een applicatie die info geeft over alle landen van Europa. Ik heb Europa eerst gekozen omdat ik tijdens de werkperiode genoeg tijd moet besteden aan de applicatie en alles erond. Moest ik andere continenten erbij doen, ging er te veel werk bijkomen. De app haalt zijn info via het internet van zowel een eigen database en andere bronnen. Die info bestaat uit het volgende:
 
 -	De naam van het gekozen land;
 -	Een foto met de vlag die hij van restcountries.eu haalt;
@@ -12,21 +12,17 @@ World Explorer: Europe is een applicatie die info geeft over alle landen van Eur
 
 Het is ook de bedoeling dat de database beheert wordt door een administrator via een externe website. De bewerkingen gaan dan via internet langs een web api(application programming interface) naar de database. 
 
-## Extra info
+## Extra info voor stagebedrijven die dit nu kijken
+
+De app is zowel beschikbaar via UWP en Android. Heb enkel op UWP getest de laatste tijd, maar Android zal normaalgezien ook werken. Om zoveel mogelijk bugs te vermijden zou ik best voor de dev branch kiezen. In de originele repo mocht alleen gemerged worden naar de master, wanneer de leerkrachten het goedkeurden.
+
+Alle keys van de vorige commits zijn niet meer geldig.
+
+Ook zal je in de app een foutmelding krijgen over de syncfusion key die niet meer geldig is. Die mag je gewoon negeren.
 
 ### Spotify
 
-In in de Services folder van de api voeg je de volgende keys in de spotify klasse toe:
-
-- clientId:
-```
-e1e36ceac985420e9c65c12f450045da
-```
-
-- secretId:
-```
-5d151d54fa7a4be9a5d473201f072ea5
-```
+In in de Services folder van de api voeg je je client en secret toe van jouw applicatie in de spotify klasse.
 
 Buiten dat voer je ook het ipconfig commando via het command venster.
 
@@ -36,9 +32,4 @@ Kopieer uw ipv4 adres op het lokale netwerk en vervang alles tussen de haakjes v
 
 Voor de locatie te bepalen ging ik normaalgezien gebruik maken van de google maps api, maar dat kost wel wat geld en dat ga ik dus natuurlijk niet uitgeven. Daarom koos ik voor het gratis alternatief [OpenCage](https://opencagedata.com).
 
-In in de domain folder in het gemeenschappelijk project van de app voeg je de via de services de volgende key in de OpenCage klasse toe:
-
-- OpenCage API Key:
-```
-d41c893d59b24581ac5b1596decc612b
-```
+In in de domain folder in het gemeenschappelijk project van de app voeg je de via de services de api key toe.
