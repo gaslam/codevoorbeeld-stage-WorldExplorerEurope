@@ -61,11 +61,16 @@
             <label><input class="uk-radio" type="radio" value="Admin" v-model="IsAdmin">Admin</label>
         </div>
     </div>
+    <div class="uk-margin">
+        <div class="uk-form-controls">
+            <label><input class="uk-radio" type="radio" value="Spotify" v-model="IsSpotifyDj">Spotify DJ</label>
+        </div>
+    </div>
 </form>
 
 <div class="uk-button-group">
-    <a class="uk-button-primary" style="padding:10px;margin:10px" v-on:click="login()">Add</a>
-    <a class="uk-button-danger" style="padding:10px;margin:10px" asp-controller="Home" asp-action="Home">Go back</a>
+    <a class="uk-button-primary explorer-button-margin" v-on:click="login()">Add</a>
+    <a class="uk-button-danger explorer-button-margin" asp-controller="Home" asp-action="Home">Go back</a>
 </div>
 
 @section Scripts{
@@ -82,13 +87,18 @@
                 Password: "",
                 PasswordRepeat: "",
                 IsAdmin: "",
-                CheckData:"",
+                CheckData: "",
+                IsSpotifyDj:"",
                 Errors: []
             },
 
             created: function () {
                 var token = sessionStorage.getItem('token');
                 if (token == null) {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
+                var jwt = JSON.parse(atob(token.split('.')[1]));
+                if (jwt != null && jwt.role != "Admin") {
                     window.location.href = window.location.origin + '/NotAllowed';
                 }
             },
@@ -105,11 +115,11 @@
                     self.Errors = new Array();
                     if (self.FirstName.length == 0) {
                         self.CheckData = false;
-                        self.Errors.push("Enter a valid name");
+                        self.Errors.push("Enter a valid firstname");
                     }
                     if (self.LastName.length == 0) {
                         self.CheckData = false;
-                        self.Errors.push("Enter a valid name");
+                        self.Errors.push("Enter a valid lastname");
                     }
                     if (!regEmail.test(self.Email)) {
                         self.CheckData = false;
@@ -149,9 +159,11 @@
                         nationality: self.Nationality,
                         birthDate: self.BirthDate,
                         password: self.Password,
-                        isAdmin: false,
+                        role: "Visitor",
+                        isSpotifyDj: false
                     };
-                    if (self.IsAdmin.length > 0) user.isAdmin = true;
+                    if (self.IsAdmin.length > 0) user.role = "Admin";
+                    if (self.IsSpotifyDj.length > 0) user.isSpotifyDj = true;
 
                     axios.post(`${baseUrl}/users/register`, user)
                         .then(function (response) {

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ using WorldExplorerEurope.API.Domain.Services;
 
 namespace WorldExplorerEurope.API.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class CountriesController : ControllerDtoCrudBase<CountryDto, IMappingRepository<CountryDto>>
@@ -230,7 +231,7 @@ namespace WorldExplorerEurope.API.Controllers
             }
         }
 
-        [HttpPost("/{countryName}flag")]
+        [HttpPost("{countryName}/flag")]
         public async Task<IActionResult> UploadFlag([FromRoute] string countryName, IFormFile flag)
         {
             var existingCountry = _countryMapperRepo.GetAll().FirstOrDefault(m => m.Name.ToLower() == countryName.ToLower());
@@ -238,6 +239,7 @@ namespace WorldExplorerEurope.API.Controllers
             {
                 return BadRequest("Country already exists");
             }
+            if (flag == null) return BadRequest("Add a flag.");
             if (Path.GetExtension(flag.FileName) != ".svg")
             {
                 return BadRequest($"{Path.GetExtension(flag.FileName)} is not a valid extension. Only svg's are accepted.");

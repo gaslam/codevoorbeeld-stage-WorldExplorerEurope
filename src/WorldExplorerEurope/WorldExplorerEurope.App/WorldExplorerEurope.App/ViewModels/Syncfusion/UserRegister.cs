@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Java.Sql;
+using Newtonsoft.Json;
 using Syncfusion.XForms.DataForm;
 using System;
 using System.Collections;
@@ -18,6 +19,11 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        public UserRegister()
+        {
+            BirthDate = DateTime.Now.AddYears(-12).Date;
+        }
 
         private string firstname;
         public string FirstName
@@ -74,8 +80,11 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
             }
             set
             {
-                value = DateTime.Now.Date.AddYears(-12);
+                //To prevent wrong date on initialisation I decided to add an if statement.
+                //If you remove the statement it will always set te value to the current date in syncfusion I believe.
                 birthdate = value;
+
+                if (birthdate.Year == 1900) birthdate = DateTime.Now.AddYears(-12).Date;
                 RaisePropertyChanged(nameof(BirthDate));
             }
         }
@@ -132,9 +141,15 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
         {
             var list = new List<string>();
 
-            if (propertyName.Equals(nameof(FirstName)) || propertyName.Equals(nameof(LastName)))
+            if (propertyName.Equals(nameof(FirstName)))
             {
-                if ((string.IsNullOrEmpty(FirstName) || string.IsNullOrWhiteSpace(FirstName)))
+                if (string.IsNullOrEmpty(FirstName) || string.IsNullOrWhiteSpace(FirstName))
+                    list.Add("Please, enter a valid name");
+            }
+
+            if (propertyName.Equals(nameof(LastName)))
+            {
+                if(string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(LastName))
                     list.Add("Please, enter a valid name");
             }
 
@@ -153,16 +168,13 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
 
             if (propertyName.Equals("Password"))
             {
-                if (string.IsNullOrEmpty(Password) || string.IsNullOrWhiteSpace(Password))
+                if (string.IsNullOrEmpty(Password))
                     list.Add("Please, enter a password");
 
-                if (!Regex.IsMatch(Password, "^.*(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*$"))
+                if (!string.IsNullOrEmpty(Password) && !Regex.IsMatch(Password, "^.*(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*$"))
                     list.Add("Password must contain at least 1 Upper/lower case letter and a digit.");
-                if (Password.Length < 10)
+                if (Password != null && Password.Length < 10)
                     list.Add("Password must at least have 10 characters.");
-
-                if (PasswordRepeat != Password && PasswordRepeat != null)
-                    list.Add("Passwords do not match.");
             }
 
             if (propertyName.Equals("PasswordRepeat"))
@@ -180,6 +192,9 @@ namespace WorldExplorerEurope.ViewModels.Syncfusion
                     return list;
                 }
                 if (BirthDate.Date.AddYears(12) > currentDate.Date)
+                    list.Add("You must be 12 years or older");
+
+                if (BirthDate.Date == DateTime.Now.Date)
                     list.Add("You must be 12 years or older");
             }
 

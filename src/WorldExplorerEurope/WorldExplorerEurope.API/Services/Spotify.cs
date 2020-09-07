@@ -15,8 +15,13 @@ namespace WorldExplorerEurope.API.Services
     {
         //Contains all the code for getting the spotify API data.
         private static SpotifyWebAPI _spotify;
-        private const string clientId = "e1e36ceac985420e9c65c12f450045da";
-        private const string clientSecret = "5d151d54fa7a4be9a5d473201f072ea5";
+
+        /*Just to be clear, I know hardcoding is not a good practice.
+         * Back then I did not know you could store them in de secrets file.
+         * I decided not to change it because I do not currently have a lot of time.
+         */
+        private const string clientId = "(YOUR CLIENT ID OF YOUR SPOTIFY APP)";
+        private const string clientSecret = "(YOUR SECRET ID OF YOUR SPOTIFY APP)";
         // Is used for to create the tokens to access the API.
         private static Token token = new Token();
         //Is Used to get the credentials of the application for the spotify API.
@@ -73,8 +78,13 @@ namespace WorldExplorerEurope.API.Services
             }
             return true;
         }
-
-        public async Task<List<SpotifyBasicTracksDto>> GetFirst5Tracks(FullPlaylist playlist)
+        /*
+         * <summary>
+         *  Get's the first 100 tracks of a playlist.
+         *  I wanted to display the tracks of the spotify playlist but with a limit. I believe 100 is enough.
+         *  </summary>
+         */
+        public async Task<List<SpotifyBasicTracksDto>> GetFirst100Tracks(FullPlaylist playlist)
         {
             if (_spotify == null || token.IsExpired())
             {
@@ -82,19 +92,19 @@ namespace WorldExplorerEurope.API.Services
                 await AccessAPI();
             }
 
-            var tracks = await _spotify.GetPlaylistTracksAsync(playlist.Id, "", 5, 1, "BE");
+            var tracks = await _spotify.GetPlaylistTracksAsync(playlist.Id, "", 100, 1, "BE");
             List<SpotifyBasicTracksDto> spotifyBasicTracks = new List<SpotifyBasicTracksDto>();
             if (tracks.Items == null) return null;
             for (int i = 0; i < tracks.Items.Count; i++)
             {
                 var track = tracks.Items[i];
-                  SpotifyBasicTracksDto spotifyBasicTracksDto =  new SpotifyBasicTracksDto
-                    {
-                        Number = i + 1,
-                        Name = track.Track.Name,
-                        Artists = ConvertArtistsToString(track.Track.Artists)
-                    };
-                if(track.Track.PreviewUrl == null)
+                SpotifyBasicTracksDto spotifyBasicTracksDto = new SpotifyBasicTracksDto
+                {
+                    Number = i + 1,
+                    Name = track.Track.Name,
+                    Artists = ConvertArtistsToString(track.Track.Artists)
+                };
+                if (track.Track.PreviewUrl == null)
                 {
                     //Cannot pass empty url's so if 
                     spotifyBasicTracksDto.PreviewUrl = new Uri("https://www.spotify.com/");
@@ -108,10 +118,15 @@ namespace WorldExplorerEurope.API.Services
             return spotifyBasicTracks;
         }
 
+        /*
+         * <summary>
+         *  Translates the a list of SimpleArtist to a string.
+         *  </summary>
+         */
         private string ConvertArtistsToString(List<SimpleArtist> artists)
         {
             StringBuilder combinedArtists = new StringBuilder();
-            if(artists.Count == 1)
+            if (artists.Count == 1)
             {
                 combinedArtists.Append(artists[0].Name);
             }
@@ -125,6 +140,12 @@ namespace WorldExplorerEurope.API.Services
             return combinedArtists.ToString();
         }
 
+        /*
+         * <summary>
+         *  Returns a spotify playlist.
+         *  The market is set to belgium, because there are no actual plans to release it. That's why I decided to set it to my country.
+         *  </summary>
+         */
         public async Task<FullPlaylist> GetFullPlaylist(string id)
         {
             if (token.IsExpired())

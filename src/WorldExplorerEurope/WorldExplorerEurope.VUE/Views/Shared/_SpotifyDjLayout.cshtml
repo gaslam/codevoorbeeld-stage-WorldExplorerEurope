@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WorldExplorerEurope.VUE</title>
+    <link rel="stylesheet" href="~/lib/Soda_admin_template/css/proxima-nova.css" />
+    <link rel="stylesheet" href="~/lib/Soda_admin_template/css/theme.css" />
+
+    <link rel="stylesheet" href="~/lib/Soda_admin_template/css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.18/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.18/js/uikit-icons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-signals/1.0.0/js-signals.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hasher/1.2.0/hasher.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crossroads/0.12.2/crossroads.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.6.2/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" />
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.calenstyle/latest/calenstyle.min.css" />
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.calenstyle/latest/calenstyle.min.js"></script>
+    <!-- For i18n -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.calenstyle/latest/i18n/calenstyle-i18n.js"></script>
+    <script type="text/javascript" src="~/lib/Soda_admin_template/js/CalJsonGenerator.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.10.1/chartist.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.10.1/chartist.min.js"></script>
+    <script src="//cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <link rel="stylesheet" href="~/css/explorerButtons.css" />
+</head>
+<body>
+    <div id="app">
+
+        <div id="wrapper" class="toggled">
+
+            <!-- Sidebar -->
+            <div id="sidebar-wrapper">
+
+                <div class="uk-panel uk-padding ">
+                    <img src="~/Images/Logo.png"  height="120"/>
+                </div>
+
+                <div class="uk-padding uk-padding-remove-top">
+
+                    <p class="uk-text-small">Welcome<br /><a asp-controller="Home" asp-action="Index">Sign out</a><p>
+
+                        <ul class="uk-nav uk-nav-default" uk-nav>
+                            <li class="uk-parent">
+                                <a href="#">SpotifyPlaylists</a>
+                                <ul class="uk-nav-sub">
+                                    <li><a asp-controller="SpotifyDJ" asp-action="Index">Manage</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                </div>
+            </div>
+            <!-- /#sidebar-wrapper -->
+
+            <nav class="uk-navbar-container" uk-navbar>
+                <div class="uk-navbar-left tm-mobile-menu">
+
+                    <ul class="uk-navbar-nav">
+                        <li class="uk-parent">
+                            <a href="#">Articles</a>
+                            <div class="uk-navbar-dropdown">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    <li><a href="#articles/new">Write a new article</a></li>
+                                    <li><a href="#articles/manage">Manage Articles</a></li>
+                                    <li><a href="#articles/comments">Manage Comments</a></li>
+                                    <li><a href="#articles/categories">Manage Categories</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="uk-parent">
+                            <a href="#">Images</a>
+                            <div class="uk-navbar-dropdown">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    <li><a href="#images/upload">Upload images</a></li>
+                                    <li><a href="#images/gallery">Manage galleries</a></li>
+                                    <li><a href="#images/albums">Manage albums</a></li>
+                                    <li><a href="#images/settings">Gallery settings</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="uk-parent">
+                            <a href="#">Widgets</a>
+                            <div class="uk-navbar-dropdown">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    <li><a href="#widgets/tabs">Tabs</a></li>
+                                    <li><a href="#widgets/carousel">Carousel</a></li>
+                                    <li><a href="#widgets/modals">Modals</a></li>
+                                    <li><a href="#widgets/popups">Confirm boxes</a></li>
+                                    <li><a href="#widgets/charts">Charts</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="uk-parent">
+                            <a href="#">Calendar</a>
+                            <div class="uk-navbar-dropdown">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    <li><a href="#events/calendar">Calendar overview</a></li>
+                                    <li><a href="#events/event">Add a new event</a></li>
+                                    <li><a href="#events/appointments">Appointments</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="uk-parent">
+                            <a href="#">Elements</a>
+                            <div class="uk-navbar-dropdown">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    <li><a href="#elements/buttons">Buttons</a></li>
+                                    <li><a href="#elements/badges">Labels & Badges</a></li>
+                                    <li><a href="#elements/cards">Cards and panels</a></li>
+                                    <li><a href="#elements/icons">Icons</a></li>
+                                    <li><a href="#elements/navs">Navigation menus</a></li>
+                                    <li><a href="#elements/alerts">Alerts</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </nav>
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <a href="" class="tm-mobile-menu-toggle" uk-icon="icon: menu" uk-toggle="target: #wrapper; cls: toggled"></a>
+
+                <div class="uk-container uk-container-medium" id="content">
+                    @RenderBody()
+
+                </div>
+            </div>
+            <!-- /#page-content-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/UIkit/js/uikit.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+
+    @section Scripts{
+        <script>
+            function get_content(tpl, div) {
+                $.get(tpl, function (result) {
+                    $result = $(result);
+
+                    $(div).html(result);
+                    $result.find('script').appendTo(div);
+                }, 'html');
+
+            }
+            crossroads.addRoute('/{section}/{subsection}', function (section, subsection) {
+                get_content('templates/' + section + '/' + subsection + '.html', '#content');
+            });
+            crossroads.addRoute('/', function (id) {
+                get_content('templates/home.html', '#content');
+            });
+
+            //setup hasher
+            function parseHash(newHash, oldHash) {
+                crossroads.parse(newHash);
+            }
+            hasher.initialized.add(parseHash); //parse initial hash
+            hasher.changed.add(parseHash); //parse hash changes
+            hasher.init(); //start listening for history change
+
+
+            (function ($) {
+                var $window = $(window),
+                    $html = $('#wrapper');
+
+                function resize() {
+                    if ($window.width() < 768) {
+                        return $html.removeClass('toggled');
+                    }
+
+                    $html.addClass('toggled');
+                }
+
+                $window
+                    .resize(resize)
+                    .trigger('resize');
+            })(jQuery);
+        </script>
+    }
+</body>
+</html>

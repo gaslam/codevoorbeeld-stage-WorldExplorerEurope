@@ -12,7 +12,7 @@
         <AbsoluteLayout>
             <StackLayout AbsoluteLayout.LayoutFlags="All"
                         AbsoluteLayout.LayoutBounds="0,0,1,1">
-                <ScrollView VerticalScrollBarVisibility="Always" HeightRequest="800">
+                <ScrollView VerticalScrollBarVisibility="Always" HeightRequest="700" Margin="0,0,0,70">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
@@ -34,7 +34,7 @@
                             <ColumnDefinition Width="150"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label Text="Register" x:Name="txtLogin" FontAttributes="Bold" Grid.Column="1"  Grid.ColumnSpan="2" Grid.Row="1" HorizontalTextAlignment="Center" TextColor="#2e2e2c" FontSize="60">
+                        <Label Text="Edit" x:Name="txtEdit" FontAttributes="Bold" Grid.Column="1"  Grid.ColumnSpan="2" Grid.Row="1" HorizontalTextAlignment="Center" TextColor="#2e2e2c" FontSize="60">
                             <Label.FontFamily>
                                 <OnPlatform x:TypeArguments="x:String">
                                     <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>

@@ -57,8 +57,8 @@
 </form>
 
 <div class="uk-button-group">
-    <a class="uk-button-primary" style="padding:10px;margin:10px" v-on:click="check()">Save</a>
-    <a class="uk-button-danger" style="padding:10px;margin:10px" asp-controller="Country" asp-action="Index">Go back</a>
+    <a class="uk-button-primary explorer-button-margin" v-on:click="check()">Save</a>
+    <a class="uk-button-danger explorer-button-margin" asp-controller="Country" asp-action="Index">Go back</a>
 </div>
 
 @section Scripts{
@@ -83,7 +83,11 @@
 
             created: function () {
                 var token = sessionStorage.getItem('token');
-                if (token != null) {
+                if (token == null) {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
+                var jwt = JSON.parse(atob(token.split('.')[1]));
+                if (jwt != null && jwt.role == "Admin") {
                     var self = this;
                     self.GetCountry();
                 }
@@ -149,14 +153,20 @@
                     var self = this;
                     formData = new FormData();
                     formData.append('flag', $('#image')[0].files[0]);
-                    axios.put(`${baseUrl}/${self.Name}/flag/update`, formData, { headers: { "Content-Type": "multipart/form-data" } })
-                        .then(function (response) {
-                            self.FlagUrl = response.data;
-                            self.UpdateCountry();
-                        })
-                        .catch(function (error) {
-                            self.Errors.push(error.response.data);
-                        });
+                    if (formData.files != null) {
+                        var config = { headers: { "Content-Type": "multipart/form-data", Authorization: `Bearer ${token}` } };
+                        axios.put(`${baseUrl}/${self.Name}/flag/update`, formData, config)
+                            .then(function (response) {
+                                self.FlagUrl = response.data;
+                                self.UpdateCountry();
+                            })
+                            .catch(function (error) {
+                                self.Errors.push(error.response.data);
+                            });
+                    }
+                    else {
+                        self.UpdateCountry();
+                    }
                 },
 
                 UpdateCountry: function () {
@@ -177,7 +187,11 @@
                         isEUMember: false,
                     };
                     if (country.isEUMember.length > 0) country.isEUMember = true;
-                    axios.put(`${baseUrl}/update/${self.Id}`, country)
+                    var token = sessionStorage.getItem('token');
+                    const config = {
+                        headers: { Authorization: `Bearer ${token}` }
+                    };
+                    axios.put(`${baseUrl}/update/${self.Id}`, country, config)
                         .then(function (response) {
                             alert("Country has been updated succesfully");
                             window.location.href = window.location.origin + '/Country';

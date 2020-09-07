@@ -15,7 +15,7 @@
   <mp:PhoneIdentity PhoneProductId="ec0cc741-fd3e-485c-81be-68815c480690" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>WorldExplorerEurope.App.UWP</DisplayName>
+    <DisplayName>WorldExplorerEurope</DisplayName>
     <PublisherDisplayName>b86b011f-298e-4b6b-8702-c0d13061b3e5</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -46,6 +46,7 @@
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\WorldExplorerEurope.png"  BackgroundColor="#fe5f55"/>
+        <uap:LockScreen BadgeLogo="Assets\BadgeLogo.png" Notification="badge"/>
       </uap:VisualElements>
     </Application>
   </Applications>
@@ -54,6 +55,6 @@
     <Capability Name="internetClient" />
     <Capability Name="internetClientServer"/>
     <Capability Name="privateNetworkClientServer"/>
-    <uap3:Capability Name="backgroundMediaPlayback"/>
+    <DeviceCapability Name="location"/>
   </Capabilities>
 </Package>

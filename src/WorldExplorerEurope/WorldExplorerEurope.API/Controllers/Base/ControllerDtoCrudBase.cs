@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using WorldExplorerEurope.API.Domain.Interfaces;
 
 namespace WorldExplorerEurope.API.Controllers.Base
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ControllerDtoCrudBase<Dto, Mr> : ControllerBase where Dto : DtoBaseId where Mr : IMappingRepository<Dto>
     {
         protected Mr _mappingRepository;
@@ -85,7 +86,6 @@ namespace WorldExplorerEurope.API.Controllers.Base
             return Ok(dto);
         }
 
-        [Authorize]
         [HttpDelete("delete/{id}")]
         public virtual async Task<IActionResult> Delete([FromRoute]Guid id)
         {

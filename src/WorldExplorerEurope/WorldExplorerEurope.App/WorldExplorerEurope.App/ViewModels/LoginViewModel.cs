@@ -30,9 +30,9 @@ namespace WorldExplorerEurope.App.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public LoginViewModel()
+        public LoginViewModel(IAPIinterface apiService)
         {
-            _apiService = new APIservice();
+            _apiService = apiService;
         }
 
         public async override void Init(object initData)
@@ -81,6 +81,8 @@ namespace WorldExplorerEurope.App.ViewModels
             }
         }
 
+        //only for tests
+        public bool test = false;
 
         public ICommand LoginCommand => new Command(
 
@@ -102,12 +104,15 @@ namespace WorldExplorerEurope.App.ViewModels
                         newUser.ErrorMessage = await request.Content.ReadAsStringAsync();
                         ActivityIndicator = false;
                     }
-                    else
+                    else if(!test)
                     {
                         var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
                         UserService userService = new UserService();
                         userService.SetUser(user);
-                        await CoreMethods.PushPageModel<MyCountriesViewModel>(user, false, true);
+                        App.Current.MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MyCountriesViewModel>())
+                        {
+                            BarBackgroundColor = Color.FromHex(ToolBarBackgroundcolor.backgroundColor)
+                        };
 
                         ActivityIndicator = false;
                     }

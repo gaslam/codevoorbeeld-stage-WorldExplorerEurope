@@ -21,25 +21,25 @@
     <div class="uk-margin">
         <label class="uk-form-label">Lastname:</label>
         <div class="uk-form-controls">
-            <input class="uk-input" type="text" placeholder="Enter lastname" v-model="LastName"  />
+            <input class="uk-input" type="text" placeholder="Enter lastname" v-model="LastName" />
         </div>
     </div>
     <div class="uk-margin">
         <label class="uk-form-label">E-mail:</label>
         <div class="uk-form-controls">
-            <input class="uk-input" type="email" placeholder="Enter your Email" v-model="Email"  />
+            <input class="uk-input" type="email" placeholder="Enter your Email" v-model="Email" />
         </div>
     </div>
     <div class="uk-margin">
         <label class="uk-form-label">Nationality</label>
         <div class="uk-form-controls">
-            <input class="uk-input" type="text" placeholder="Enter Nationality" v-model="Nationality"  />
+            <input class="uk-input" type="text" placeholder="Enter Nationality" v-model="Nationality" />
         </div>
     </div>
     <div class="uk-margin">
         <label class="uk-form-label">Date of birth</label>
         <div class="uk-form-controls">
-            <input class="uk-datepicker" type="date" v-model="BirthDate"  />
+            <input class="uk-datepicker" type="date" v-model="BirthDate" />
         </div>
     </div>
     <div class="uk-margin">
@@ -47,11 +47,16 @@
             <label><input class="uk-radio" type="radio" value="Admin" v-model="IsAdmin">Admin</label>
         </div>
     </div>
+    <div class="uk-margin">
+        <div class="uk-form-controls">
+            <label><input class="uk-radio" type="radio" value="Spotify" v-model="IsSpotifyDj">Spotify DJ</label>
+        </div>
+    </div>
 </form>
 
 <div class="uk-button-group">
-    <a class="uk-button-primary" style="padding:10px;margin:10px" v-on:click="check()">Save</a>
-    <a class="uk-button-danger" style="padding:10px;margin:10px" asp-controller="Home" asp-action="Home">Go back</a>
+    <a class="uk-button-primary explorer-button-margin" v-on:click="check()">Save</a>
+    <a class="uk-button-danger explorer-button-margin" asp-controller="Home" asp-action="Home">Go back</a>
 </div>
 
 @section Scripts{
@@ -67,13 +72,18 @@
                 BirthDate: new Date(),
                 Email: "",
                 IsAdmin: "",
+                IsSpotifyDj: "",
                 CheckData:"",
                 Errors: []
             },
 
             created: function () {
                 var token = sessionStorage.getItem('token');
-                if (token != null) {
+                if (token == null) {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
+                var jwt = JSON.parse(atob(token.split('.')[1]));
+                if (jwt != null && jwt.role == "Admin") {
                     var self = this;
                     self.GetUser();
                 }
@@ -152,16 +162,23 @@
                         nationality: self.Nationality,
                         birthDate: self.BirthDate,
                         password: self.Password,
-                        isAdmin: self.IsAdmin,
+                        isAdmin: false,
+                        isSpotifyDj: false,
+                        token: ""
                     };
 
-                    if (user.isAdmin.length == true) self.IsAdmin = true;
-                    else user.isAdmin = false;
+                    if (self.IsAdmin.length > 0) user.isAdmin = true;
 
-                    axios.put(`${baseUrl}/users/update/${self.Id}`, user)
+                    if (self.IsSpotifyDj.length > 0) user.isSpotifyDj = true;
+
+                    var token = sessionStorage.getItem('token');
+                    const config = {
+                        headers: { Authorization: `Bearer ${token}` }
+                    };
+
+                    axios.put(`${baseUrl}/users/update/${self.Id}`, user, config)
                         .then(function (response) {
                             alert("User has been updated succesfully");
-                            window.location.href = window.location.origin + '/NotAllowed';
                         })
                         .catch(function (error) {
                             self.Errors.push(error.response.data);

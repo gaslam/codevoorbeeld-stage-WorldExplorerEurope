@@ -22,9 +22,9 @@ namespace WorldExplorerEurope.App.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         private IAPIinterface _apiService;
-        public EditViewModel(User user)
+        public EditViewModel(IAPIinterface apiService)
         {
-            _apiService = new APIservice();
+            _apiService = apiService;
         }
 
         public async override void Init(object initData)
@@ -39,6 +39,8 @@ namespace WorldExplorerEurope.App.ViewModels
             base.Init(initData);
         }
 
+        public bool test = false;
+
         private User editUser;
 
         private UserEdit GenerateNewUserEdit(User user)
@@ -50,7 +52,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Nationality = user.Nationality,
-                Token = user.Token
+                Token = user.Token,
             };
             return userEdit;
         }
@@ -100,12 +102,13 @@ namespace WorldExplorerEurope.App.ViewModels
                     EditedUser.ErrorMessage = await request.Content.ReadAsStringAsync();
                     ActivityIndicator = false;
                 }
-                else
+                else if(test ==false)
                 {
                     var user = JsonConvert.DeserializeObject<User>(await request.Content.ReadAsStringAsync());
                     UserService userService = new UserService();
                     userService.SetUser(user);
-                    await CoreMethods.PushPageModel<DetailViewModel>(user, false, true);
+                    await CoreMethods.PopToRoot(true);
+                    await Application.Current.MainPage.DisplayAlert("Update Successfull.", "You just updated your profile succesfully", "OK");
                     ActivityIndicator = false;
                 }
             }
@@ -123,7 +126,7 @@ namespace WorldExplorerEurope.App.ViewModels
         public ICommand CancelCommand => new Command(
             async () =>
             {
-                await CoreMethods.PopPageModel(true);
+                await CoreMethods.PopToRoot(true);
             });
 
         public void DataForm_AutoGeneratingDataFormItem(object sender, AutoGeneratingDataFormItemEventArgs e)

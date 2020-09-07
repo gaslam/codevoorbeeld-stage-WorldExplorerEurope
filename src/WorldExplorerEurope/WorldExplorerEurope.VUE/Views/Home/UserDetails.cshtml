@@ -44,8 +44,8 @@
 </form>
 
 <div class="uk-button-group">
-    <a class="uk-button-primary" style="padding:10px;margin:10px" asp-controller="Home" asp-action="EditUser" asp-route-id="@Model.Id">Edit</a>
-    <a class="uk-button-danger" style="padding:10px;margin:10px" asp-controller="Home" asp-action="Home">Go back</a>
+    <a class="uk-button-primary explorer-button-margin" asp-controller="Home" asp-action="EditUser" asp-route-id="@Model.Id">Edit</a>
+    <a class="uk-button-danger explorer-button-margin" asp-controller="Home" asp-action="Home">Go back</a>
 </div>
 
 @section Scripts{
@@ -54,7 +54,11 @@
             el: '#app',
             created: function () {
                 var token = sessionStorage.getItem('token');
+                var jwt = JSON.parse(atob(token.split('.')[1]));
                 if (token == null) {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
+                if (jwt != null && jwt.role != "Admin") {
                     window.location.href = window.location.origin + '/NotAllowed';
                 }
             },

@@ -15,14 +15,15 @@ namespace WorldExplorerEurope.API
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateWebHostBuilder(string[] args) =>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                     webBuilder
                     .UseUrls("http://0.0.0.0:5000", "https://0.0.0.0:5001")
                     .UseStartup<Startup>());
+
     }
 }

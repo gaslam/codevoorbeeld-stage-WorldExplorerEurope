@@ -1,4 +1,5 @@
-﻿using FreshMvvm;
+﻿using Android.Provider;
+using FreshMvvm;
 using Microsoft.AspNetCore.SignalR.Client;
 using Newtonsoft.Json;
 using Plugin.Media;
@@ -26,6 +27,7 @@ using WorldExplorerEurope.App.ViewModels.Syncfusion;
 using WorldExplorerEurope.App.Views;
 using WorldExplorerEurope.Domain.Models;
 using WorldExplorerEurope.ViewModels;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WorldExplorerEurope.App.ViewModels
@@ -37,22 +39,23 @@ namespace WorldExplorerEurope.App.ViewModels
         private Country _country;
 
         private IAPIinterface _apiService;
-        private MainViewModel mainViewModel = new MainViewModel();
         private LocalService _localService;
         private ExplorerHubViewModel explorerHubViewModel;
         private HubConnection connection;
 
-        public InfoViewModel()
+        public InfoViewModel(IAPIinterface _apiService)
         {
-            this._apiService = new APIservice();
+            this._apiService = _apiService;
             _localService = new LocalService();
             explorerHubViewModel = new ExplorerHubViewModel();
         }
 
+        public bool test = false;
+
         public async override void Init(object initData)
         {
             var country = initData as Country;
-            this._country = mainViewModel.GetCountry();
+            this._country = country;
             this.countryPlaylist = GetCountryPlaylist().Result;
             UserMemories = await GetUserMemories();
             ActivityIndicator = false;
@@ -69,6 +72,21 @@ namespace WorldExplorerEurope.App.ViewModels
 
         }
 
+        //Deze variable is alleen geschreven voor te Unit testen. Verder doe ik niks hiermee
+        private User user;
+        public User User
+        {
+            get
+            {
+                return user;
+            }
+            set
+            {
+                this.user = value;
+                ChangeProperty(nameof(User));
+            }
+        }
+
         private void addConnectionEventHandler()
         {
             connection.On<string>("addFavourites", (string country) =>
@@ -80,7 +98,8 @@ namespace WorldExplorerEurope.App.ViewModels
         
         private void ChangePageContentBasedOnUser()
         {
-            var user = _localService.GetUser();
+            var user = User;
+            if (user == null) user = _localService.GetUser();
             int count = 0;
             int count2 = 0;
             if (user != null) count = _country.favourites.Where(m => m.UserId == user.Id).Count();
@@ -260,7 +279,8 @@ namespace WorldExplorerEurope.App.ViewModels
 
         private async Task<ObservableCollection<PhotoMemoryDto>> GetUserMemories()
         {
-            var user = _localService.GetUser();
+            var user = User;
+            if (user == null) user = _localService.GetUser();
             if (user == null)
             {
                 return new ObservableCollection<PhotoMemoryDto>();
@@ -298,7 +318,18 @@ namespace WorldExplorerEurope.App.ViewModels
             }
         }
 
-        private async Task<ObservableCollection<BasicPlaylist>> GetCountryPlaylist()
+        private Uri playlistLink;
+
+        public ICommand OpenPlaylistInBrowser => new Command(
+            async () =>
+            {
+                if (playlistLink != null)
+                    await Launcher.OpenAsync(playlistLink);
+                else
+                    await Application.Current.MainPage.DisplayAlert("Cannot open link!!", "This country does not have a playlist yet.\nPlease, suggest us some songs if you want😀", "ok😁");
+            });
+
+        public async Task<ObservableCollection<BasicPlaylist>> GetCountryPlaylist()
         {
             try
             {
@@ -317,11 +348,12 @@ namespace WorldExplorerEurope.App.ViewModels
                     newBasicPlaylist.Add(basicPlaylist);
 
                 }
+                playlistLink = playlist.Url;
                 return newBasicPlaylist;
             }
             catch
             {
-                return null;
+                return new ObservableCollection<BasicPlaylist>();
             }
         }
 
@@ -330,8 +362,9 @@ namespace WorldExplorerEurope.App.ViewModels
             {
                 string action = await App.Current.MainPage.DisplayActionSheet("What do you want to do?", "Cancel", null, "Take a picture", "Get a picture");
                 ActivityIndicator = true;
-                LocalService localService = new LocalService();
-                if (localService.GetUser() == null)
+                var user = User;
+                if (user == null) user = _localService.GetUser();
+                if (user == null)
                 {
                     await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before you upload.", "Ok");
                     await CoreMethods.PushPageModel<LoginViewModel>(true);
@@ -347,23 +380,6 @@ namespace WorldExplorerEurope.App.ViewModels
                     await PickPicture();
                 }
             });
-
-        //This is code I wanted to implement, but for some reason it does not work
-        private async Task<bool> CheckAndroidCameraPermissions()
-        {
-            PermissionStatus status = await CrossPermissions.Current.CheckPermissionStatusAsync<CalendarPermission>();
-            if (status != PermissionStatus.Granted)
-            {
-                status = await CrossPermissions.Current.RequestPermissionAsync<CameraPermission>();
-                return true;
-            }
-
-            if (status == PermissionStatus.Granted)
-            {
-                return true;
-            }
-            return false;
-        }
 
         private async Task TakePicture()
         {
@@ -411,6 +427,7 @@ namespace WorldExplorerEurope.App.ViewModels
                 string responseContent = await upload.Content.ReadAsStringAsync();
                 var country = JsonConvert.DeserializeObject<Country>(responseContent);
                 _country = country;
+                UserMemories = await GetUserMemories();
                 ActivityIndicator = false;
             }
         }
@@ -463,10 +480,11 @@ namespace WorldExplorerEurope.App.ViewModels
             }
         }
 
-        ICommand AddFavouriteCommand => new Command(
+        public ICommand AddFavouriteCommand => new Command(
             async () =>
             {
-                var user = _localService.GetUser();
+                var user = User;
+                if (user == null) user = _localService.GetUser();
                 if (user != null)
                 {
                     await Add($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/favourites");
@@ -475,14 +493,18 @@ namespace WorldExplorerEurope.App.ViewModels
                     updateFavouriteAndWishlistCount(updatedCountry);
                     return;
                 }
-                await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
-                await CoreMethods.PushPageModel<LoginViewModel>(true);
+                if(test == false)
+                {
+                    await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
+                    await CoreMethods.PushPageModel<LoginViewModel>(true);
+                }
             });
 
         ICommand RemoveFavouriteCommand => new Command(
             async () =>
             {
-                var user = _localService.GetUser();
+                var user = User;
+                if (user == null) user = _localService.GetUser();
                 var favourite = _country.favourites.FirstOrDefault(m => m.UserId == user.Id);
                 await Remove($"{WorldExplorerAPIService.BaseUrl}/favourites/remove/{_country.Id}/{favourite.Id}", user.Token);
                 var countries = await _localService.GetCountriesAsync();
@@ -493,7 +515,8 @@ namespace WorldExplorerEurope.App.ViewModels
         ICommand AddWishlistCommand => new Command(
             async () =>
             {
-                var user = _localService.GetUser();
+                var user = User;
+                if (user == null) user = _localService.GetUser();
                 if (user != null)
                 {
                     await Add($"{WorldExplorerAPIService.BaseUrl}/{_country.Id}/{user.Id}/wishlist");
@@ -502,8 +525,11 @@ namespace WorldExplorerEurope.App.ViewModels
                     updateFavouriteAndWishlistCount(updatedCountry).Wait();
                     return;
                 }
-                await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
-                await CoreMethods.PushPageModel<LoginViewModel>(true);
+                if(test == false)
+                {
+                    await App.Current.MainPage.DisplayAlert("Login!!", "Please, login before adding", "OK");
+                    await CoreMethods.PushPageModel<LoginViewModel>(true);
+                }
             });
 
         private async Task updateFavouriteAndWishlistCount(Country country)
@@ -517,7 +543,8 @@ namespace WorldExplorerEurope.App.ViewModels
         ICommand RemoveWishlistCommand => new Command(
             async () =>
             {
-                var user = _localService.GetUser();
+                var user = User;
+                if (user == null) user = _localService.GetUser();
                 var wishlist = _country.countryWishlists.SingleOrDefault(m => m.UserId == user.Id);
                 await Remove($"{WorldExplorerAPIService.BaseUrl}/wishlists/remove/{_country.Id}/{wishlist.Id}", user.Token);
                 var countries = await _localService.GetCountriesAsync();
@@ -527,7 +554,8 @@ namespace WorldExplorerEurope.App.ViewModels
 
         private async Task Add(string url)
         {
-            var user = _localService.GetUser();
+            var user = User;
+            if (user == null) user = _localService.GetUser();
             string rawJSON = JsonConvert.SerializeObject(_country);
             var response = await _apiService.Put(url, rawJSON, user.Token);
             if (!response.IsSuccessStatusCode) await App.Current.MainPage.DisplayAlert("Error", "Cannot perform action.", "OK");

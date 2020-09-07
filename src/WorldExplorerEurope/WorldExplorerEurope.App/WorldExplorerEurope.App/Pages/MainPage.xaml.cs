@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WorldExplorerEurope.API.Services.Interface;
+using WorldExplorerEurope.App.Domain.Services;
 using WorldExplorerEurope.App.Pages;
 using WorldExplorerEurope.App.ViewModels;
 using WorldExplorerEurope.Domain.Models;
@@ -21,9 +23,11 @@ namespace WorldExplorerEurope.App.Pages
     public partial class MainPage : ContentPage
     {
         private readonly MainViewModel mainPageViewModel;
-        public MainPage()
+        private readonly IAPIinterface _apiService;
+        public MainPage(IAPIinterface apiService)
         {
-            mainPageViewModel = new MainViewModel();
+            _apiService = apiService;
+            mainPageViewModel = new MainViewModel(_apiService);
             InitializeComponent();
             SfListViewCountries.ItemsSource = mainPageViewModel.Countries;
         }
@@ -31,8 +35,8 @@ namespace WorldExplorerEurope.App.Pages
         private void OnFilterChanged(object sender, TextChangedEventArgs e)
         {
             SearchBar searchBar = sender as SearchBar;
-            if(SfListViewCountries.DataSource != null && searchBar.Text != null)
-                SfListViewCountries.ItemsSource = mainPageViewModel.Countries.Where(m => m.Name.ToLower().Contains(searchBar.Text.ToLower()));
+            if (SfListViewCountries.DataSource != null && searchBar.Text != null)
+                SfListViewCountries.ItemsSource = mainPageViewModel.Filter(searchBar.Text);
             else
                 SfListViewCountries.ItemsSource = mainPageViewModel.Countries;
 

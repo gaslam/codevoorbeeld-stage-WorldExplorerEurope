@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,9 +15,10 @@ namespace WorldExplorerEurope.VUE.services
         {
             try
             {
-                using (var webClient = new WebClient())
+                using (var webClient = new HttpClient())
                 {
-                    string download = webClient.DownloadString(url);
+                    var response = await webClient.GetAsync(url);
+                    string download = await response.Content.ReadAsStringAsync();
                     return download;
                 }
             }

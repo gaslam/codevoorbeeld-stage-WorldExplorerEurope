@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -51,6 +52,13 @@ namespace WorldExplorerEurope.VUE.Controllers
             {
                 return Content("User not found");
             }
+            var handler = new JwtSecurityTokenHandler().ReadJwtToken(user.Token);
+            var localjwt = handler.Claims.FirstOrDefault(claim => claim.Type == "role").Value;
+            var spotify = handler.Claims.Any(claim => claim.Type == "isSpotifyDJ");
+            if (localjwt == "Admin") user.Role = localjwt;
+            else user.Role = "Visitor";
+            if (spotify == true) user.IsSpotifyDj = true;
+            else user.IsSpotifyDj = false;
             return View(user);
         }
 

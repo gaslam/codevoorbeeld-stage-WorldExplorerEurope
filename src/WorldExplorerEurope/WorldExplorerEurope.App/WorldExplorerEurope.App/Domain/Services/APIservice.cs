@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Org.Apache.Http.Protocol;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -13,12 +14,17 @@ namespace WorldExplorerEurope.App.Domain.Services
 {
     public class APIservice : IAPIinterface
     {
+        public APIservice()
+        {
+
+        }
         public async Task<string> Get(string url)
         {
             try
             {
                 using (var webClient = new HttpClient())
                 {
+                    if (webClient.DefaultRequestHeaders.Authorization != null) webClient.DefaultRequestHeaders.Authorization = null;
                     var download = webClient.GetStringAsync(url).Result;
                     return download.ToString();
                 }
@@ -74,7 +80,7 @@ namespace WorldExplorerEurope.App.Domain.Services
                     return responseMessage;
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 return null;
             }

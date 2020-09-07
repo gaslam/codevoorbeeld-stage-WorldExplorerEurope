@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Net.Http;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -27,10 +29,10 @@ namespace WorldExplorerEurope.App.ViewModels
         private IAPIinterface _apiService;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public MainViewModel()
+        public MainViewModel(IAPIinterface apiService)
         {
-            _apiService = new APIservice();
-            countries = GetCountries().Result;
+            _apiService = apiService;
+            Countries = GetCountries().Result;
             ActivityIndicator = new bool();
             ActivityIndicator = false;
         }
@@ -53,7 +55,8 @@ namespace WorldExplorerEurope.App.ViewModels
             try
             {
                 LocalService localService = new LocalService();
-                 var countries = await localService.GetCountriesAsync();
+                var response = await _apiService.Get($"{WorldExplorerAPIService.BaseUrl}");
+                if(response != null) countries = JsonConvert.DeserializeObject<ObservableCollection<Country>>(response);
                 return countries;
             }
             catch
@@ -63,7 +66,7 @@ namespace WorldExplorerEurope.App.ViewModels
 
         }
 
-        public static Country selectedCountry;
+        private static Country selectedCountry;
 
         public void setSelectedCountry(Country country)
         {
@@ -106,6 +109,12 @@ namespace WorldExplorerEurope.App.ViewModels
                 await CoreMethods.PushPageModel<InfoViewModel>(selectedCountry, false, true);
                 ActivityIndicator = false;
             });
+
+        public List<Country> Filter(string country)
+        {
+            return countries.Where(m => m.Name.ToLower().Contains(country.ToLower())).ToList();
+        }
+
         public ICommand LocationCommand => new Command(
             async () =>
             {
@@ -117,9 +126,11 @@ namespace WorldExplorerEurope.App.ViewModels
                     if (location == null) throw new Exception();
                     setSelectedCountry(location);
                     await CoreMethods.PushPageModel<InfoViewModel>(selectedCountry, false, true);
+                    ActivityIndicator = false;
                 }
                 catch
                 {
+                    ActivityIndicator = false;
                     await App.Current.MainPage.DisplayAlert("Error", "Cannot get your location.", "Ok");
                 }
             });

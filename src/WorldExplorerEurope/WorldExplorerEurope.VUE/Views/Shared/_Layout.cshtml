@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.10.1/chartist.min.css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.10.1/chartist.min.js"></script>
     <script src="//cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <link rel="stylesheet" href="~/css/explorerButtons.css" />
 </head>
 <body>
     <div id="app">
@@ -36,7 +37,7 @@
             <div id="sidebar-wrapper">
 
                 <div class="uk-panel uk-padding ">
-                    <a class="uk-logo" href="#">ExpressPanel</a>
+                    <img src="~/Images/Logo.png"  height="120"/>
                 </div>
 
                 <div class="uk-padding uk-padding-remove-top">
@@ -63,6 +64,12 @@
                                 <a href="#">Popular</a>
                                 <ul class="uk-nav-sub">
                                     <li><a asp-controller="Country" asp-action="Popular">See what's popular</a></li>
+                                </ul>
+                            </li>
+                            <li class="uk-parent">
+                                <a href="#">SpotifyPlaylists</a>
+                                <ul class="uk-nav-sub">
+                                    <li><a asp-controller="Spotify" asp-action="Index">Manage</a></li>
                                 </ul>
                             </li>
                         </ul>

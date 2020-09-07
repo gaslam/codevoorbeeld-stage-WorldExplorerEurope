@@ -11,7 +11,7 @@
     <ContentPage.Content>
         <AbsoluteLayout AbsoluteLayout.LayoutFlags="All"
                         AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <ScrollView VerticalScrollBarVisibility="Always" HeightRequest="500">
+            <ScrollView VerticalScrollBarVisibility="Always" HeightRequest="700">
                 <StackLayout>
                     <Grid Margin="0,75,0,140">
                         <Grid.RowDefinitions>
@@ -20,11 +20,12 @@
                             <RowDefinition>
                                 <RowDefinition.Height>
                                     <OnPlatform x:TypeArguments="GridLength">
-                                        <On Platform="Android">660</On>
-                                        <On Platform="UWP">700</On>
+                                        <On Platform="Android">620</On>
+                                        <On Platform="UWP">660</On>
                                     </OnPlatform>
                                 </RowDefinition.Height>
                             </RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
@@ -44,7 +45,15 @@
                         </Label>
                         <dataform:SfDataForm x:Name="dataForm" ValidationMode="LostFocus" LayoutOptions="TextInputLayout" LabelPosition="Top" AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" DataObject="{Binding newUser}">
                         </dataform:SfDataForm>
-                        <Button x:Name="btnRegister" Text="Register" Grid.Column="1" Grid.Row="3" Padding="5" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" Command="{Binding RegisterCommand}">
+                        <Label Text="{Binding newUser.ErrorMessage}" TextColor="#fe5f55" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,5,0,5">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="Android">Raleway-Regular.ttf#Raleway</On>
+                                    <On Platform="UWP">/Assets/Fonts/Raleway-Regular.ttf#Raleway</On>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                        <Button x:Name="btnRegister" Text="Register" Grid.Column="1" Grid.Row="4" Padding="5" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#C7EFCF" BorderColor="#88BF93" Command="{Binding RegisterCommand}">
                             <Button.FontFamily>
                                 <OnPlatform x:TypeArguments="x:String">
                                     <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
@@ -52,7 +61,7 @@
                                 </OnPlatform>
                             </Button.FontFamily>
                         </Button>
-                        <Button x:Name="btnCancel" Text="Cancel" Grid.Column="2" Grid.Row="3" Padding="5" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#FE5F55" BorderColor="#FA9A94" TextColor="White" Command="{Binding CancelCommand}">
+                        <Button x:Name="btnCancel" Text="Cancel" Grid.Column="2" Grid.Row="4" Padding="5" FontAttributes="Bold" BorderWidth="4" BackgroundColor="#FE5F55" BorderColor="#FA9A94" TextColor="White" Command="{Binding CancelCommand}">
                             <Button.FontFamily>
                                 <OnPlatform x:TypeArguments="x:String">
                                     <On Platform="Android">RobotoMono-Bold.ttf#Roboto-Mono</On>
