@@ -18,6 +18,8 @@ namespace WorldExplorerEurope.API
             CreateHostBuilder(args).Build().Run();
         }
 
+        //Xamarin.Forms cannot reach the localhost so we had to use this. It ensures that you can reach the api over your local internet. 
+        //We do not have our own domain, so the teacher recommended this to us.
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
