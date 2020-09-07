@@ -83,6 +83,9 @@
 
             created: function () {
                 var token = sessionStorage.getItem('token');
+                if (token == null) {
+                    window.location.href = window.location.origin + '/NotAllowed';
+                }
                 var jwt = JSON.parse(atob(token.split('.')[1]));
                 if (jwt != null && jwt.role == "Admin") {
                     var self = this;
