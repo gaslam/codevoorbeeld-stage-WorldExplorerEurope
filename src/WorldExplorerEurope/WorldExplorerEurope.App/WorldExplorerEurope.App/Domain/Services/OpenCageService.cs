@@ -230,7 +230,7 @@ namespace WorldExplorerEurope.App.Domain.Services
             {
                 using (var webclient = new WebClient())
                 {
-                    string ApiUrl = $"https://api.opencagedata.com/geocode/v1/json?q={lat}+{lng}&key=d41c893d59b24581ac5b1596decc612b";
+                    string ApiUrl = $"https://api.opencagedata.com/geocode/v1/json?q={lat}+{lng}&key=(YOUR_API_KEY)";
                     string rawJSON = webclient.DownloadString(ApiUrl);
                     var deviceCountry = JsonConvert.DeserializeObject<Rootobject>(rawJSON);
                     var currentCountry = countries.FirstOrDefault(m => m.Name.Contains(deviceCountry.results[0].components.country));
