@@ -84,7 +84,7 @@ namespace WorldExplorerEurope.API.Controllers
             }
 
             var fullplaylist = await _spotify.GetFullPlaylist(playlist.PlaylistId);
-            var tracks = await _spotify.GetFirst5Tracks(fullplaylist);
+            var tracks = await _spotify.GetFirst100Tracks(fullplaylist);
             var country = getCountry(playlist.CountryId);
 
             SpotifyBasicDto spotifyBasicDto = new SpotifyBasicDto()
@@ -123,7 +123,7 @@ namespace WorldExplorerEurope.API.Controllers
                 }
 
                 var fullplaylist = await _spotify.GetFullPlaylist(playlist.PlaylistId);
-                var tracks = await _spotify.GetFirst5Tracks(fullplaylist);
+                var tracks = await _spotify.GetFirst100Tracks(fullplaylist);
                 var country = getCountry(playlist.CountryId);
 
                 SpotifyBasicDto spotifyBasicDto = new SpotifyBasicDto()

@@ -239,6 +239,7 @@ namespace WorldExplorerEurope.API.Controllers
             {
                 return BadRequest("Country already exists");
             }
+            if (flag == null) return BadRequest("Add a flag.");
             if (Path.GetExtension(flag.FileName) != ".svg")
             {
                 return BadRequest($"{Path.GetExtension(flag.FileName)} is not a valid extension. Only svg's are accepted.");

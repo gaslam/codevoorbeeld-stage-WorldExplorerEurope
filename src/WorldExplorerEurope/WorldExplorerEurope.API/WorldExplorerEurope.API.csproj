@@ -40,6 +40,10 @@
     <ProjectReference Include="..\WorldExplorerEurope.App\WorldExplorerEurope.App\WorldExplorerEurope.App.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="http://json.schemastore.org/band-manifest" /></VisualStudio></ProjectExtensions>
 
 </Project>
